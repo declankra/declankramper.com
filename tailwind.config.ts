@@ -1,14 +1,19 @@
 // tailwind.config.ts
 
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
-const config: Config = {
+const config = {
+  darkMode: ["class"],
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -51,8 +56,7 @@ const config: Config = {
       },
     },
   },
-  darkMode: ["class"],
   plugins: [require("tailwindcss-animate")],
-};
+} satisfies Config;
 
 export default config;
