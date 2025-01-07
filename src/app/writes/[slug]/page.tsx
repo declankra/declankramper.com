@@ -82,7 +82,11 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           prose-strong:font-medium
           prose-a:text-foreground prose-a:underline-offset-4
           marker:text-muted-foreground
-          [&>*:first-child]:mt-0"
+          prose-img:rounded-lg prose-img:max-w-[60%] prose-img:mx-auto
+          [&_.footnotes]:mt-16 [&_.footnotes]:border-t [&_.footnotes]:border-border [&_.footnotes]:pt-8
+          [&_.footnotes_ol]:list-decimal [&_.footnotes_li]:text-sm [&_.footnotes_li]:text-muted-foreground
+          [&_.footnote-backref]:ml-1 [&_.footnote-backref]:text-muted-foreground hover:[&_.footnote-backref]:text-foreground
+          "
         dangerouslySetInnerHTML={{ __html: post.content }} 
       />
     </article>

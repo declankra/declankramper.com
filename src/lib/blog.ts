@@ -4,6 +4,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import footnotes from 'remark-footnotes';
 import { BlogPost } from '@/types/blog';
 
 // Define the directory where blog posts are stored
@@ -67,6 +68,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 // Helper function to convert markdown to HTML with enhanced features
 async function markdownToHtml(markdown: string): Promise<string> {
     const result = await remark()
+    .use(footnotes, {
+      inlineNotes: true, // Enable inline footnotes
+      footnoteLinkBack: true // Add back-links from footnotes to references
+    })
       .use(html, {
         sanitize: false, // Allow raw HTML
         allowDangerousHtml: true // Required for some HTML elements
