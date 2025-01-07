@@ -47,15 +47,15 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       <header className="mb-8">
         <div className="flex flex-wrap gap-2 mb-4">
           {post.categories.map((category: string) => (
-            <Badge key={category} variant="secondary">
-              {category}
+            <Badge key={category} variant="secondary" className="text-xs px-2 py-0">
+              {category.toLowerCase()}
             </Badge>
           ))}
         </div>
-        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
         <time 
           dateTime={post.date}
-          className="text-muted-foreground"
+          className="text-xs text-muted-foreground block"
         >
           {new Date(post.date).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -66,7 +66,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       </header>
 
       {/* Post Preview */}
-      <div className="text-lg text-muted-foreground mb-8 italic">
+      <div className="text-md text-muted-foreground mb-8 italic">
         {post.preview}
       </div>
 
