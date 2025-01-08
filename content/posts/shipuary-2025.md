@@ -49,7 +49,7 @@ I’ll learn a lot between now and the end of the month. In the days spent passi
     - Few buttons. I’m smart enough to know what matters).
 5. **what are some product principles I want to keep in mind - for shipuary and beyond?**
     
-    dkBuilds 3 Product Principles[^4]
+    3 Product Principles[^4] of dkBuilds
     
     1. It works as you expect it to
         1. functional and delivers on the promise being sold
