@@ -43,10 +43,10 @@ I’ll learn a lot between now and the end of the month. In the days spent passi
     - Getting narrow, staying narrow
     - Defining a single ‘done’ requirement
 3. **how will i do it?**
-    - Intuition building. I have good intuition and I am a user of all my potential ideas. Just build it. Don’t have time to fully research everything[^3] anyways. I can research after (i.e. get real user feedback aka the better research)
+    - Intuition building. I have good intuition and I am a user of all my potential ideas. Just build it. Don’t have time to fully research everything[^3] anyways. I can research after (i.e. get real user feedback aka the better research[^5])
 4. **what will the products look like?**
     - Black and white everything. Color for results/outcomes or key actions only.
-    - Few buttons. I’m smart enough to know what matters).
+    - Few buttons. I’m smart enough to know what matters.
 5. **what are some product principles I want to keep in mind - for shipuary and beyond?**
     
     3 Product Principles[^4] of dkBuilds
@@ -78,6 +78,8 @@ See ya Feb 1 ✌️
 
 [^2]: is it really passive if it’s always on the back burner? not sure. but i am sure that having ideas “on the back burner” or “back off the mind” is where a lot of the real magic happens.
 
-[^3]: and talk myself out of it (because X is already doing something similar)
+[^3]: and talk myself out of it (because person/thing/product X is already doing something similar)
 
 [^4]: this feeds into this ongoing process of building my brand. a brand is a promise. i want to promise all three of those things in any work that i do. the promise for the things that come out of shipuary: simple, beautiful products people will want to share.
+
+[^5]: after i posted this, saw the [following tweet](https://x.com/jsngr/status/1876831618003833308); yep
