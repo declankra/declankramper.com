@@ -1,7 +1,7 @@
 ---
 title: "Shipuary 2025"
 date: "2025-01-07"
-categories: ["Life"]
+categories: ["dkBuilds", "Product"]
 preview: "shipping 3 new products by the end of february"
 ---
 
