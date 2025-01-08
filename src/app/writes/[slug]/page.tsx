@@ -71,24 +71,30 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       </div>
 
       {/* Post Content */}
-
       <div 
         className="prose prose-neutral dark:prose-invert max-w-none 
-          prose-p:text-base prose-p:leading-relaxed 
-          prose-headings:font-medium prose-headings:tracking-tight
-          prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg
-          prose-pre:bg-secondary/50 prose-pre:border-0
-          prose-code:text-foreground prose-code:bg-secondary/50 prose-code:px-1 prose-code:rounded
-          prose-strong:font-medium
-          prose-a:text-foreground prose-a:underline-offset-4
-          marker:text-muted-foreground
-          prose-img:rounded-lg prose-img:max-w-[60%] prose-img:mx-auto
-          [&_.footnotes]:mt-16 [&_.footnotes]:border-t [&_.footnotes]:border-border [&_.footnotes]:pt-8
-          [&_.footnotes_ol]:list-decimal [&_.footnotes_li]:text-sm [&_.footnotes_li]:text-muted-foreground
-          [&_.footnote-backref]:ml-1 [&_.footnote-backref]:text-muted-foreground hover:[&_.footnote-backref]:text-foreground
-          "
+            prose-p:text-base prose-p:leading-relaxed prose-p:text-foreground/90
+            prose-headings:font-medium prose-headings:tracking-tight
+            prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg
+            prose-pre:bg-secondary/50 prose-pre:border-0
+            prose-code:text-foreground prose-code:bg-secondary/50 prose-code:px-1 prose-code:rounded
+            prose-strong:font-medium
+            prose-a:text-foreground prose-a:underline-offset-4
+            marker:text-muted-foreground
+            prose-li:mt-0.5 prose-li:mb-0.5
+            prose-ol:mt-0 prose-ol:mb-2
+            prose-ul:mt-0 prose-ul:mb-2
+            [&>*:first-child]:mt-0
+            [&>ol]:space-y-0
+            [&_ol_ol]:mt-0
+            [&_li>p]:my-0
+            [&_p:has(+ol)]:mb-1
+            [&_p:has(+ul)]:mb-1
+            [&_li]:text-foreground/90
+            [&_li>ol]:mt-1
+            [&_p+ol]:mt-1"
         dangerouslySetInnerHTML={{ __html: post.content }} 
-      />
+        />
     </article>
   );
 }
