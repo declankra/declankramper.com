@@ -16,25 +16,13 @@ export default function Home() {
         Declan Kramper
       </p>
 
-       {/* Build - with hover card */}
-       {/* Build - with hover card */}
-       <HoverCard>
-        <HoverCardTrigger asChild>
+       {/* Build */}
         <Link 
             href="/builds"
             className="transition-opacity hover:opacity-70 cursor-pointer"
           >
             build
           </Link>
-        </HoverCardTrigger>
-        <HoverCardContent className="w-64 text-center">
-          <p className="text-sm text-muted-foreground">
-            A collection of projects and products I've built.
-            <br />
-            Coming soon.
-          </p>
-        </HoverCardContent>
-      </HoverCard>
       
       {/* Run - with hover card */}
       <HoverCard>
