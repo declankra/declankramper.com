@@ -58,10 +58,10 @@ export default function BuildsPage() {
           transition={{ delay: 0.3, duration: 0.6 }}
         >
           Keep scrolling to view my recent work, or{' '}
-          <Link href="/products" className="underline underline-offset-4 hover:text-foreground">
+          <Link href="https://dkbuilds.co" className="underline underline-offset-4 hover:text-foreground">
             click here
           </Link>
-          {' '}to view my products you can use yourself.
+          {' '}to view my products you can use yourself right now.
         </motion.p>
 
         <motion.div
