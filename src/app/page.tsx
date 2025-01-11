@@ -17,11 +17,15 @@ export default function Home() {
       </p>
 
        {/* Build - with hover card */}
+       {/* Build - with hover card */}
        <HoverCard>
         <HoverCardTrigger asChild>
-          <p className="transition-opacity hover:opacity-70 cursor-pointer">
+        <Link 
+            href="/builds"
+            className="transition-opacity hover:opacity-70 cursor-pointer"
+          >
             build
-          </p>
+          </Link>
         </HoverCardTrigger>
         <HoverCardContent className="w-64 text-center">
           <p className="text-sm text-muted-foreground">
