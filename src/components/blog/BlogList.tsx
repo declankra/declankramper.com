@@ -7,6 +7,7 @@ import CategoryFilter from '@/components/blog/CategoryFilter';
 import PostList from '@/components/blog/PostList';
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import BreadcrumbNav from '../layout/BreadcrumbNav';
 
 interface BlogListProps {
   initialPosts: BlogPost[];
@@ -39,6 +40,12 @@ export default function BlogList({ initialPosts }: BlogListProps) {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
+            <BreadcrumbNav
+        items={[
+          { href: "/", label: "home" },
+          { href: "/writes", label: "writes", current: true }
+        ]}
+      />
       {/* Simple header */}
       <header className="mb-12 space-y-2">
         <h1 className="text-lg font-medium">Declan Kramper</h1>

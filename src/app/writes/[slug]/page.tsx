@@ -3,6 +3,7 @@ import { getPostBySlug, getAllPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Badge } from "@/components/ui/badge";
+import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 
 // Generate all possible paths at build time
 export async function generateStaticParams() {
@@ -43,6 +44,13 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-8">
+            <BreadcrumbNav
+        items={[
+          { href: "/", label: "home" },
+          { href: "/writes", label: "writes" },
+          { label: post.title, current: true }
+        ]}
+      />
     {/* Post Header */}
     <header className="mb-6">
       <div className="flex flex-wrap gap-1.5 mb-3">
