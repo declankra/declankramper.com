@@ -7,7 +7,18 @@ import { cn } from "@/lib/utils"
 
 const HoverCard = HoverCardPrimitive.Root
 
-const HoverCardTrigger = HoverCardPrimitive.Trigger
+const HoverCardTrigger = React.forwardRef<
+  React.ElementRef<typeof HoverCardPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof HoverCardPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <HoverCardPrimitive.Trigger
+    ref={ref}
+    className={cn("touch-manipulation", className)} // Added touch-manipulation
+    data-touch-trigger // Add data attribute for touch detection
+    {...props}
+  />
+))
+HoverCardTrigger.displayName = HoverCardPrimitive.Trigger.displayName
 
 const HoverCardContent = React.forwardRef<
   React.ElementRef<typeof HoverCardPrimitive.Content>,
@@ -25,5 +36,28 @@ const HoverCardContent = React.forwardRef<
   />
 ))
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
+
+// Add client-side event handler initialization
+if (typeof window !== 'undefined') {
+  // Initialize touch handling
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement
+    const trigger = target.closest('[data-touch-trigger]')
+    
+    if (trigger) {
+      e.preventDefault()
+      const currentState = trigger.getAttribute('data-state')
+      // Toggle open state
+      if (currentState === 'closed') {
+        ;(trigger as any)?._hoverCardTriggerImpl?.props?.onOpenChange?.(true)
+      }
+    } else {
+      // Close all hover cards when clicking outside
+      document.querySelectorAll('[data-touch-trigger][data-state="open"]').forEach((trigger) => {
+        ;(trigger as any)?._hoverCardTriggerImpl?.props?.onOpenChange?.(false)
+      })
+    }
+  })
+}
 
 export { HoverCard, HoverCardTrigger, HoverCardContent }
