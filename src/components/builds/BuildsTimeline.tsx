@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog } from '@/components/ui/dialog';
 import { ArrowUpRight } from 'lucide-react';
+import { timelineItems } from './TimelineItems';
 
 // Types for our timeline items
 interface WorkTile {
@@ -28,34 +29,6 @@ interface FeedbackTile {
 
 type TimelineItem = WorkTile | FeedbackTile;
 
-// Sample data - replace with your actual content
-const timelineItems: TimelineItem[] = [
-    {
-        type: 'work',
-        id: 'personal-portfolio',
-        title: 'Personal Portfolio',
-        date: '2024-01',
-        year: 2024,
-        media: '/images/buildsTimeline/PersonalPortfolio.webp',
-        preview: 'A website to showcase my work and thoughts',
-        description: 'Built to make the user feel my brand',
-        link: 'https://declankramper.com'
-    },
-    {
-        type: 'feedback',
-        id: 'tyler-feedback-1',
-        date: '2024-02',
-        year: 2024,
-        text: '"Given he is a self-starter, we often just counted on him figuring things out (which he did)." - Director of Product Management, retail client'
-    },
-    {
-        type: 'feedback',
-        id: 'tyler-feedback-2',
-        date: '2024-02',
-        year: 2024,
-        text: '"Declan was self-motivated to get to an outcome, which is perhaps the GREATEST skill a product person can have" - Director of Product Management, retail client'
-    },
-];
 
 function BuildsTimeline() {
     const [selectedWork, setSelectedWork] = useState<WorkTile | null>(null);
@@ -146,7 +119,7 @@ function BuildsTimeline() {
                                         </button>
 
                                         <div className="space-y-4">
-                                            <h2 className="text-xl font-medium">{selectedWork.title}</h2>
+                                            <h2 className="text-xl font-bold">{selectedWork.title}</h2>
                                             <p className="text-sm text-muted-foreground">{selectedWork.description}</p>
 
                                             {selectedWork.link && (
