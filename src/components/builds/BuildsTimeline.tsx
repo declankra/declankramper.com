@@ -110,7 +110,7 @@ export function BuildsTimeline() {
                                             onClick={() => setSelectedWork(null)}
                                             className="absolute top-4 right-4 p-2 rounded-full bg-background/20 hover:bg-background/30 transition-colors"
                                         >
-                                            <span className="text-white text-lg">×</span>
+                                            <span className="text-foreground text-lg">×</span>
                                         </button>
 
                                         <div className="space-y-4">
