@@ -81,10 +81,10 @@ export function BuildsTimeline() {
                                     overflow: hidden;
                                 }
                             `}</style>
-                            <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
+                            <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto">
                                 {/* Backdrop */}
                                 <div
-                                    className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+                                    className="fixed inset-0 bg-background/80 backdrop-blur-sm"
                                     onClick={() => setSelectedWork(null)}
                                 />
                                 {/* Modal content */}
@@ -92,7 +92,7 @@ export function BuildsTimeline() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="relative z-50 max-w-2xl w-full mx-4 bg-card rounded-lg shadow-lg overflow-hidden my-8"
+                                    className="relative z-50 max-w-2xl w-full mx-4 bg-card rounded-lg shadow-lg overflow-hidden my-16 md:my-8"
                                     onClick={(e) => e.stopPropagation()}
                                 >
                                     {/* Media section */}
