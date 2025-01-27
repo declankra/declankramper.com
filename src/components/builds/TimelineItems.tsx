@@ -3,6 +3,23 @@ import { TimelineItem } from './BuildsTimeline';
 export const timelineItems: TimelineItem[] = [
     {
         type: 'work',
+        id: 'athlete-personality-test',
+        title: 'Athlete Personality Test | Web App',
+        date: '2025-01',
+        year: 2025,
+        media: '/images/buildsTimeline/AthletePersonalityTest.webp',
+        preview: 'Discover your unique athlete personality based on your Strava activity titles',
+        description: "A fun personality test app that reads your Strava activity titles and matches you with one of six distinct athlete personalities, from the 'Data Enthusiast' to the 'Storyteller', unlocking a new way to analyze your acivities and engage with the Strava community. Complete with custom avatar generation and viral sharing features. \n\nBorn from my obserations (as a Strava DAU) that people knowingly (or unknowingly) pour their uniqueness into their Strava activity titiles, Strava encourages users to write custom activity titles because it boosts engagement, and my own use of commemorating my running thoughts into my Strava posts. \n\nIt's my most complex build yet. As of this writing, it is under review by Strava's developer program for extended use approval. You can [view the demo here](https://www.loom.com/share/203fc26c1d5e407bb5a43ad64fbefae0?sid=7d7b2db6-4d7c-4adc-bc83-9ff44aca0a1c).",
+    },
+    {
+        type: 'feedback',
+        id: 'martha-presentation-feedback',
+        date: '2025-01',
+        year: 2025,
+        text: '"During your presentation, you mentioned being young and naive, but let me tell you—that doesn’t stop you from already being a rockstar." - Senior Product Manager'
+    },
+    {
+        type: 'work',
         id: 'personal-portfolio',
         title: 'Modern Personal Portfolio',
         date: '2025-01',
@@ -63,14 +80,14 @@ export const timelineItems: TimelineItem[] = [
         id: 'tyler-feedback-1',
         date: '2023-11',
         year: 2023,
-        text: '"Given he is a self-starter, we often just counted on him figuring things out (which he did)." - Director of Product Management, retail client'
+        text: '"Given he is a self-starter, we often just counted on him figuring things out (which he did)." - Director of Product Management, client'
     },
     {
         type: 'feedback',
         id: 'tyler-feedback-2',
         date: '2023-09',
         year: 2023,
-        text: '"Declan was self-motivated to get to an outcome, which is perhaps the GREATEST skill a product person can have" - Director of Product Management, retail client'
+        text: '"Declan was self-motivated to get to an outcome, which is perhaps the GREATEST skill a product person can have" - Director of Product Management, client'
     },
     {
         type: 'work',
