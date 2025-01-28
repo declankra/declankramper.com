@@ -10,6 +10,27 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/AthletePersonalityTest.webp',
         preview: 'Discover your unique athlete personality based on your Strava activity titles',
         description: "A fun personality test app that reads your Strava activity titles and matches you with one of six distinct athlete personalities, from the 'Data Enthusiast' to the 'Storyteller', unlocking a new way to analyze your acivities and engage with the Strava community. Complete with custom avatar generation and viral sharing features. \n\nBorn from my obserations (as a Strava DAU) that people knowingly (or unknowingly) pour their uniqueness into their Strava activity titiles, Strava encourages users to write custom activity titles because it boosts engagement, and my own use of commemorating my running thoughts into my Strava posts. \n\nIt's my most complex build yet. As of this writing, it is under review by Strava's developer program for extended use approval. You can [view the demo here](https://www.loom.com/share/203fc26c1d5e407bb5a43ad64fbefae0?sid=7d7b2db6-4d7c-4adc-bc83-9ff44aca0a1c).",
+        link: 'https://www.athletepersonalitytest.com'
+
+    },
+    {
+        type: 'feedback',
+        id: 'sheldon-presentation-feedback',
+        date: '2025-01',
+        year: 2025,
+        text: '"+1 really appreciate you putting yourself out there Declan" - EVP, Product Management'
+    },
+    {
+        type: 'work',
+        id: 'ai-presentation-guide',
+        title: 'How PMs Can Best Leverage AI',
+        date: '2025-01',
+        year: 2025,
+        media: '/images/buildsTimeline/AIPresentationGuide.webp',
+        preview: 'A POV on the future of PM and a simple, step-by-step workflow to go from idea to your first working prototype using AI tools',
+        description: 'I gave a presentation at work on AI, my POV on PMs in the AI world, and what I think PMs should focus on going forward. \n\n The goal was not only to encourage everyone to explore AI more in their daily work, but to embrace their uniqueness and lean into it. \n\n Upon recieving positive feedback, I wrote a guide to help my coworkers build their first full-code prototype using AI.',
+        link: 'https://declankramper.notion.site/how-to-build-a-full-code-prototype-as-a-pm'
+
     },
     {
         type: 'feedback',
