@@ -46,8 +46,8 @@ export const timelineItems: TimelineItem[] = [
         date: '2025-01',
         year: 2025,
         media: '/images/buildsTimeline/PersonalPortfolio.webp',
-        preview: 'A place on the internet to showcase my work and thoughts',
-        description: 'Designed on my runs and built using a modern stack - nextjs, tailwind, framer motion, and vercel. I hope you enjoy using it. I certainly enjoyed making it.',
+        preview: 'I never liked making resumes anyways',
+        description: "Designed on my runs and built using a modern stack - nextjs, tailwind, framer motion, and vercel.\n\nIt's a place on the internet to showcase my work and thoughts.\n\nI hope you enjoy using it. I certainly enjoyed making it.",
     },
     {
         type: 'work',
