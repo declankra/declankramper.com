@@ -74,6 +74,9 @@ Every art form has tension before creation. Fuck it.
 See ya Feb 1 ✌️
 
 
+---
+
+
 [^1]: is any thought really new? if you look up shipuary, im sure someone has probably already done it before. ill stay ignorant here.
 
 [^2]: is it really passive if it’s always on the back burner? not sure. but i am sure that having ideas “on the back burner” or “back off the mind” is where a lot of the real magic happens.

@@ -68,6 +68,8 @@ unfortunately, you can do these two things (all the right things) and never find
 
 ***so start doing, opening up, and getting lucky.***[^note]
 
+---
+
 [^1]: the topic internal vs external control, ownership, taking responsibility, holding yourself accountable, related to growth mindset, etc is worthy of a post on its own
 
 [^note]: Adding further emphasis on the first footnote. Luck can be more simply be defined as something you can’t control. This would include where you are born, when you are born, and who you are born too. Outside of that, it gets much trickier.
