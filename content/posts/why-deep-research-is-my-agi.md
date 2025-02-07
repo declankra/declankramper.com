@@ -33,7 +33,7 @@ What I do know is that one of the things I struggle with most, and is probably t
 
 For some reason after seeing that tweet, it just clicked. I think this is what I need. I think this could give me information I desire, to get the answers I want, to make the decisions I need, to speed things up.
 
-So, impulsively[^6], I bought it. Right after doing so, I hopped in the shower, and it clicked even more; I could just create a single note in Apple Notes with a bullet point list of all my Q2A’s (questions to answer), quickly jot down all the questions I have throughout the day, and whenever I had a moment, turn that bullet point into a slightly more detailed question, put it into ‘Deep Research’, and just [walk away] (https://x.com/dkbuildsco/status/1884013135700607185). 
+So, impulsively[^6], I bought it. Right after doing so, I hopped in the shower, and it clicked even more; I could just create a single note in Apple Notes with a bullet point list of all my Q2A’s (questions to answer), quickly jot down all the questions I have throughout the day, and whenever I had a moment, turn that bullet point into a slightly more detailed question, put it into ‘Deep Research’, and just [walk away](https://x.com/dkbuildsco/status/1884013135700607185). 
 
 Battling the all-powerful maze-game has turned into *walking away*. What? For real? 
 
