@@ -35,6 +35,8 @@ Because there’s still some thoughts i want to share:
 - corporate careers - things aren't painful so why change? in anything. life is becoming more comfortable for most of the planet, prosperity is increasing [ link to source ]
 - what is the opposite of pain - is it pleasure/enjoyment? or something else?
 
-[1]: Upcoming post = Therapy: You got a book in ya?
-[2]: Upcoming post = ADHD: Medication, uniqueness, and the deferred life plan
-[3]: Upcoming post = How dare you: Being confident in a world of unknowns
+---
+
+[^1]: Upcoming post = Therapy: You got a book in ya?
+[^2]: Upcoming post = ADHD: Medication, uniqueness, and the deferred life plan
+[^3]: Upcoming post = How dare you: Being confident in a world of unknowns
