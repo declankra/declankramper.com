@@ -81,28 +81,28 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     {/* Post Content */}
     <div 
       className="prose prose-neutral dark:prose-invert max-w-none 
-          prose-p:text-sm prose-p:leading-relaxed prose-p:tracking-tight prose-p:text-foreground/90
-          prose-headings:font-medium prose-headings:tracking-tight
+          prose-p:text-sm prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/90
+          prose-headings:font-medium prose-headings:tracking-normal
           prose-h1:text-base prose-h2:text-sm prose-h3:text-sm
           prose-pre:bg-secondary/50 prose-pre:border-0
           prose-code:text-sm prose-code:text-foreground prose-code:bg-secondary/50 prose-code:px-1 prose-code:rounded
           prose-strong:font-medium
           prose-a:text-foreground prose-a:underline-offset-4
           marker:text-muted-foreground
-          prose-li:text-sm prose-li:tracking-tight prose-li:mt-0.5 prose-li:mb-0.5
-          prose-ol:mt-0 prose-ol:mb-1.5
-          prose-ul:mt-0 prose-ul:mb-1.5
+          prose-li:text-sm prose-li:tracking-normal prose-li:mt-1 prose-li:mb-1
+          prose-ol:mt-2 prose-ol:mb-2
+          prose-ul:mt-2 prose-ul:mb-2
           [&>*:first-child]:mt-0
-          [&>ol]:space-y-1
-          [&_ol_ol]:mt-1
+          [&>ol]:space-y-2
+          [&_ol_ol]:mt-2
           [&_li>p]:my-0
-          [&_p:has(+ol)]:mb-1
-          [&_p:has(+ul)]:mb-1
+          [&_p:has(+ol)]:mb-2
+          [&_p:has(+ul)]:mb-2
           [&_li]:text-foreground/90
-          [&_li>ol]:mt-1
-          [&_p+ol]:mt-1"
+          [&_li>ol]:mt-2
+          [&_p+ol]:mt-2"
         dangerouslySetInnerHTML={{ __html: post.content }} 
-        />
+    />
     </article>
   );
 }
