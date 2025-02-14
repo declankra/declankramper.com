@@ -7,7 +7,7 @@ preview: "shipping 3 new products by the end of february"
 
 I’m either late to shipmas or early to the shipuary trend. Yes, shipuary, a new thing I just made up[^1].
 
-The **objective** is simple: ship 3 products by the end of the month of January.
+The **objective** is simple: ship 3 products by the end of the month of February.
 
 The **purpose** is simple: to build and ship things fast → to get real feedback fast.
 
@@ -23,7 +23,7 @@ I loved tuning into [12 Days of OpenAI](https://openai.com/12-days/) (a play on 
 
 **Here are the rules**:
 
-1. three new products must be in a production environment by 11:59PM CST on January 31st, 2025
+1. three new products must be in a production environment by 11:59PM CST on February 28th, 2025
 2. each product must meet a single minimum requirement to be considered ‘done’
 
 **The single requirements are**:
@@ -71,7 +71,7 @@ I’ll learn a lot between now and the end of the month. In the days spent passi
 
 Every art form has tension before creation. Fuck it.
 
-See ya Feb 1 ✌️
+See ya Mar 1 ✌️
 
 
 ---
