@@ -9,6 +9,8 @@ These are some raw thoughts I had after running the Indianapolis Marathon on Nov
 
 I share here because I’m currently going through a bit of a slump and came back to these thoughts today as a way to remind myself of the joys in life; maybe it’ll remind someone else, too.
 
+---
+
 *Note: This post starts at the end, but the beginning is included after for reference…*
 
 - mile 24-26 & the finish: the below are just raw thoughts i wrote throughout the day saturday/sunday, in no particular chronological order:
