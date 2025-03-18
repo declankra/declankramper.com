@@ -23,6 +23,8 @@ interface HyperTextProps extends MotionProps {
   animateOnHover?: boolean;
   /** Custom character set for scramble effect. Defaults to uppercase alphabet */
   characterSet?: CharacterSet;
+  /** Callback function called when the animation completes */
+  onAnimationComplete?: () => void;
 }
 
 const DEFAULT_CHARACTER_SET = Object.freeze(
@@ -40,6 +42,7 @@ export function HyperText({
   startOnView = false,
   animateOnHover = true,
   characterSet = DEFAULT_CHARACTER_SET,
+  onAnimationComplete,
   ...props
 }: HyperTextProps) {
   const MotionComponent = motion.create(Component, {
@@ -50,6 +53,7 @@ export function HyperText({
     children.split(""),
   );
   const [isAnimating, setIsAnimating] = useState(false);
+  const [animationCompleted, setAnimationCompleted] = useState(false);
   const iterationCount = useRef(0);
   const elementRef = useRef<HTMLElement>(null);
 
@@ -92,7 +96,8 @@ export function HyperText({
   useEffect(() => {
     if (!isAnimating) return;
 
-    const intervalDuration = duration / (children.length * 10);
+    // Make the animation faster by reducing the interval between updates
+    const intervalDuration = duration / (children.length * 2); // Reduced from 10 to 3 for faster animation
     const maxIterations = children.length;
 
     const interval = setInterval(() => {
@@ -106,15 +111,21 @@ export function HyperText({
                 : characterSet[getRandomInt(characterSet.length)],
           ),
         );
-        iterationCount.current = iterationCount.current + 0.1;
+        iterationCount.current = iterationCount.current + 0.5; // Increased step size from 0.1 to 0.5 for faster completion
       } else {
         setIsAnimating(false);
+        if (!animationCompleted) {
+          setAnimationCompleted(true);
+          if (onAnimationComplete) {
+            onAnimationComplete();
+          }
+        }
         clearInterval(interval);
       }
     }, intervalDuration);
 
     return () => clearInterval(interval);
-  }, [children, duration, isAnimating, characterSet]);
+  }, [children, duration, isAnimating, characterSet, animationCompleted, onAnimationComplete]);
 
   return (
     <MotionComponent
@@ -127,7 +138,7 @@ export function HyperText({
         {displayText.map((letter, index) => (
           <motion.span
             key={index}
-            className={cn(letter === " " ? "w-3" : "")} // Removed font-mono class
+            className={cn(letter === " " ? "w-3" : "")}
           >
             {letter.toUpperCase()}
           </motion.span>

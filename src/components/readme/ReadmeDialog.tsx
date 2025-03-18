@@ -15,12 +15,22 @@ interface ReadmeDialogProps {
 export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) {
     const [contentVisible, setContentVisible] = useState(false);
     const [headerTypingComplete, setHeaderTypingComplete] = useState(false);
+    
+    // Animation sequence states
+    const [firstParagraphComplete, setFirstParagraphComplete] = useState(false);
+    const [whatIWantComplete, setWhatIWantComplete] = useState(false);
+    const [careerMotivationComplete, setCareerMotivationComplete] = useState(false);
+    const [howToGetThereComplete, setHowToGetThereComplete] = useState(false);
 
     // Reset states when dialog closes
     useEffect(() => {
         if (!open) {
             setContentVisible(false);
             setHeaderTypingComplete(false);
+            setFirstParagraphComplete(false);
+            setWhatIWantComplete(false);
+            setCareerMotivationComplete(false);
+            setHowToGetThereComplete(false);
         }
     }, [open]);
 
@@ -38,6 +48,15 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
             return () => clearTimeout(timer);
         }
     }, [contentVisible, headerTypingDuration]);
+
+    // Helper function to create an animation completion handler
+    const createCompletionHandler = (setStateFunction: (value: boolean) => void, delay = 200) => {
+        return () => {
+            setTimeout(() => {
+                setStateFunction(true);
+            }, delay);
+        };
+    };
 
     return (
         <AnimatePresence>
@@ -125,7 +144,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                             <TypingAnimation
                                                 text={headerText}
                                                 duration={30}
-                                                className="text-lg font-medium leading-relaxed" // Removed font styles that would override the component
+                                                className="text-lg font-medium leading-relaxed"
                                             />
                                         </div>
 
@@ -139,125 +158,142 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                 >
                                                     {/* First paragraph */}
                                                     <HyperText
-                                                        className="text-sm leading-relaxed" // Kept sizing but removed font style
+                                                        className="text-sm leading-relaxed"
                                                         startOnView={true}
                                                         animateOnHover={false}
+                                                        duration={300} // Faster animation
+                                                        onAnimationComplete={createCompletionHandler(setFirstParagraphComplete)}
                                                     >
                                                         I'm 25 years old. By some measures, I've been living on earth for 33% of my expected stay.
                                                     </HyperText>
 
-                                                    {/* What I want section */}
-                                                    <div className="mt-6 space-y-2">
+                                                    {/* What I want section - only show after first paragraph completes */}
+                                                    {firstParagraphComplete && (
+                                                        <div className="mt-6 space-y-2">
+                                                            <HyperText
+                                                                className="text-sm leading-relaxed"
+                                                                startOnView={true}
+                                                                animateOnHover={false}
+                                                                duration={300} // Faster animation
+                                                                onAnimationComplete={createCompletionHandler(setWhatIWantComplete)}
+                                                            >
+                                                                What do I want to do with my life? Well, I know I want to…
+                                                            </HyperText>
+
+                                                            {whatIWantComplete && (
+                                                                <motion.ol
+                                                                    initial={{ opacity: 0 }}
+                                                                    animate={{ opacity: 1 }}
+                                                                    className="list-decimal pl-6 space-y-1 text-sm font-sans"
+                                                                >
+                                                                    <li>Be my best self</li>
+                                                                    <li>Be the best family man</li>
+                                                                    <li>Build the greatest consumer products in the world</li>
+                                                                </motion.ol>
+                                                            )}
+                                                        </div>
+                                                    )}
+
+                                                    {/* Career motivation - only show after "what I want" section completes */}
+                                                    {whatIWantComplete && (
                                                         <HyperText
-                                                            className="text-sm leading-relaxed" // Kept sizing but removed font style
+                                                            className="text-sm leading-relaxed mt-4"
                                                             startOnView={true}
-                                                            delay={500}
                                                             animateOnHover={false}
+                                                            duration={150} // Much faster animation for longer text
+                                                            onAnimationComplete={createCompletionHandler(setCareerMotivationComplete)}
                                                         >
-                                                            What do I want to do with my life? Well, I know I want to…
+                                                            To expand on the third point, about my career, the motivation is to help people. Building great consumer products means solving problems for the user. I can volunteer my time (something I certainly could do more), but a great product can scale to millions of people and therefore benefit way more than my limited time can. "One of the ways that I believe people express their appreciation to the rest of humanity is to make something wonderful and put it out there."
                                                         </HyperText>
+                                                    )}
 
-                                                        <motion.ol
-                                                            initial={{ opacity: 0 }}
-                                                            animate={{ opacity: 1 }}
-                                                            transition={{ delay: 1 }}
-                                                            className="list-decimal pl-6 space-y-1 text-sm font-sans" // Added font-sans
-                                                        >
-                                                            <li>Be my best self</li>
-                                                            <li>Be the best family man</li>
-                                                            <li>Build the greatest consumer products in the world</li>
-                                                        </motion.ol>
-                                                    </div>
+                                                    {/* How will I get there section - only show after career motivation completes */}
+                                                    {careerMotivationComplete && (
+                                                        <div className="mt-6 space-y-2">
+                                                            <HyperText
+                                                                className="text-sm leading-relaxed"
+                                                                startOnView={true}
+                                                                animateOnHover={false}
+                                                                duration={300} // Faster animation
+                                                                onAnimationComplete={createCompletionHandler(setHowToGetThereComplete)}
+                                                            >
+                                                                How will I get there? Greatness can't be planned, but here's how it could possibly look…
+                                                            </HyperText>
 
-                                                    {/* Career motivation */}
-                                                    <HyperText
-                                                        className="text-sm leading-relaxed mt-4" // Kept sizing but removed font style
-                                                        startOnView={true}
-                                                        delay={1500}
-                                                        animateOnHover={false}
-                                                    >
-                                                        To expand on the third point, about my career, the motivation is to help people. Building great consumer products means solving problems for the user. I can volunteer my time (something I certainly could do more), but a great product can scale to millions of people and therefore benefit way more than my limited time can. "One of the ways that I believe people express their appreciation to the rest of humanity is to make something wonderful and put it out there."
-                                                    </HyperText>
-
-                                                    {/* How will I get there section */}
-                                                    <div className="mt-6 space-y-2">
-                                                        <HyperText
-                                                            className="text-sm leading-relaxed" // Kept sizing but removed font style
-                                                            startOnView={true}
-                                                            delay={2500}
-                                                            animateOnHover={false}
-                                                        >
-                                                            How will I get there? Greatness can't be planned, but here's how it could possibly look…
-                                                        </HyperText>
-
-                                                        <motion.ol
-                                                            initial={{ opacity: 0 }}
-                                                            animate={{ opacity: 1 }}
-                                                            transition={{ delay: 3 }}
-                                                            className="list-decimal pl-6 space-y-4 text-sm font-sans" // Added font-sans
-                                                        >
-                                                            {/* Current phase */}
-                                                            <li className="space-y-2">
-                                                                <span className="font-medium">Current phase = Exploration</span>
-                                                                <ol className="list-decimal pl-6 space-y-1">
-                                                                    <li>
-                                                                        Continue to follow my curiosity
+                                                            {howToGetThereComplete && (
+                                                                <motion.ol
+                                                                    initial={{ opacity: 0 }}
+                                                                    animate={{ opacity: 1 }}
+                                                                    className="list-decimal pl-6 space-y-4 text-sm font-sans"
+                                                                >
+                                                                    {/* Current phase */}
+                                                                    <li className="space-y-2">
+                                                                        <span className="font-medium">Current phase = Exploration</span>
                                                                         <ol className="list-decimal pl-6 space-y-1">
-                                                                            <li>Building things I find interesting and want to see in the world</li>
-                                                                            <li>Learn things that peak my interest</li>
+                                                                            <li>
+                                                                                Continue to follow my curiosity
+                                                                                <ol className="list-decimal pl-6 space-y-1">
+                                                                                    <li>Building things I find interesting and want to see in the world</li>
+                                                                                    <li>Learn things that peak my interest</li>
+                                                                                </ol>
+                                                                            </li>
+                                                                            <li>Continue to enjoy time with friends and family (especially new places and experiences)</li>
+                                                                            <li>Continue to deepen my relationship</li>
                                                                         </ol>
                                                                     </li>
-                                                                    <li>Continue to enjoy time with friends and family (especially new places and experiences)</li>
-                                                                    <li>Continue to deepen my relationship</li>
-                                                                </ol>
-                                                            </li>
 
-                                                            {/* Next phase */}
-                                                            <li className="space-y-2">
-                                                                <span className="font-medium">Next phase = Growth</span>
-                                                                <ol className="list-decimal pl-6 space-y-1">
-                                                                    <li>Still explore. But more narrow. I'll have a wife and kids. A family.</li>
-                                                                    <li>I'll have a job that doesn't require me to split my time between the work I find interesting and the work I get paid to do. I can go all-in on that. Learn what it takes to be great.</li>
-                                                                    <li>Finish an Ironman.</li>
-                                                                </ol>
-                                                            </li>
+                                                                    {/* Next phase */}
+                                                                    <li className="space-y-2">
+                                                                        <span className="font-medium">Next phase = Growth</span>
+                                                                        <ol className="list-decimal pl-6 space-y-1">
+                                                                            <li>Still explore. But more narrow. I'll have a wife and kids. A family.</li>
+                                                                            <li>I'll have a job that doesn't require me to split my time between the work I find interesting and the work I get paid to do. I can go all-in on that. Learn what it takes to be great.</li>
+                                                                            <li>Finish an Ironman.</li>
+                                                                        </ol>
+                                                                    </li>
 
-                                                            {/* Last phase */}
-                                                            <li className="space-y-2">
-                                                                <span className="font-medium">Last phase = Impact</span>
-                                                                <ol className="list-decimal pl-6 space-y-1">
-                                                                    <li>Apply all that I've learned to make the biggest impact that I can.</li>
-                                                                    <li>This entity will be my own thing. I don't see it going any other way.</li>
-                                                                    <li>See earth from space.</li>
-                                                                </ol>
-                                                            </li>
-                                                        </motion.ol>
-                                                    </div>
+                                                                    {/* Last phase */}
+                                                                    <li className="space-y-2">
+                                                                        <span className="font-medium">Last phase = Impact</span>
+                                                                        <ol className="list-decimal pl-6 space-y-1">
+                                                                            <li>Apply all that I've learned to make the biggest impact that I can.</li>
+                                                                            <li>This entity will be my own thing. I don't see it going any other way.</li>
+                                                                            <li>See earth from space.</li>
+                                                                        </ol>
+                                                                    </li>
+                                                                </motion.ol>
+                                                            )}
+                                                        </div>
+                                                    )}
 
-                                                    {/* Final note */}
-                                                    <HyperText
-                                                        className="text-sm leading-relaxed mt-6" // Kept sizing but removed font style
-                                                        startOnView={true}
-                                                        delay={3500}
-                                                        animateOnHover={false}
-                                                    >
-                                                        I wrote this sleep deprived after 3 days of little sleep. Why then?
-                                                    </HyperText>
+                                                    {/* Final note - only show after "how to get there" section completes */}
+                                                    {howToGetThereComplete && (
+                                                        <>
+                                                            <HyperText
+                                                                className="text-sm leading-relaxed mt-6"
+                                                                startOnView={true}
+                                                                animateOnHover={false}
+                                                                duration={300} // Faster animation
+                                                            >
+                                                                I wrote this sleep deprived after 3 days of little sleep. Why then?
+                                                            </HyperText>
 
-                                                    {/* Contact link */}
-                                                    <motion.div
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        transition={{ delay: 4 }}
-                                                        className="mt-6 font-sans" // Added font-sans
-                                                    >
-                                                        <a
-                                                            href="#"
-                                                            className="text-primary underline-offset-4 hover:underline text-sm inline-block"
-                                                        >
-                                                            what brings you here?
-                                                        </a>
-                                                    </motion.div>
+                                                            {/* Contact link */}
+                                                            <motion.div
+                                                                initial={{ opacity: 0 }}
+                                                                animate={{ opacity: 1 }}
+                                                                transition={{ delay: 0.5 }}
+                                                                className="mt-6 font-sans"
+                                                            >
+                                                                <a
+                                                                    href="#"
+                                                                    className="text-primary underline-offset-4 hover:underline text-sm inline-block"
+                                                                >
+                                                                    what brings you here?
+                                                                </a>
+                                                            </motion.div>
+                                                        </>
+                                                    )}
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
