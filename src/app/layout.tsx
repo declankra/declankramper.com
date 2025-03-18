@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from '@/components/layout/Header'
@@ -9,10 +9,47 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: "Declan Kramper | Personal Portfolio",
-  description: "The online portfolio of Declan Kramper",
+  description: "A place on the internet for some of my thoughts and projects",
+
+    // Open Graph metadata for rich sharing previews
+    openGraph: {
+      title: "Declan Kramper | Personal Portfolio",
+      description: "A place on the internet for some of my thoughts and projects",
+      url: process.env.NEXT_PUBLIC_BASE_URL,
+      siteName: "Declan Kramper",
+      images: [
+        {
+          url: "/og-image.png", // This should be 1200x630px for optimal sharing
+          width: 1200,
+          height: 630,
+          alt: "Declan Kramper Preview",
+        }
+      ],
+      locale: "en_US",
+      type: "website",
+    },
+
+  // Favicon and manifest
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png" },
+      { url: "/apple-touch-icon-precomposed.png" }
+    ],
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
