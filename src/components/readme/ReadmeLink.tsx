@@ -13,10 +13,10 @@ export function ReadmeLink() {
   const [linkPosition, setLinkPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Delay appearance of the link by 1s
+    // Delay appearance of the link by 0.5s
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
