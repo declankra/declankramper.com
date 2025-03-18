@@ -49,14 +49,32 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
         }
     }, [contentVisible, headerTypingDuration]);
 
-    // Helper function to create an animation completion handler
+    // Modified helper function to return the actual handler function
     const createCompletionHandler = (setStateFunction: (value: boolean) => void, delay = 200) => {
         return () => {
             setTimeout(() => {
                 setStateFunction(true);
+                console.log('State updated!'); // Confirm the state was set
             }, delay);
         };
     };
+
+    // Force howToGetThereComplete to be set after career motivation is done
+    useEffect(() => {
+        if (careerMotivationComplete) {
+            const timer = setTimeout(() => {
+                setHowToGetThereComplete(true);
+                console.log('Forced howToGetThereComplete to true');
+            }, 2000); // Allow 2 seconds for the animation
+            
+            return () => clearTimeout(timer);
+        }
+    }, [careerMotivationComplete]);
+
+    // Debug effect for tracking state changes
+    useEffect(() => {
+        console.log('howToGetThereComplete:', howToGetThereComplete);
+    }, [howToGetThereComplete]);
 
     return (
         <AnimatePresence>
@@ -196,15 +214,15 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
 
                                                     {/* Career motivation - only show after "what I want" section completes */}
                                                     {whatIWantComplete && (
-                                                        <HyperText
-                                                            className="text-sm leading-relaxed mt-4"
-                                                            startOnView={true}
-                                                            animateOnHover={false}
-                                                            duration={150} // Much faster animation for longer text
+                                                        <motion.p
+                                                            initial={{ opacity: 0 }}
+                                                            animate={{ opacity: 1 }}
+                                                            transition={{ duration: 0.3 }}
                                                             onAnimationComplete={createCompletionHandler(setCareerMotivationComplete)}
+                                                            className="text-sm leading-relaxed mt-4"
                                                         >
                                                             To expand on the third point, about my career, the motivation is to help people. Building great consumer products means solving problems for the user. I can volunteer my time (something I certainly could do more), but a great product can scale to millions of people and therefore benefit way more than my limited time can. "One of the ways that I believe people express their appreciation to the rest of humanity is to make something wonderful and put it out there."
-                                                        </HyperText>
+                                                        </motion.p>
                                                     )}
 
                                                     {/* How will I get there section - only show after career motivation completes */}
@@ -214,8 +232,8 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 className="text-sm leading-relaxed"
                                                                 startOnView={true}
                                                                 animateOnHover={false}
-                                                                duration={300} // Faster animation
-                                                                onAnimationComplete={createCompletionHandler(setHowToGetThereComplete)}
+                                                                duration={300}
+                                                                onAnimationComplete={createCompletionHandler(setHowToGetThereComplete, 0)}
                                                             >
                                                                 How will I get there? Greatness can't be planned, but here's how it could possibly look…
                                                             </HyperText>
@@ -274,6 +292,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 startOnView={true}
                                                                 animateOnHover={false}
                                                                 duration={300} // Faster animation
+                                                                onAnimationComplete={() => console.log('Final section animation complete')}
                                                             >
                                                                 I wrote this sleep deprived after 3 days of little sleep. Why then?
                                                             </HyperText>
@@ -287,7 +306,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                             >
                                                                 <a
                                                                     href="#"
-                                                                    className="text-primary underline-offset-4 hover:underline text-sm inline-block"
+                                                                    className="text-primary underline-offset-4 hover:underline text-sm inline-block mt-4"
                                                                 >
                                                                     what brings you here?
                                                                 </a>

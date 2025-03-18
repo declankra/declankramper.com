@@ -82,7 +82,7 @@ export function HyperText({
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "-30% 0px -30% 0px" },
+      { threshold: 0.1, rootMargin: "-10% 0px -10% 0px" },
     );
 
     if (elementRef.current) {
