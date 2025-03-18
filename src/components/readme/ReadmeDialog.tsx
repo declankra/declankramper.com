@@ -1,10 +1,11 @@
 // src/components/readme/ReadmeDialog.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TypingAnimation } from "@/components/ui/typing-animation";
 import { HyperText } from "@/components/magicui/hyper-text";
+import { ContactPopover } from "./ContactPopover";
 
 interface ReadmeDialogProps {
     open: boolean;
@@ -15,6 +16,9 @@ interface ReadmeDialogProps {
 export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) {
     const [contentVisible, setContentVisible] = useState(false);
     const [headerTypingComplete, setHeaderTypingComplete] = useState(false);
+    const [contactPopoverOpen, setContactPopoverOpen] = useState(false);
+    const contactLinkRef = useRef<HTMLAnchorElement>(null);
+    const [contactLinkPosition, setContactLinkPosition] = useState({ x: 0, y: 0 });
     
     // Animation sequence states
     const [firstParagraphComplete, setFirstParagraphComplete] = useState(false);
@@ -31,6 +35,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
             setWhatIWantComplete(false);
             setCareerMotivationComplete(false);
             setHowToGetThereComplete(false);
+            setContactPopoverOpen(false);
         }
     }, [open]);
 
@@ -75,6 +80,21 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
     useEffect(() => {
         console.log('howToGetThereComplete:', howToGetThereComplete);
     }, [howToGetThereComplete]);
+
+    // Handle opening the contact popover
+    const handleOpenContactPopover = (e: React.MouseEvent) => {
+        e.preventDefault();
+        
+        if (contactLinkRef.current) {
+            const rect = contactLinkRef.current.getBoundingClientRect();
+            setContactLinkPosition({ 
+                x: rect.right,
+                y: rect.top - 300, // Significant offset to position well above the text
+            });
+        }
+        
+        setContactPopoverOpen(true);
+    };
 
     return (
         <AnimatePresence>
@@ -195,7 +215,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 duration={300} // Faster animation
                                                                 onAnimationComplete={createCompletionHandler(setWhatIWantComplete)}
                                                             >
-                                                                What do I want to do with my life? Well, I know I want to…
+                                                                What do I want to do with my life? I want to…
                                                             </HyperText>
 
                                                             {whatIWantComplete && (
@@ -305,8 +325,10 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 className="mt-6 font-sans"
                                                             >
                                                                 <a
+                                                                    ref={contactLinkRef}
                                                                     href="#"
                                                                     className="text-primary underline-offset-4 hover:underline text-sm inline-block mt-4"
+                                                                    onClick={handleOpenContactPopover}
                                                                 >
                                                                     what brings you here?
                                                                 </a>
@@ -321,6 +343,13 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                             </AnimatePresence>
                         </div>
                     </motion.div>
+                    
+                    {/* Contact Popover */}
+                    <ContactPopover 
+                        isOpen={contactPopoverOpen}
+                        onClose={() => setContactPopoverOpen(false)}
+                        origin={contactLinkPosition}
+                    />
                 </>
             )}
         </AnimatePresence>
