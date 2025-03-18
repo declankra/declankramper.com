@@ -19,7 +19,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
     const [contactPopoverOpen, setContactPopoverOpen] = useState(false);
     const contactLinkRef = useRef<HTMLAnchorElement>(null);
     const [contactLinkPosition, setContactLinkPosition] = useState({ x: 0, y: 0 });
-    
+
     // Animation sequence states
     const [firstParagraphComplete, setFirstParagraphComplete] = useState(false);
     const [whatIWantComplete, setWhatIWantComplete] = useState(false);
@@ -71,7 +71,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                 setHowToGetThereComplete(true);
                 console.log('Forced howToGetThereComplete to true');
             }, 2000); // Allow 2 seconds for the animation
-            
+
             return () => clearTimeout(timer);
         }
     }, [careerMotivationComplete]);
@@ -84,15 +84,15 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
     // Handle opening the contact popover
     const handleOpenContactPopover = (e: React.MouseEvent) => {
         e.preventDefault();
-        
+
         if (contactLinkRef.current) {
             const rect = contactLinkRef.current.getBoundingClientRect();
-            setContactLinkPosition({ 
+            setContactLinkPosition({
                 x: rect.right,
                 y: rect.top - 300, // Significant offset to position well above the text
             });
         }
-        
+
         setContactPopoverOpen(true);
     };
 
@@ -215,7 +215,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 duration={300} // Faster animation
                                                                 onAnimationComplete={createCompletionHandler(setWhatIWantComplete)}
                                                             >
-                                                                What do I want to do with my life? I want to…
+                                                                What do I want to do with my life?
                                                             </HyperText>
 
                                                             {whatIWantComplete && (
@@ -224,6 +224,10 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                     animate={{ opacity: 1 }}
                                                                     className="list-decimal pl-6 space-y-1 text-sm font-sans"
                                                                 >
+                                                                    {/* Intro text */}
+                                                                    <p className="text-sm -ml-6">
+                                                                        I want to…
+                                                                    </p>
                                                                     <li>Be my best self</li>
                                                                     <li>Be the best family man</li>
                                                                     <li>Build the greatest consumer products in the world</li>
@@ -255,7 +259,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 duration={300}
                                                                 onAnimationComplete={createCompletionHandler(setHowToGetThereComplete, 0)}
                                                             >
-                                                                How will I get there? Greatness can't be planned, but here's how it could possibly look…
+                                                                How will I get there?
                                                             </HyperText>
 
                                                             {howToGetThereComplete && (
@@ -264,6 +268,11 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                     animate={{ opacity: 1 }}
                                                                     className="list-decimal pl-6 space-y-4 text-sm font-sans"
                                                                 >
+                                                                    {/* Intro text */}
+                                                                    <p className="text-sm -ml-6 -mb-2">
+                                                                        Greatness can't be planned, but here's how it could possibly look…
+                                                                    </p>
+
                                                                     {/* Current phase */}
                                                                     <li className="space-y-2">
                                                                         <span className="font-medium">Current phase = Exploration</span>
@@ -343,9 +352,9 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                             </AnimatePresence>
                         </div>
                     </motion.div>
-                    
+
                     {/* Contact Popover */}
-                    <ContactPopover 
+                    <ContactPopover
                         isOpen={contactPopoverOpen}
                         onClose={() => setContactPopoverOpen(false)}
                         origin={contactLinkPosition}
