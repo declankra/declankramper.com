@@ -87,9 +87,14 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
 
         if (contactLinkRef.current) {
             const rect = contactLinkRef.current.getBoundingClientRect();
+            
+            // Calculate a position that works better for both mobile and desktop
+            // For mobile, we want to position it higher up from the link to ensure visibility
+            const isMobile = window.innerWidth < 768;
+            
             setContactLinkPosition({
-                x: rect.right,
-                y: rect.top - 300, // Significant offset to position well above the text
+                x: isMobile ? window.innerWidth / 4 : rect.right,
+                y: rect.top - 300,
             });
         }
 
