@@ -93,7 +93,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
             const isMobile = window.innerWidth < 768;
             
             setContactLinkPosition({
-                x: isMobile ? window.innerWidth / 4 : rect.right,
+                x: isMobile ? window.innerWidth / 9 : rect.right,
                 y: rect.top - 300,
             });
         }

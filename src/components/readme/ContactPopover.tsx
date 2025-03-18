@@ -138,7 +138,7 @@ export function ContactPopover({ isOpen, onClose, origin }: ContactPopoverProps)
                       </label>
                       <input
                         id="name"
-                        placeholder="Leave a name or an email so I can reach you back!"
+                        placeholder="Name or email so I can reach you back!"
                         className={`w-full p-2 text-xs border rounded-md ${
                           errors.name ? "border-destructive" : "border-input"
                         } bg-background focus:outline-none focus:ring-1 focus:ring-primary`}
@@ -155,6 +155,7 @@ export function ContactPopover({ isOpen, onClose, origin }: ContactPopoverProps)
                       </label>
                       <textarea
                         id="message"
+                        placeholder="Your message"
                         rows={3}
                         className={`w-full p-2 text-xs border rounded-md ${
                           errors.message ? "border-destructive" : "border-input"
