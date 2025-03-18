@@ -16,7 +16,7 @@ export function ReadmeLink() {
     // Delay appearance of the link by 0.5s
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
