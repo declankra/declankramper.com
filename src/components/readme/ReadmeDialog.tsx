@@ -125,7 +125,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                             <TypingAnimation
                                                 text={headerText}
                                                 duration={30}
-                                                className="text-lg font-medium leading-relaxed"
+                                                className="text-lg font-medium leading-relaxed" // Removed font styles that would override the component
                                             />
                                         </div>
 
@@ -139,7 +139,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                 >
                                                     {/* First paragraph */}
                                                     <HyperText
-                                                        className="text-sm leading-relaxed"
+                                                        className="text-sm leading-relaxed" // Kept sizing but removed font style
                                                         startOnView={true}
                                                         animateOnHover={false}
                                                     >
@@ -149,7 +149,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                     {/* What I want section */}
                                                     <div className="mt-6 space-y-2">
                                                         <HyperText
-                                                            className="text-sm leading-relaxed"
+                                                            className="text-sm leading-relaxed" // Kept sizing but removed font style
                                                             startOnView={true}
                                                             delay={500}
                                                             animateOnHover={false}
@@ -161,7 +161,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                             initial={{ opacity: 0 }}
                                                             animate={{ opacity: 1 }}
                                                             transition={{ delay: 1 }}
-                                                            className="list-decimal pl-6 space-y-1 text-sm"
+                                                            className="list-decimal pl-6 space-y-1 text-sm font-sans" // Added font-sans
                                                         >
                                                             <li>Be my best self</li>
                                                             <li>Be the best family man</li>
@@ -171,7 +171,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
 
                                                     {/* Career motivation */}
                                                     <HyperText
-                                                        className="text-sm leading-relaxed mt-4"
+                                                        className="text-sm leading-relaxed mt-4" // Kept sizing but removed font style
                                                         startOnView={true}
                                                         delay={1500}
                                                         animateOnHover={false}
@@ -182,7 +182,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                     {/* How will I get there section */}
                                                     <div className="mt-6 space-y-2">
                                                         <HyperText
-                                                            className="text-sm leading-relaxed"
+                                                            className="text-sm leading-relaxed" // Kept sizing but removed font style
                                                             startOnView={true}
                                                             delay={2500}
                                                             animateOnHover={false}
@@ -194,7 +194,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                             initial={{ opacity: 0 }}
                                                             animate={{ opacity: 1 }}
                                                             transition={{ delay: 3 }}
-                                                            className="list-decimal pl-6 space-y-4 text-sm"
+                                                            className="list-decimal pl-6 space-y-4 text-sm font-sans" // Added font-sans
                                                         >
                                                             {/* Current phase */}
                                                             <li className="space-y-2">
@@ -236,7 +236,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
 
                                                     {/* Final note */}
                                                     <HyperText
-                                                        className="text-sm leading-relaxed mt-6"
+                                                        className="text-sm leading-relaxed mt-6" // Kept sizing but removed font style
                                                         startOnView={true}
                                                         delay={3500}
                                                         animateOnHover={false}
@@ -249,7 +249,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
                                                         transition={{ delay: 4 }}
-                                                        className="mt-6"
+                                                        className="mt-6 font-sans" // Added font-sans
                                                     >
                                                         <a
                                                             href="#"
