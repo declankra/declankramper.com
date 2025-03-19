@@ -40,7 +40,7 @@ export function ReadmeLink() {
       >
         <button
           onClick={handleClick}
-          className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="transition-opacity hover:opacity-70 cursor-pointer text-xs flex items-center gap-1.5"
         >
           <FileCode className="w-4 h-4" />
           README.md
