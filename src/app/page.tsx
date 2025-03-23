@@ -32,9 +32,12 @@ export default function Home() {
         {/* Run - with hover card */}
         <HoverCard>
           <HoverCardTrigger asChild>
-            <p className="transition-opacity hover:opacity-70 cursor-pointer">
+            <Link
+              href="/runs"
+              className="transition-opacity hover:opacity-70 cursor-pointer"
+            >
               run
-            </p>
+            </Link>
           </HoverCardTrigger>
           <HoverCardContent className="w-64 text-center">
             <p className="text-sm text-muted-foreground">
