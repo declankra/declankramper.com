@@ -10,7 +10,7 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/chitrack-preview.webp',
         preview: 'The best CTA train tracker in the city of chicago - it just makes sense',
         description: "I use the CTA train multiple times a week to go into the office. So do many others. Ask any of these people about the current \"best\" option for tracking train arrival times to get to/from work and they'll tell you that it sucks.\n\n Why not build something that doesn't suck? Although the idea is simple, there's a lot to consider. That's the fun of it.\n\n Launching soon.",
-        link: 'https://www.chitrack.com'
+        link: 'https://www.chitrack.com/?utm_source=portfolio'
     },
     {
         type: 'work',
@@ -21,7 +21,7 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/AthletePersonalityTest.webp',
         preview: 'Discover your unique athlete personality based on your Strava activity titles',
         description: "A fun personality test app that reads your Strava activity titles and matches you with one of six distinct athlete personalities, from the 'Data Enthusiast' to the 'Storyteller', unlocking a new way to analyze your acivities and engage with the Strava community. Complete with custom avatar generation and viral sharing features. \n\nBorn from my obserations (as a Strava DAU) that people knowingly (or unknowingly) pour their uniqueness into their Strava activity titiles, Strava encourages users to write custom activity titles because it boosts engagement, and my own use of commemorating my running thoughts into my Strava posts. \n\nIt's my most complex build yet. As of this writing, it is under review by Strava's developer program for extended use approval. You can [view the demo here](https://www.loom.com/share/203fc26c1d5e407bb5a43ad64fbefae0?sid=7d7b2db6-4d7c-4adc-bc83-9ff44aca0a1c).",
-        link: 'https://www.athletepersonalitytest.com'
+        link: 'https://www.athletepersonalitytest.com/?utm_source=portfolio'
 
     },
     {
@@ -69,7 +69,7 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/MeetOrNot.webp',
         preview: 'Generative AI tool to ensure your next meeting is effective',
         description: "I was sick of wasting time in meetings that weren't setup for success. So, I built a tool to help:\n\n1. Determine if your meeting is necessary\n2. Ensure it is effective\n\nIt was my first full-stack web app, utilizing:\n- Google Cloud's Firestore database\n- OpenAI API to generate meeting agendas\n- Custom templates and instructions for the LLM\n\n**Impact to date:**\n- 191+ users\n- **60+ meeting agendas generated**\n- Saving as many hours in preparation time",
-        link: 'https://meetornot.io'
+        link: 'https://meetornot.io/?utm_source=portfolio'
     },
     {
         type: 'work',
@@ -92,7 +92,7 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/ValidateIdea.webp',
         preview: 'Starter-kit landing page to validate your SaaS idea while building it',
         description: "Like many of you, I struggle with decision paralysis from having too many ideas and *no clear way to know which idea I should go all-in on*. I wanted a faster way to figure out if people cared about my ideas *before* investing months into building.\n\nSo I built ValidateIdea to solve this problem - a full-stack starter kit landing page that focuses on understanding user needs before needing to get deep into lines of code.\n\nLaunched on ProductHunt to a measly 7 upvotes, it's a reminder that if you're not using your products, no one else will either. And whatever you're going to say, use less words.\n\nDespite only **3 people signing up** and **4 github repo clones**, I learned a tremendous amount - both technical (how to build web apps) and ever-growing product skills (positioning and marketing).",
-        link: 'https://www.validateidea.now'
+        link: 'https://www.validateidea.now/?utm_source=portfolio'
     },
 
     {
