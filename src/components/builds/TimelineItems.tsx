@@ -3,6 +3,16 @@ import { TimelineItem } from './BuildsTimeline';
 export const timelineItems: TimelineItem[] = [
     {
         type: 'work',
+        id: 'aspire-hackathon',
+        title: 'Aspire Hackathon - Global Finalists',
+        date: '2025-03',
+        year: 2025,
+        media: '/images/buildsTimeline/AspireHackathon.webp',
+        preview: 'Selected as one of 3 global finalists out of ~100 teams',
+        description: 'Every year, Publicis Sapient provides the opportunity for early-career associates to showcase their innovative skills over the course of a weekend by building a solution to one of three possible problem statements.\n\n Our team decided to solve the employee engagement issue. But instead of focusing on the obvious definition of engagement inferred by the problem statement—where increased social engagement meant “fixing” employee engagement and relying on traditional platforms and tools to facilitate that engagement—we used a user-centric and first-principled approach to arrive at a unique perspective: that solving employee engagement at PS meant addressing the staffing problem. We looked at employees as human beings that require foundational support and satisfaction before they are ready to engage socially. After analyzing user personas across the company, we identified a common pain point around staffing. We believe that the inefficiencies and disconnect in staffing—project allocation, candidate-to-hiring manager connection, role matching, and overall visibility into projects and talent/candidates—are at the heart of a poor employee sense of belonging and engagement.\n\n The solution we built focused on two key personas: the employee candidate and the hiring manager. Our goal was to alleviate this disconnect by providing an easy and intuitive experience to find and match opportunities with talent, utilizing generative AI.\n\n The winners are announced this coming week. If chosen, we hope to continue this conversation with company leaders at Necker Island.',
+    },
+    {
+        type: 'work',
         id: 'chitrack',
         title: 'ChiTrack | Chicago Transit Tracker',
         date: '2025-03',
