@@ -28,7 +28,7 @@ As a user, I want to view a scoreboard of top players.
    - User controls their cursor normally
    - Three computer opponents (red, blue, green) move randomly around the screen
    - All cursors leave trails behind them
-   - Computer cursors increase speed every 5 seconds
+   - Computer cursors increase speed by 10% every 3.14 seconds
    - Game continues until user collides with any trail
    - All existing homepage functionality remains accessible during gameplay
 
