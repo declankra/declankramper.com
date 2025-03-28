@@ -4,11 +4,16 @@
 import Link from 'next/link';
 import { ReadmeLink } from '@/components/readme/ReadmeLink';
 import CursorTrail from '@/components/game/CursorTrail';
+import FusionFrenzyGame from '@/components/game/FusionFrenzyGame';
 
 export default function Home() {
   return (
     <>
+      {/* Cursor trail effect */}
       <CursorTrail />
+
+      {/* Fusion Frenzy Game */}
+      <FusionFrenzyGame />
 
       {/* README.md link appears in top left */}
       <ReadmeLink />
