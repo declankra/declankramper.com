@@ -3,10 +3,13 @@
 
 import Link from 'next/link';
 import { ReadmeLink } from '@/components/readme/ReadmeLink';
+import CursorTrail from '@/components/CursorTrail';
 
 export default function Home() {
   return (
     <>
+      <CursorTrail />
+
       {/* README.md link appears in top left */}
       <ReadmeLink />
 
