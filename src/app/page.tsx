@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { ReadmeLink } from '@/components/readme/ReadmeLink';
-import CursorTrail from '@/components/CursorTrail';
+import CursorTrail from '@/components/game/CursorTrail';
 
 export default function Home() {
   return (
