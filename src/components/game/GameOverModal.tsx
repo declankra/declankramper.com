@@ -32,6 +32,8 @@ export default function GameOverModal() {
     
     try {
       await saveScore(playerName);
+      // Add a small delay to ensure the scores are fetched
+      await new Promise(resolve => setTimeout(resolve, 300));
       setSaved(true);
     } catch (error) {
       console.error('Error saving score:', error);

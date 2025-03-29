@@ -1,16 +1,10 @@
 // src/components/game/Leaderboard.tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useGame } from '@/components/game/GameContext';
 
 export default function Leaderboard() {
-  const { topScores, fetchTopScores } = useGame();
-  
-  // Fetch scores when the component mounts (e.g., when shown in GameOverModal)
-  useEffect(() => {
-    fetchTopScores();
-  }, [fetchTopScores]);
+  const { topScores } = useGame();
   
   // Format date to readable format
   const formatDate = (dateString: string) => {
