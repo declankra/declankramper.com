@@ -1,7 +1,7 @@
 // src/components/game/GameContext.tsx
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 
 // Types
@@ -65,6 +65,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const lastTimeRef = useRef<number>(0);
   const speedIncreaseIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const playerTrailShrinkIntervalRef = useRef<NodeJS.Timeout | null>(null); // Ref for player trail shrink interval
+  const supabaseSubscriptionRef = useRef<any>(null); // For real-time subscription
 
   // Initialize player cursor
   useEffect(() => {
@@ -327,7 +328,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         console.error('Error saving score:', error);
       } else {
-        // Refresh scores after saving
+        // Explicitly fetch scores after saving to ensure the UI updates immediately
+        // This handles cases where the real-time subscription might be delayed
         await fetchTopScores();
       }
     } catch (error) {
@@ -335,8 +337,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Fetch top scores from Supabase
-  const fetchTopScores = async () => {
+  // Fetch top scores from Supabase - used for initial load and as a fallback
+  const fetchTopScores = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('dk_fusion_frenzy_scores')
@@ -352,7 +354,52 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error) {
       console.error('Error fetching scores:', error);
     }
-  };
+  }, []);
+
+  // Set up real-time subscription for scores
+  useEffect(() => {
+    // Fetch initial scores
+    fetchTopScores();
+    
+    // Set up real-time subscription to the scores table
+    const setupSubscription = async () => {
+      // Clean up any existing subscription
+      if (supabaseSubscriptionRef.current) {
+        supabaseSubscriptionRef.current.unsubscribe();
+      }
+      
+      // Create new subscription
+      supabaseSubscriptionRef.current = supabase
+        .channel('dk_fusion_frenzy_scores_channel')
+        .on('postgres_changes', 
+          { 
+            event: '*', 
+            schema: 'public', 
+            table: 'dk_fusion_frenzy_scores' 
+          }, 
+          (payload) => {
+            // When any change happens to the scores table, fetch the latest scores
+            console.log('Received real-time update:', payload.eventType, payload);
+            fetchTopScores();
+          }
+        )
+        .subscribe((status) => {
+          console.log('Supabase subscription status:', status);
+        });
+      
+      console.log('Supabase real-time subscription initialized');
+    };
+    
+    setupSubscription();
+    
+    // Cleanup subscription on unmount
+    return () => {
+      if (supabaseSubscriptionRef.current) {
+        console.log('Cleaning up Supabase subscription');
+        supabaseSubscriptionRef.current.unsubscribe();
+      }
+    };
+  }, [fetchTopScores]);
 
   // Effect to start/stop the game loop based on gameState
   useEffect(() => {
@@ -413,11 +460,6 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     };
   }, [gameState]); // Depend only on gameState
-
-  // Fetch scores on initial load
-  useEffect(() => {
-    fetchTopScores();
-  }, []);
 
   return (
     <GameContext.Provider

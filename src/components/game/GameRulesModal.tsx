@@ -7,14 +7,9 @@ import { useState, useEffect } from 'react';
 import Leaderboard from './Leaderboard';
 
 export default function GameRulesModal() {
-  const { gameState, startGame, topScores, fetchTopScores } = useGame();
+  const { gameState, startGame, topScores } = useGame();
   const isOpen = gameState === 'instructions';
   const [showLeaderboard, setShowLeaderboard] = useState(false);
-  
-  // Fetch top scores on component mount
-  useEffect(() => {
-    fetchTopScores();
-  }, [fetchTopScores]);
   
   // Format time to minutes:seconds.milliseconds
   const formatTime = (timeInSeconds: number) => {
