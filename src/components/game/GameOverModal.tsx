@@ -9,7 +9,14 @@ import ShareButton from '@/components/game/ShareButton';
 import { X } from 'lucide-react'; // Import X icon from lucide-react
 
 export default function GameOverModal() {
-  const { gameState, survivalTime, resetGame, saveScore, setGameState } = useGame();
+  const { 
+    gameState, 
+    survivalTime, 
+    resetGame, 
+    saveScore, 
+    setGameState, 
+    gameOverReason // Destructure the new reason
+  } = useGame();
   const [playerName, setPlayerName] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -23,6 +30,20 @@ export default function GameOverModal() {
     const milliseconds = Math.floor((timeInSeconds % 1) * 100);
     
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+  };
+  
+  // Helper to get the reason text
+  const getReasonText = () => {
+    switch (gameOverReason) {
+      case 'collision':
+        return 'You collided with a trail.';
+      case 'trailShrunk':
+        return 'Your trail disappeared! Keep moving!';
+      case 'exited':
+        return 'Game exited.'; // Or handle this case differently if needed
+      default:
+        return null;
+    }
   };
   
   const handleSaveScore = async () => {
@@ -92,6 +113,12 @@ export default function GameOverModal() {
                 <div className="text-center mb-4 py-4">
                   <p className="text-sm text-muted-foreground">Your survival time:</p>
                   <p className="text-3xl font-mono my-2">{formatTime(survivalTime)}</p>
+                  {/* ADDED: Display game over reason */} 
+                  {getReasonText() && (
+                    <p className="text-sm text-rose-600 mt-1 italic">
+                      {getReasonText()}
+                    </p>
+                  )}
                 </div>
                 
                 {!saved ? (
