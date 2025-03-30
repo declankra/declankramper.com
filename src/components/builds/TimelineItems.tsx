@@ -79,7 +79,7 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/MeetOrNot.webp',
         preview: 'Generative AI tool to ensure your next meeting is effective',
         description: "I was sick of wasting time in meetings that weren't setup for success. So, I built a tool to help:\n\n1. Determine if your meeting is necessary\n2. Ensure it is effective\n\nIt was my first full-stack web app, utilizing:\n- Google Cloud's Firestore database\n- OpenAI API to generate meeting agendas\n- Custom templates and instructions for the LLM\n\n**Impact to date:**\n- 191+ users\n- **60+ meeting agendas generated**\n- Saving as many hours in preparation time",
-        link: 'https://meetornot.io/?utm_source=portfolio'
+        link: 'https://meet-or-not.web.app/?utm_source=portfolio'
     },
     {
         type: 'work',
