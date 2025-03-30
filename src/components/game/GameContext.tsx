@@ -27,7 +27,7 @@ interface GameContextType {
   gameState: GameState;
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
   startGame: () => void;
-  endGame: () => void;
+  endGame: (reason?: 'collision' | 'trailShrunk' | 'exited') => void;
   playerCursor: Cursor | null;
   computerCursors: Cursor[];
   updatePlayerPosition: (x: number, y: number) => void;
@@ -36,6 +36,7 @@ interface GameContextType {
   saveScore: (playerName: string) => Promise<void>;
   topScores: Score[];
   fetchTopScores: () => Promise<void>;
+  gameOverReason: 'collision' | 'trailShrunk' | 'exited' | null;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -60,12 +61,15 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [computerCursors, setComputerCursors] = useState<Cursor[]>([]);
   const [survivalTime, setSurvivalTime] = useState<number>(0);
   const [topScores, setTopScores] = useState<Score[]>([]);
+  const [isGracePeriodActive, setIsGracePeriodActive] = useState<boolean>(false);
+  const [gameOverReason, setGameOverReason] = useState<'collision' | 'trailShrunk' | 'exited' | null>(null);
   
   const gameLoopRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
   const speedIncreaseIntervalRef = useRef<NodeJS.Timeout | null>(null);
-  const playerTrailShrinkIntervalRef = useRef<NodeJS.Timeout | null>(null); // Ref for player trail shrink interval
-  const supabaseSubscriptionRef = useRef<any>(null); // For real-time subscription
+  const playerTrailShrinkIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const gracePeriodTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const supabaseSubscriptionRef = useRef<any>(null); 
 
   // Initialize player cursor
   useEffect(() => {
@@ -75,10 +79,15 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         color: 'rgba(0, 0, 0, 0.8)',
         x: 0,
         y: 0,
-        trail: [],
+        trail: [], 
         speed: 0,
         direction: { x: 0, y: 0 }
       });
+      setIsGracePeriodActive(false);
+      if (gracePeriodTimerRef.current) {
+        clearTimeout(gracePeriodTimerRef.current);
+        gracePeriodTimerRef.current = null;
+      }
     }
   }, [gameState]);
 
@@ -130,14 +139,18 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setPlayerCursor(prev => {
         if (!prev) return null;
         
-        // Add current position to trail
-        // The shrinking interval will handle removing old points.
-        const newTrail = [...prev.trail, { x, y }]; 
-        
-        // REMOVED: Trail length limit logic is now handled by the shrinking interval
-        // if (newTrail.length > MAX_TRAIL_LENGTH) {
-        //   newTrail.shift();
-        // }
+        let newTrail = [...prev.trail];
+
+        // If this is the very first movement creating the trail, populate it instantly
+        if (newTrail.length === 0) {
+            // Use a reasonable starting length for visual effect
+            const initialVisualTrailLength = 43; 
+            newTrail = Array(initialVisualTrailLength).fill({ x, y });
+            console.log("Initialized player trail at:", x, y);
+        } else {
+            // Otherwise, just add the current position
+            newTrail.push({ x, y });
+        }
         
         return {
           ...prev,
@@ -147,6 +160,37 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         };
       });
     }
+  };
+
+  // Check for collisions between player and computer trails
+  const checkCollisions = (): 'collision' | 'trailShrunk' | false => {
+    if (!playerCursor) return false;
+    
+    // UPDATED: Check if player's trail has shrunk to zero AFTER grace period
+    if (!isGracePeriodActive && playerCursor.trail.length === 0 && gameState === 'active') {
+        console.log("Game over: Player trail length reached zero after grace period.");
+        return 'trailShrunk';
+    }
+    
+    // Collision detection threshold
+    const threshold = 10;
+    
+    // Check collisions with each computer cursor trail
+    for (const computer of computerCursors) {
+      for (const point of computer.trail) {
+        const distance = Math.sqrt(
+          Math.pow(playerCursor.x - point.x, 2) + 
+          Math.pow(playerCursor.y - point.y, 2)
+        );
+        
+        if (distance < threshold) {
+          console.log("Game over: Collision detected.");
+          return 'collision';
+        }
+      }
+    }
+    
+    return false;
   };
 
   // Game loop
@@ -218,41 +262,17 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     // Check for collisions
     console.log("Game loop: Before checkCollisions");
-    const collisionDetected = checkCollisions();
-    console.log(`Game loop: After checkCollisions (collisionDetected: ${collisionDetected})`);
-    if (playerCursor && collisionDetected) {
-      console.log("Game loop exit: Collision detected");
-      endGame();
+    const collisionResult = checkCollisions();
+    console.log(`Game loop: After checkCollisions (collisionResult: ${collisionResult})`);
+    if (collisionResult) {
+      console.log(`Game loop exit: ${collisionResult} detected`);
+      endGame(collisionResult);
       return;
     }
     
     // Continue game loop
     console.log("Game loop: Requesting next frame");
     gameLoopRef.current = requestAnimationFrame(gameLoop);
-  };
-
-  // Check for collisions between player and computer trails
-  const checkCollisions = () => {
-    if (!playerCursor) return false;
-    
-    // Collision detection threshold
-    const threshold = 10;
-    
-    // Check collisions with each computer cursor trail
-    for (const computer of computerCursors) {
-      for (const point of computer.trail) {
-        const distance = Math.sqrt(
-          Math.pow(playerCursor.x - point.x, 2) + 
-          Math.pow(playerCursor.y - point.y, 2)
-        );
-        
-        if (distance < threshold) {
-          return true;
-        }
-      }
-    }
-    
-    return false;
   };
 
   // Start game function
@@ -263,21 +283,35 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initializeComputerCursors();
     lastTimeRef.current = performance.now();
     
+    // Start Grace Period
+    setIsGracePeriodActive(true);
+    if (gracePeriodTimerRef.current) clearTimeout(gracePeriodTimerRef.current);
+    gracePeriodTimerRef.current = setTimeout(() => {
+        console.log("Grace period ended.");
+        setIsGracePeriodActive(false);
+        gracePeriodTimerRef.current = null;
+    }, 2000);
+
     // Increase computer speed every 3.14 seconds
     speedIncreaseIntervalRef.current = setInterval(() => {
       setComputerCursors(prev => {
         console.log('Increasing computer cursor speeds');
         return prev.map(cursor => ({
           ...cursor,
-          speed: cursor.speed * 1.1 // Increase speed by 10%
+          speed: cursor.speed * 1.1
         }));
       });
     }, 3140);
+
+    setGameOverReason(null);
   };
 
   // End game function
-  const endGame = () => {
+  const endGame = (reason: 'collision' | 'trailShrunk' | 'exited' = 'exited') => {
+    if (gameState === 'gameOver') return;
+
     setGameState('gameOver');
+    setGameOverReason(reason);
     
     // Stop game loop and intervals
     if (gameLoopRef.current) {
@@ -289,11 +323,15 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       clearInterval(speedIncreaseIntervalRef.current);
       speedIncreaseIntervalRef.current = null;
     }
-    // Also stop player trail shrinking interval
     if (playerTrailShrinkIntervalRef.current) {
         clearInterval(playerTrailShrinkIntervalRef.current);
         playerTrailShrinkIntervalRef.current = null;
     }
+    if (gracePeriodTimerRef.current) {
+        clearTimeout(gracePeriodTimerRef.current);
+        gracePeriodTimerRef.current = null;
+    }
+    setIsGracePeriodActive(false);
   };
 
   // Reset game function
@@ -304,12 +342,18 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       color: 'rgba(0, 0, 0, 0.8)',
       x: 0,
       y: 0,
-      trail: [],
+      trail: [], 
       speed: 0,
       direction: { x: 0, y: 0 }
     });
     setComputerCursors([]);
     setSurvivalTime(0);
+    setIsGracePeriodActive(false);
+    if (gracePeriodTimerRef.current) {
+        clearTimeout(gracePeriodTimerRef.current);
+        gracePeriodTimerRef.current = null;
+    }
+    setGameOverReason(null);
   };
 
   // Save score to Supabase
@@ -422,17 +466,18 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         gameLoopRef.current = null;
       }
     };
-  }, [gameState, gameLoop]); // Depend on gameState and gameLoop
+  }, [gameState, gameLoop]);
 
   // Effect to manage the player trail shrinking interval
   useEffect(() => {
-    if (gameState === 'active') {
-      // Start shrinking interval if not already running
+    // Only start shrinking AFTER the grace period AND if the game is active
+    if (gameState === 'active' && !isGracePeriodActive) {
       if (!playerTrailShrinkIntervalRef.current) {
+          console.log("Starting player trail shrinking interval.");
           playerTrailShrinkIntervalRef.current = setInterval(() => {
           setPlayerCursor(prev => {
             if (!prev || prev.trail.length === 0) {
-              return prev; // No cursor or no trail to shrink
+              return prev;
             }
             // Remove points based on current trail length: remove ~10%, minimum 1
             const pointsToRemove = Math.max(1, Math.floor(prev.trail.length * 0.1));
@@ -445,21 +490,23 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }, PLAYER_TRAIL_SHRINK_INTERVAL);
       }
     } else {
-      // Clear interval if game is not active and interval exists
+      // Clear interval if game is not active, or if grace period is active,
+      // and interval exists
       if (playerTrailShrinkIntervalRef.current) {
+        console.log("Clearing player trail shrinking interval.");
         clearInterval(playerTrailShrinkIntervalRef.current);
         playerTrailShrinkIntervalRef.current = null;
       }
     }
 
-    // Cleanup function for unmounting or gameState change
+    // Cleanup function for unmounting or gameState/gracePeriod change
     return () => {
       if (playerTrailShrinkIntervalRef.current) {
         clearInterval(playerTrailShrinkIntervalRef.current);
         playerTrailShrinkIntervalRef.current = null;
       }
     };
-  }, [gameState]); // Depend only on gameState
+  }, [gameState, isGracePeriodActive]);
 
   return (
     <GameContext.Provider
@@ -475,7 +522,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         resetGame,
         saveScore,
         topScores,
-        fetchTopScores
+        fetchTopScores,
+        gameOverReason
       }}
     >
       {children}

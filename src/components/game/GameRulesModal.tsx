@@ -75,8 +75,9 @@ export default function GameRulesModal() {
                       <h3 className="text-base font-medium mb-3">Rules:</h3>
                       <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
                         <li>Move your cursor to avoid running into the colored trails</li>
+                        <li>You must keep moving at all times</li>
                         <li>Colored trails increase speed by 10% every pi seconds</li>
-                        <li>The game ends if your pointer hits any trail</li>
+                        <li>The game ends if your pointer hits any trail or if your trail disappears completely</li>
                       </ul>
                     </motion.div>
 
