@@ -26,7 +26,7 @@ export default function GameHUD() {
         </div>
         
         <button
-          onClick={endGame}
+          onClick={() => endGame()}
           className="p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/30"
           title="End Game"
         >
