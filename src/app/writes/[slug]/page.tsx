@@ -83,7 +83,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       className="prose prose-neutral dark:prose-invert max-w-none 
           prose-p:text-sm prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/90
           prose-headings:font-medium prose-headings:tracking-normal
-          prose-h1:text-base prose-h2:text-sm prose-h3:text-sm
+          prose-h1:text-xl prose-h2:text-lg prose-h3:text-base
           prose-pre:bg-secondary/50 prose-pre:border-0
           prose-code:text-sm prose-code:text-foreground prose-code:bg-secondary/50 prose-code:px-1 prose-code:rounded
           prose-strong:font-medium
