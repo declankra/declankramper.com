@@ -1,7 +1,7 @@
 ---
 title: "How To Build Your First Full Code Prototype As A Product Manager"
 date: "2025-01-13"
-categories: ["product"]
+categories: ["Product"]
 preview: "a guide to build your first prototype"
 ---
 I gave a presentation at work on AI, my POV on PMs in the AI world, and what I think PMs should focus on going forward.
