@@ -250,7 +250,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                             onAnimationComplete={createCompletionHandler(setCareerMotivationComplete)}
                                                             className="text-sm leading-relaxed mt-4"
                                                         >
-                                                            To expand on the third point, about my career, the motivation is to help people. Building great consumer products means solving problems for the user. I can volunteer my time (something I certainly could do more), but a great product can scale to millions of people and therefore benefit way more than my limited time can. "One of the ways that I believe people express their appreciation to the rest of humanity is to make something wonderful and put it out there." <a href="https://book.stevejobsarchive.com/" className="hover:underline text-primary">[quote]</a>
+                                                            To expand on the third point, about my career, the motivation is to help people. Building great consumer products means solving problems for the user (in a way that creates more value than they consume, yes). I can volunteer my time (something I certainly could do more, yes), but a great product can scale to millions of people and therefore benefit way more than my limited time can. "One of the ways that I believe people express their appreciation to the rest of humanity is to make something wonderful and put it out there." <a href="https://book.stevejobsarchive.com/" className="hover:underline text-primary">[quote]</a>
                                                         </motion.p>
                                                     )}
 
@@ -290,7 +290,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                                 </ol>
                                                                             </li>
                                                                             <li>Continue to enjoy time with friends and family (especially new places and experiences)</li>
-                                                                            <li>Continue to deepen my relationship</li>
+                                                                            <li>Continue to deepen my relationships</li>
                                                                         </ol>
                                                                     </li>
 
