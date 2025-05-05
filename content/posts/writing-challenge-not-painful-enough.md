@@ -1,7 +1,7 @@
 ---
 title: "A Writing Challenge: When Pain Isn't Painful Enough"
 date: "2025-02-03"
-categories: ["life"]
+categories: ["Life"]
 preview: “why do we do what we do?”
 ---
 

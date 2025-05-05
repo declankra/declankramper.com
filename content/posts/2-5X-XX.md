@@ -1,7 +1,7 @@
 ---
 title: "2:5X:XX"
 date: "2025-02-17"
-categories: ["life", "running"]
+categories: ["Life", "Running"]
 preview: "some raw thoughts after achieving a goal"
 ---
 
