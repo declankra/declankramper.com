@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import Leaderboard from './Leaderboard';
 
 export default function GameRulesModal() {
-  const { gameState, startGame, topScores } = useGame();
+  const { gameState, startGame, topScores, setGameState } = useGame();
   const isOpen = gameState === 'instructions';
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   
@@ -45,7 +45,21 @@ export default function GameRulesModal() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 flex items-center justify-center z-50"
           >
-            <div className="w-full max-w-md bg-gradient-to-br from-card to-card/90 border rounded-xl shadow-xl p-8">
+            <div className="w-full max-w-md bg-gradient-to-br from-card to-card/90 border rounded-xl shadow-xl p-8 relative">
+              {/* Exit Button */}
+              <motion.button
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+                onClick={() => setGameState('inactive')}
+                className="absolute top-3 right-3 text-muted-foreground hover:text-foreground transition-colors z-10 p-1 rounded-full hover:bg-muted/50"
+                aria-label="Close rules"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </motion.button>
+
               <div className="space-y-6">
                 <motion.h2 
                   initial={{ opacity: 0, y: -10 }}
