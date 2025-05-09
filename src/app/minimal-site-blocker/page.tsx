@@ -77,8 +77,11 @@ export default function MinimalSiteBlockerPage() {
             learn about the human who made it
           </a>
         </p>
-        <p>
+        <p style={{ marginBottom: '10px' }}>
           Need help or have questions? Email me at <a href="mailto:business@dkbuild.co" style={{ color: '#007aff', textDecoration: 'none' }}>business@dkbuild.co</a>.
+        </p>
+        <p>
+          <a href="/minimal-site-blocker/privacy" style={{ color: '#007aff', textDecoration: 'none' }}>Privacy Policy</a>
         </p>
       </footer>
     </div>
