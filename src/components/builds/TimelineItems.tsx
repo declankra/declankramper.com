@@ -14,12 +14,12 @@ export const timelineItems: TimelineItem[] = [
     {
         type: 'work',
         id: 'chitrack',
-        title: 'ChiTrack | Chicago Transit Tracker',
+        title: 'ChiTrack | Chicago CTA Transit Tracker',
         date: '2025-03',
         year: 2025,
         media: '/images/buildsTimeline/chitrack-preview.webp',
         preview: 'The best CTA train tracker in the city of chicago - it just makes sense',
-        description: "I use the CTA train multiple times a week to go into the office. So do many others. Ask any of these people about the current \"best\" option for tracking train arrival times to get to/from work and they'll tell you that it sucks.\n\n Why not build something that doesn't suck? Although the idea is simple, there's a lot to consider. That's the fun of it.\n\n Launching soon.",
+        description: "I use the CTA train multiple times a week to go into the office. So do many others. Ask any of these people about the current \"best\" option for tracking CTA train arrival times to get to/from work and they'll tell you that it sucks.\n\n Why not build something that doesn't suck? Although the idea is simple, there's a lot to consider. That's the fun of it.\n\n You can download it [here](https://apps.apple.com/app/chitrack-chicago-l-tracker/id6745131685).",
         link: 'https://www.chitrack.com/?utm_source=portfolio'
     },
     {
