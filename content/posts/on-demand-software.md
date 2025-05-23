@@ -3,7 +3,7 @@
 title: "On-demand software"
 date: "2025-03-17"
 categories: ["Product", "AI"]
-preview: “making human moments more meaningful”
+preview: making human moments more meaningful
 
 ---
 

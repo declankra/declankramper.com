@@ -2,7 +2,7 @@
 title: "Shipuary 2025"
 date: "2025-01-07"
 categories: ["dkBuilds", "Product"]
-preview: "shipping 3 new products by the end of february"
+preview: shipping 3 new products by the end of february
 ---
 
 I’m either late to shipmas or early to the shipuary trend. Yes, shipuary, a new thing I just made up[^1].

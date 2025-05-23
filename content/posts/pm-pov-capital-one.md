@@ -2,7 +2,7 @@
 title: "PM POV: Capital One"
 date: "2025-04-13"
 categories: ["Product"]
-preview: “if I were the PM, how would I improve three Capital One products?”
+preview: if I were the PM, how would I improve three Capital One products?
 
 ---
 This is the start of a hopefully regular-ish (yeah, I’m data-driven) series where I write about Product. I think about it quite often, but my thoughts are scattered throughout Apple Notes, Notion pages, and my head. This is an effort to articulate those thoughts into a somewhat-polished format.

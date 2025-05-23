@@ -2,7 +2,7 @@
 title: "Coffee shop to nowhere"
 date: "2024-03-15"
 categories: ["Life"]
-preview: "So when i first wanted to start writing, as i do with most things, i wrote out the steps i think i'd take to make it happen. it went like this:"
+preview: "so when i first wanted to start writing, as i do with most things, i wrote out the steps i think i'd take to make it happen. it went like this:"
 ---
 
 1. collect random throughout the week in apple notes (least friction)

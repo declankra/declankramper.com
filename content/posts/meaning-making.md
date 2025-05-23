@@ -6,7 +6,7 @@ date: "2025-05-04"
 
 categories: ["Life"]
 
-preview: “confronting a hard truth”
+preview: confronting a hard truth
 
 ---
 
