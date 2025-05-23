@@ -4,9 +4,11 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FileCode } from "lucide-react";
+import { useOpenPanel } from "@openpanel/nextjs";
 import { ReadmeDialog } from "./ReadmeDialog";
 
 export function ReadmeLink() {
+  const op = useOpenPanel();
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const linkRef = useRef<HTMLDivElement>(null);
@@ -16,12 +18,18 @@ export function ReadmeLink() {
     // Delay appearance of the link by 0.5s
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
 
   const handleClick = () => {
+    // Track the readme button click
+    op.track('readme_button_clicked', {
+      location: 'top_left_corner',
+      component: 'ReadmeLink'
+    });
+
     if (linkRef.current) {
       const rect = linkRef.current.getBoundingClientRect();
       setLinkPosition({ x: rect.left, y: rect.top });
