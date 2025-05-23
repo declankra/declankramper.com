@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { ReadmeLink } from '@/components/readme/ReadmeLink';
 import CursorTrail from '@/components/game/CursorTrail';
 import FusionFrenzyGame from '@/components/game/FusionFrenzyGame';
+import BuildIcon from '@/components/home/BuildIcon';
+import RunIcon from '@/components/home/RunIcon';
+import WriteIcon from '@/components/home/WriteIcon';
 
 export default function Home() {
   return (
@@ -27,24 +30,27 @@ export default function Home() {
         {/* Build */}
         <Link
           href="/builds"
-          className="transition-opacity hover:opacity-70 cursor-pointer"
+          className="build-link transition-opacity hover:opacity-70 cursor-pointer flex items-center"
         >
+          <BuildIcon />
           build
         </Link>
 
         {/* Run - with hover card */}
         <Link
           href="/runs"
-          className="transition-opacity hover:opacity-70 cursor-pointer"
+          className="run-link transition-opacity hover:opacity-70 cursor-pointer flex items-center"
         >
+          <RunIcon />
           run
         </Link>
 
         {/* Write - with link */}
         <Link
           href="/writes"
-          className="transition-opacity hover:opacity-70"
+          className="write-link transition-opacity hover:opacity-70 flex items-center"
         >
+          <WriteIcon />
           write
         </Link>
       </main>
