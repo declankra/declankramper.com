@@ -22,10 +22,10 @@ export default function PlayGameButton() {
     // Listen for resize events
     window.addEventListener('resize', checkIfMobile);
     
-    // Show button after 1 second
+    // Show button after 0.5 seconds
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1000);
+    }, 500);
 
     return () => {
       clearTimeout(timer);
