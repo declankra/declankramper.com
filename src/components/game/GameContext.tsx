@@ -283,8 +283,9 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     op.track('game_started');
     setGameState('active');
     setSurvivalTime(0);
+    // Reset timer reference to prevent negative deltaTime calculations
+    lastTimeRef.current = 0;
     initializeComputerCursors();
-    lastTimeRef.current = performance.now();
     
     // Start Grace Period
     setIsGracePeriodActive(true);
@@ -351,6 +352,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
     setComputerCursors([]);
     setSurvivalTime(0);
+    // Reset timer reference to ensure clean state
+    lastTimeRef.current = 0;
     setIsGracePeriodActive(false);
     if (gracePeriodTimerRef.current) {
         clearTimeout(gracePeriodTimerRef.current);
@@ -452,8 +455,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (gameState === 'active' && !gameLoopRef.current) {
       console.log("useEffect: Starting game loop because gameState is active.");
-      // Ensure lastTimeRef is set before starting the first frame
-      lastTimeRef.current = performance.now(); 
+      // Ensure lastTimeRef is reset before starting the first frame
+      lastTimeRef.current = 0; // Reset to 0 so first deltaTime calculation uses fallback
       gameLoopRef.current = requestAnimationFrame(gameLoop);
     } else if (gameState !== 'active' && gameLoopRef.current) {
       console.log("useEffect: Stopping game loop because gameState is no longer active.");
@@ -469,7 +472,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         gameLoopRef.current = null;
       }
     };
-  }, [gameState, gameLoop]);
+  }, [gameState]); // Removed gameLoop from dependencies
 
   // Effect to manage the player trail shrinking interval
   useEffect(() => {
