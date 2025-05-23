@@ -2,7 +2,7 @@
 title: "Luck"
 date: "2024-03-18"
 categories: ["Life"]
-preview: "is luck real?"
+preview: is luck real?
 ---
 
 what about the most generic symbol of luck: four-leaf clovers?

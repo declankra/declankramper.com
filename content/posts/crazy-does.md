@@ -2,7 +2,7 @@
 title: "Crazy does: Consistency, Decisions & Execution"
 date: "2024-04-05"
 categories: ["Life"]
-preview: "Ideas are easy. Execution is hard."
+preview: ideas are easy. execution is hard.
 ---
 
 more specifically: ideas can easily sound good and are easy to come by. execution is hardly straightforward and hard to come by.

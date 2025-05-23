@@ -2,7 +2,7 @@
 title: "A Writing Challenge: When Pain Isn't Painful Enough"
 date: "2025-02-03"
 categories: ["Life"]
-preview: “why do we do what we do?”
+preview: why do we do what we do?
 ---
 
 **tldr;** wanted to write more but there wasn't enough pain if I didn't, so I started a writing challenge with a friend and we forfeit $ to each other if we don't
