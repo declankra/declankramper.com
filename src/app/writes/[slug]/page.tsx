@@ -43,7 +43,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   }
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-8">
+    <article className="max-w-2xl mx-auto px-4 py-8">
             <BreadcrumbNav
         items={[
           { href: "/", label: "home" },
@@ -63,7 +63,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       <h1 className="text-xl font-medium tracking-tight mb-1.5">{post.title}</h1>
       <time 
         dateTime={post.date}
-        className="text-[10px] text-muted-foreground block tracking-tight"
+        className="text-[10px] text-foreground/70 block tracking-tight"
       >
         {new Date(post.date).toLocaleDateString('en-US', {
           year: 'numeric',
@@ -74,22 +74,22 @@ export default async function BlogPost({ params }: { params: { slug: string } })
     </header>
 
     {/* Post Preview */}
-    <div className="text-xs text-muted-foreground mb-6 italic tracking-tight">
+    <div className="text-xs text-foreground/70 mb-6 italic tracking-tight">
       {post.preview}
     </div>
 
     {/* Post Content */}
     <div 
       className="prose prose-neutral dark:prose-invert max-w-none 
-          prose-p:text-sm prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/90
-          prose-headings:font-medium prose-headings:tracking-normal
+          prose-p:text-sm prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/95 prose-p:mb-4
+          prose-headings:font-medium prose-headings:tracking-normal prose-headings:mt-8 prose-headings:mb-4
           prose-h1:text-xl prose-h2:text-lg prose-h3:text-base
           prose-pre:bg-secondary/50 prose-pre:border-0
           prose-code:text-sm prose-code:text-foreground prose-code:bg-secondary/50 prose-code:px-1 prose-code:rounded
           prose-strong:font-medium
           prose-a:text-foreground prose-a:underline-offset-4
-          marker:text-muted-foreground
-          prose-li:text-sm prose-li:tracking-normal prose-li:mt-1 prose-li:mb-1
+          marker:text-foreground/70
+          prose-li:text-sm prose-li:tracking-normal prose-li:mt-1 prose-li:mb-2
           prose-ol:mt-2 prose-ol:mb-2
           prose-ul:mt-2 prose-ul:mb-2
           [&>*:first-child]:mt-0
@@ -98,7 +98,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           [&_li>p]:my-0
           [&_p:has(+ol)]:mb-2
           [&_p:has(+ul)]:mb-2
-          [&_li]:text-foreground/90
+          [&_li]:text-foreground/95
           [&_li>ol]:mt-2
           [&_p+ol]:mt-2"
         dangerouslySetInnerHTML={{ __html: post.content }} 
