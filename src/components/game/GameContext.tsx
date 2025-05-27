@@ -482,12 +482,27 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.log("Starting player trail shrinking interval.");
           playerTrailShrinkIntervalRef.current = setInterval(() => {
           setPlayerCursor(prev => {
-            if (!prev || prev.trail.length === 0) {
+            if (!prev) {
               return prev;
             }
+            
+            // If trail is already empty, end the game
+            if (prev.trail.length === 0) {
+              console.log("Game over: Player trail length reached zero during shrinking.");
+              endGame('trailShrunk');
+              return prev;
+            }
+            
             // Remove points based on current trail length: remove ~10%, minimum 1
             const pointsToRemove = Math.max(1, Math.floor(prev.trail.length * 0.1));
             const newTrail = prev.trail.slice(pointsToRemove); 
+            
+            // Check if the trail will become empty after this shrink
+            if (newTrail.length === 0) {
+              console.log("Game over: Player trail length will reach zero after shrinking.");
+              endGame('trailShrunk');
+            }
+            
             return {
               ...prev,
               trail: newTrail
