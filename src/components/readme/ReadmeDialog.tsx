@@ -308,9 +308,9 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                     <li className="space-y-2">
                                                                         <span className="font-medium">Last phase = Impact</span>
                                                                         <ol className="list-decimal pl-6 space-y-1">
-                                                                            <li>Apply all that I've learned to make the biggest impact that I can.</li>
-                                                                            <li>This entity will be my own thing. I don't see it going any other way.</li>
-                                                                            <li>See earth from space.</li>
+                                                                            <li>Apply all that I've learned to make the biggest impact that I can</li>
+                                                                            <li>This entity will be my own thing</li>
+                                                                            <li>See earth from space</li>
                                                                         </ol>
                                                                     </li>
                                                                 </motion.ol>
@@ -328,7 +328,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                                 duration={300} // Faster animation
                                                                 onAnimationComplete={() => console.log('Final section animation complete')}
                                                             >
-                                                                I wrote this sleep deprived after 3 days of little sleep. Why then?
+                                                                I wrote this sleep deprived after 3 days of little sleep. Therefore, I didn't have any energy to overthink it. Maybe I'll revisit it someday soon.
                                                             </HyperText>
 
                                                             {/* Contact link */}
