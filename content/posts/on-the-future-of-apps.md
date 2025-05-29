@@ -30,3 +30,9 @@ what am i going to do about this?
 3. continue to learn about and use AI, consider natural language as an interface, put a premium on human experiences, and take my health seriously (AI will never be able to run a sub-3 hour marathon for me!)
 
 figuring out what needs to be built, why, and how forever remain a mystery.
+
+
+
+---
+
+edit: one area i didn’t discuss above, but is likely to have a big impact on future of software apps, is the browser/web. as cloud and other technologies make the browser feel native, fast, and reliable like they do in native apps, more work (although so much of it already is) is likely to become on browser-based or internet-native. it’s a matter of collaboration, accessibility, and transparency — values customers increasingly care about when options are plentiful like they are today. in addition, experiences on the web are becoming on-par with their native app counterparts (one slight lag: mobile — mostly due to apple’s grip on safari web handling) AND AI-first, generative apps work better on the web because because the web gives you more flexibility to dynamically load models, stream content, and plug into back-end APIs without rigid app store constraints or client-side processing limitations.
