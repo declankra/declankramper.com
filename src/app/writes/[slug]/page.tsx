@@ -92,6 +92,11 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           prose-li:text-sm prose-li:tracking-normal prose-li:mt-1 prose-li:mb-2
           prose-ol:mt-2 prose-ol:mb-2
           prose-ul:mt-2 prose-ul:mb-2
+          prose-table:text-sm prose-table:mt-6 prose-table:mb-6
+          prose-thead:border-b prose-thead:border-border
+          prose-th:text-left prose-th:font-medium prose-th:px-3 prose-th:py-2 prose-th:text-sm
+          prose-td:px-3 prose-td:py-2 prose-td:text-sm prose-td:border-t prose-td:border-border
+          prose-tr:border-b prose-tr:border-border
           [&>*:first-child]:mt-0
           [&>ol]:space-y-2
           [&_ol_ol]:mt-2
