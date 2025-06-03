@@ -7,6 +7,8 @@ preview: a curious question leads to a fun data investigation
 
 [View the live report here!](https://divvy-live.vercel.app/)
 
+## Business Problem Overview
+
 ### Problem statement
 
 How can we determine which Divvy bike station would benefit from another rack?
@@ -17,20 +19,17 @@ There exists **at least one** Chicago station where adding a rack would relieve 
 
 *Initial hunch:* docks near high-traffic leisure spots (lakefront, bar clusters) will top the list.
 
----
 
 ### Divvy strategy to keep in mind
 
 City + Lyft are still in **“expand-everywhere” mode**: 250 new stations and thousands of e-bikes are being rolled out by 2025, with an explicit focus on underserved South- and West-side neighborhoods and on reducing re-balancing van mileage. ([chicago.gov](https://www.chicago.gov/city/en/depts/cdot/provdrs/bike/news/2023/october/new-divvy-stations-and-bikes-coming-to-chicago-as-part-of-contin.html?utm_source=chatgpt.com), [divvybikes.com](https://divvybikes.com/explore-chicago/expansion-temp?utm_source=chatgpt.com))
 
----
 
 ### Benefits to track
 
 - **Customer pain** ⇒ difficulty docking when a station is full.
 - **Divvy profit** ⇒ cost of truck runs to rebalance bikes.
 
----
 
 ### Success metrics
 
@@ -39,7 +38,6 @@ City + Lyft are still in **“expand-everywhere” mode**: 250 new stations and 
 | Riders | **% Time Full** (station effectively full) | Directly measures “can’t dock” pain |
 | Divvy Ops | **Net Accumulation per Dock** = (Ends − Starts) ⁄ Dock Count | Positive number ⇒ trucks must clear bikes |
 
----
 
 ### Format for our answer
 
@@ -55,9 +53,8 @@ City + Lyft are still in **“expand-everywhere” mode**: 250 new stations and 
 
 Higher DPI → stronger business case for more racks.
 
----
 
-### Data findings
+## Data Findings
 
 ### Results
 
@@ -74,7 +71,6 @@ Higher DPI → stronger business case for more racks.
 
 The handful of high-DPI docks represent structural pain points inside an otherwise balanced network (median overflow is .07 and most stations are never full). They create both rider dissatisfaction and avoidable van trips – prime targets for extra racks.
 
----
 
 ### Recommendation – what Divvy should do now
 
@@ -84,7 +80,6 @@ The handful of high-DPI docks represent structural pain points inside an otherwi
 | Medium | Re-route balancing vans toward high-DPI quadrants, away from low-utilization docks. | Cuts fuel and labor costs. |
 | Low | Monitor post-install DPI to validate improvement; iterate threshold. | Confirms ROI. |
 
----
 
 ### Looking ahead – where Divvy should focus next
 
@@ -101,7 +96,6 @@ The handful of high-DPI docks represent structural pain points inside an otherwi
 2. **We only see successful docks.** Attempted/diverted docks are invisible, so pain is understated.
 3. **Focuses on cost avoidance, not revenue growth.** Divvy may already be tracking re-balancing costs; the model should also test revenue-positive scenarios.
 
----
 
 ### What I’d change next time
 
