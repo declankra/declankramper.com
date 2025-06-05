@@ -1,5 +1,5 @@
 ---
-title: "Which Divvy Bike Station Needs Another Rack?"
+title: "Which Divvy bike station needs another rack?"
 date: "2025-06-03"
 categories: ["Product", "Business"]
 preview: a curious question leads to a fun data investigation
