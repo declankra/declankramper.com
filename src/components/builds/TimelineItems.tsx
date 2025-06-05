@@ -3,6 +3,18 @@ import { TimelineItem } from './BuildsTimeline';
 export const timelineItems: TimelineItem[] = [
     {
         type: 'work',
+        id: 'divvy-live',
+        title: 'Divvy Bike Business Case | Live Dashboard',
+        date: '2025-06',
+        year: 2025,
+        media: '/images/buildsTimeline/divvy-bottom.webp',
+        preview: 'Which Divvy bike station needs another rack?',
+        description: 'Asked myself a curious question after moving to Chicago: "Which Divvy bike station needs another rack?"\n\n I researched Divvy\'s current business goals, defined the problem in terms of measurable benefits, and formed a hypothesis with success metrics. Then I built a live data pipeline (Triggers → Cloud Scheduler → Cloud Run functions → Divvy APIs → Processing → Periodic Cleaning → Frontend Visualizations) and an interactive dashboard with scatter plot visualizations to surface insights. (Hint: the answer might surprise you.)\n\n Built over Memorial Day weekend, it was fun way to follow my curiosity -- combining business thinking and technical execution to break down an ambigious problem into a clear, actionable solution.',
+        link: 'https://divvy-live.vercel.app/'      
+    },
+
+    {
+        type: 'work',
         id: 'aspire-hackathon',
         title: 'Aspire Hackathon - Global Winners',
         date: '2025-03',
