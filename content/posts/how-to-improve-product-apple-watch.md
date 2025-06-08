@@ -43,6 +43,8 @@ The emergence of AI allows for Apple to solve problem #2 in an entirely new way:
 
 A phone can be used less if the task you go to use it can be expedited and augmented with relevant context from your everyday. Need to draft an email to coworker after that meeting? Your watch just recorded the context and can now draft a response based on what you discussed. This is just one of endless examples in how such capabilities could augment knowledge work that was previously done without context on phones/computers (and took longer).
 
+There's so many AI products that are promising to *do* things for *you* -- but the problem that they haven't been able to solve is doing things at a quality and level that is *you*. They lack the things that make you, you. They lack context. **To fully make the most of AI products for your personal work, products need access to as much context about you as possible.** This device can do that. ChatGPT with memory is so great because it uses context on past conversations to make it's future responses anticipate things you didn't know you needed, connect dots, and reduce repetitive work in repeating yourself. 
+
 Turning the Apple Watch into a context engine does more than just augment knowledge work -- **it has the potential to improve your entire, everyday life as everyday devices become connected devices.**
 
 Heart rate elevated? Spotify can recommend a calming playlist or Netflix can recommend a 'feel-good' flick. Body temperature low? Automatically send a message to the smart thermostat to turn up the heat.
