@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { OpenPanelProvider } from "@/lib/analytics/openpanel/OpenPanelProvider";
+import { Toaster } from "sonner";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({
         <Header />  
         <main>{children}</main>
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
