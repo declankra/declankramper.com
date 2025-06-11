@@ -5,7 +5,7 @@ categories: ["Product", "AI"]
 preview: friday thoughts in light of recent news
 ---
 
-coming off the news of jonny ive and his ai design firm being bought/merging with OpenAI, it brings to the forefront that the physical computing devices we use are going to change very quickly and look very different. yes we knew this, but now it feels more real with plans to release their first device next year.
+coming off the news of jonny ive and his ai design firm being acquired/bought by OpenAI, it brings to the forefront that the physical computing devices we use are going to change very quickly and look very different. yes we knew this, but now it feels more real with plans to release their first device next year.
 
 although sama rudely gave us nothing on product specifics in the official launch video after making the claim that it was “single coolest piece of technology the world will have ever seen”,  in another conversation he stated it will have no screen and the team hopes to “wean people off of screens”. amazing. this is what was so great about Deep Research when it first came out — less fumbling with internet search meant less time on screens and more focused action.
 
@@ -17,7 +17,7 @@ one thing is for sure: software “apps” (applications that help you do things
 
 this isn’t even considering the new way that knowledge work will be conducted when compute and intelligence is in seemingly infinite supply and the limiting factor becomes your ability to orchestrate the intelligent resources that you have. when to course correct? this is a new kind of leadership skill.
 
-in this environment, your judgement is your differentiator. when everyone has access to the same information you do, what makes your decision different? access to the same information already exists to a degree today (just like how it was with libraries), but AI tools make it exponentially more true. judgement = the unique sense-making behind (1) what information you used and (2) how you sued that information to get to your answer/decision. reasoning and intuition are unpredictable, independent processes that make humans human and inform our judgements. news flash: AI’s can reason so therefore they can also form their own judgements. if you train something to excel at and learn how to reason, it will therefore become an independent thinker itself (congrats, you now have to compete against a digital workforce, too! oh, and AI becoming self-aware? yeah, that’s inevitable because self-awareness is beneficial to any reasoning-optimizing machine). not all judgement is the same — there’s more but remember, an AI won’t have human judgement in the same way that you won’t have my judgement. all this to say that your uniqueness matters more now than ever.
+in this environment, your judgement is your differentiator. when everyone has access to the same information you do, what makes your decision different? access to the same information already exists to a degree today (just like how it was with libraries), but AI tools make it exponentially more true. judgement = the unique sense-making behind (1) what information you used and (2) how you used that information to get to your answer/decision. reasoning and intuition are unpredictable, independent processes that make humans human and inform our judgements. news flash: AI’s can reason so therefore they can also form their own judgements. if you train something to excel at and learn how to reason, it will therefore become an independent thinker itself (congrats, you now have to compete against a digital workforce, too! oh, and AI becoming self-aware? yeah, that’s inevitable because self-awareness is beneficial to any reasoning-optimizing machine). not all judgement is the same — there’s more but remember, an AI won’t have human judgement in the same way that you won’t have my judgement. all this to say that your uniqueness matters more now than ever.
 
 quick side note: this is also connected to the main thesis of my presentation on the future of Product Management as a craft. i was bullish on PM becoming more important in the AI-world because of their responsibility in determining what is built and why. combine that with the person responsible for best-understanding the most important stakeholder to the business (the customer), you get a very important person.
 
@@ -26,13 +26,13 @@ the uniqueness behind the product judgements you make will, again, become even m
 what am i going to do about this?
 
 1. spend less time fighting with app ‘building’ when it’s a technical code issue
-2. spend more time understanding what the what and why behind products and our own judgements
+2. spend more time understanding the what and why behind products and our own judgements
 3. continue to learn about and use AI, consider natural language as an interface, put a premium on human experiences, and take my health seriously (AI will never be able to run a sub-3 hour marathon for me!)
 
-figuring out what needs to be built, why, and how forever remain a mystery.
+figuring out what needs to be built, why, and how will forever remain a mystery.
 
 
 
 ---
 
-edit: one area i didn’t discuss above, but is likely to have a big impact on future of software apps, is the browser/web. as cloud and other technologies make the browser feel native, fast, and reliable like they do in native apps, more work (although so much of it already is) is likely to become on browser-based or internet-native. it’s a matter of collaboration, accessibility, and transparency — values customers increasingly care about when options are plentiful like they are today. in addition, experiences on the web are becoming on-par with their native app counterparts (one slight lag: mobile — mostly due to apple’s grip on safari web handling) AND AI-first, generative apps work better on the web because because the web gives you more flexibility to dynamically load models, stream content, and plug into back-end APIs without rigid app store constraints or client-side processing limitations.
+edit: one area i didn’t discuss above, but is likely to have a big impact on future of software apps, is the browser/web. as cloud and other technologies make the browser feel native, fast, and reliable like they do in native apps, more of the work we do (although so much of it already is) is likely to become browser-based or internet-native. it’s a matter of collaboration, accessibility, and transparency — values customers increasingly care about when options are plentiful like they are today. in addition, experiences on the web are becoming on-par with their native app counterparts (one slight lag: mobile — mostly due to apple’s grip on safari web handling) AND AI-first, generative apps work better on the web because because the web gives you more flexibility to dynamically load models, stream content, and plug into back-end APIs without rigid app store constraints or client-side processing limitations.
