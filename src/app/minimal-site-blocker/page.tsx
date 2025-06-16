@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Minimal Website Blocker',
+  description: 'Focus on what matters. Block distracting websites with privacy using our simple Safari extension for iOS and Mac.',
+};
+
 export default function MinimalSiteBlockerPage() {
   return (
     <div style={{

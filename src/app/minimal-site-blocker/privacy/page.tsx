@@ -1,3 +1,10 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy - Minimal Website Blocker',
+  description: 'Privacy policy for Minimal Website Blocker - we don\'t collect, store, or share any of your personal data or browsing activity.',
+};
+
 export default function PrivacyPolicyPage() {
   return (
     <div style={{

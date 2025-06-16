@@ -18,7 +18,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
-  title: "Declan Kramper | Personal Portfolio",
+  title: {
+    template: '%s | Declan Kramper',
+    default: 'Declan Kramper | Personal Portfolio'
+  },
   description: "A place on the internet for some of my thoughts and projects",
 
     // Open Graph metadata for rich sharing previews
