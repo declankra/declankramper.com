@@ -2,6 +2,12 @@
 import { getAllPosts } from '@/lib/blog';
 import BlogList from '@/components/blog/BlogList';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Writes',
+  description: 'Blog posts and thoughts from Declan Kramper',
+};
 
 export default async function WritesPage() {
   const posts = await getAllPosts();
