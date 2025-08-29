@@ -1,7 +1,8 @@
 export interface FinishedProjectVisual {
-    type: 'image' | 'video' | 'gif';
+    type: 'image' | 'video' | 'gif' | 'pdf';
     src: string;
     alt?: string;
+    pdfSrc?: string; // For images that should open PDFs in popup
 }
 
 export interface FinishedProject {
