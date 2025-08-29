@@ -34,9 +34,25 @@ export function FinishedProjectsList() {
                         {visual.type === 'video' ? (
                             <video
                                 src={visual.src}
-                                className="w-32 h-20 object-cover rounded border border-gray-200"
-                                controls
+                                className="w-32 h-20 object-cover rounded border border-gray-200 cursor-pointer"
                                 preload="metadata"
+                                muted
+                                onMouseEnter={(e) => {
+                                    const video = e.target as HTMLVideoElement;
+                                    video.controls = true;
+                                }}
+                                onMouseLeave={(e) => {
+                                    const video = e.target as HTMLVideoElement;
+                                    if (video.paused) {
+                                        video.controls = false;
+                                    }
+                                }}
+                                onClick={(e) => {
+                                    const video = e.target as HTMLVideoElement;
+                                    if (video.paused) {
+                                        video.play();
+                                    }
+                                }}
                             />
                         ) : (
                             <Image
