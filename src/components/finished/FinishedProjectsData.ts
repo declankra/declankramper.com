@@ -2,6 +2,40 @@ import { FinishedProject } from '@/types/finished';
 
 export const finishedProjects: FinishedProject[] = [
     {
+        id: 'gradefinalboss',
+        title: 'Grade Final Boss',
+        subtitle: 'a better rogerhub with personality',
+        month: 2,
+        year: 2025,
+        link: 'https://grade-final-boss-3lxl.vercel.app/',
+        visuals: [
+            {
+                type: 'gif',
+                src: '/videos/finished/grade-final-boss.gif',
+                alt: 'Grade Final Boss Demo'
+            }
+        ]
+    },
+    {
+        id: 'local-jarvis',
+        title: 'Local Jarvis',
+        subtitle: '**Personal AI assistant that runs entirely on my MacBook using Ollama\'s OS model as a privacy-first alternative to Claude Code. It automatically indexes and updates my my notes using local vector database for RAG-powered context.**',
+        month: 8,
+        year: 2025,
+        visuals: [
+            {
+                type: 'gif',
+                src: '/images/local-jarvis/local-jarvis.gif',
+                alt: 'Local Jarvis Demo'
+            },
+            {
+                type: 'image',
+                src: '/images/local-jarvis/local-jarvis-log.png',
+                alt: 'Local Jarvis Log'
+            }
+        ]
+    },
+    {
         id: 'rc-tank',
         title: 'RC Tank',
         subtitle: 'Senior Design Toy Project - Arduino with 3D printed parts',
@@ -30,21 +64,18 @@ export const finishedProjects: FinishedProject[] = [
         ]
     },
     {
-        id: 'sample-project-3',
-        title: 'Old Finished Work',
-        subtitle: 'Something from the past',
-        month: 12,
-        year: 2023,
+        id: 'divvy-bike-business-case',
+        title: 'Divvy Bike Business Case Review',
+        subtitle: 'Which divvy bike station in Chicago needs another rack?',
+        month: 6,
+        year: 2025,
+        link: 'https://divvy-live.vercel.app/',
         visuals: [
             {
                 type: 'image',
-                src: '/images/finished/old-project-1.webp',
-                alt: 'Old project screenshot 1'
-            },
-            {
-                type: 'video',
-                src: '/videos/finished/old-project-demo.mp4',
-                alt: 'Old project demo video'
+                src: '/images/buildsTimeline/divvy-bottom.webp',
+                alt: 'Divvy Bike Business Case Preview',
+                pdfSrc: '/pdfs/finished/Divvy-Bike-Business-Case-Review.pdf'
             }
         ]
     }
