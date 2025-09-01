@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight, FileText } from 'lucide-react';
-import { FinishedProject } from '@/types/finished';
-import { finishedProjects } from './FinishedProjectsData';
+import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
+import { finishedProjects, currentlyBuildingProjects } from './FinishedProjectsData';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import './scrollbar.css';
 
@@ -26,7 +26,7 @@ export function FinishedProjectsList() {
         return acc;
     }, {} as Record<number, FinishedProject[]>);
 
-    const renderVisuals = (visuals: FinishedProject['visuals']) => {
+    const renderVisuals = (visuals: FinishedProject['visuals'] | CurrentlyBuildingProject['visuals']) => {
         if (!visuals || visuals.length === 0) return null;
 
         const needsScroll = visuals.length > 3;
@@ -173,6 +173,61 @@ export function FinishedProjectsList() {
                         finishing is hard.
                     </h2>
                 </div>
+
+                {/* Currently Building Section */}
+                {currentlyBuildingProjects.length > 0 && (
+                    <div className="mb-12">
+                        {currentlyBuildingProjects.map((project) => (
+                            <div key={project.id} className="flex gap-12 mb-8">
+                                {/* Blinking red dot column */}
+                                <div className="w-16 flex-shrink-0 flex justify-end items-start pt-1">
+                                    <div className="relative">
+                                        <div className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+                                        <div className="absolute inset-0 w-3 h-3 bg-red-600 rounded-full animate-ping"></div>
+                                    </div>
+                                </div>
+
+                                {/* Project content */}
+                                <div className="flex-1 max-w-2xl">
+                                    {/* Currently building label */}
+                                    <div className="text-xs font-medium text-red-600 uppercase tracking-wider mb-2">
+                                        Currently Building
+                                    </div>
+                                    
+                                    {/* Title with optional link */}
+                                    <div className="flex items-center gap-2 mb-1">
+                                        {project.link ? (
+                                            <a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
+                                            >
+                                                {project.title}
+                                                <ArrowUpRight className="w-4 h-4" />
+                                            </a>
+                                        ) : (
+                                            <h3 className="text-lg font-normal text-black">
+                                                {project.title}
+                                            </h3>
+                                        )}
+                                    </div>
+
+                                    {/* Subtitle */}
+                                    <p className="text-base font-light text-gray-600 mb-2">
+                                        {project.subtitle}
+                                    </p>
+
+                                    {/* Visuals */}
+                                    {renderVisuals(project.visuals)}
+                                </div>
+                            </div>
+                        ))}
+                        
+                        {/* Divider line */}
+                        <div className="ml-28 mt-12 mb-12 border-t border-gray-200"></div>
+                    </div>
+                )}
 
                 {/* Projects by year */}
                 {Object.entries(projectsByYear)

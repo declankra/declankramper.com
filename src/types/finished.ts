@@ -14,3 +14,11 @@ export interface FinishedProject {
     link?: string;
     visuals?: FinishedProjectVisual[]; // 0-3 items
 }
+
+export interface CurrentlyBuildingProject {
+    id: string;
+    title: string;
+    subtitle: string;
+    link?: string;
+    visuals?: FinishedProjectVisual[];
+}

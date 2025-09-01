@@ -1,4 +1,4 @@
-import { FinishedProject } from '@/types/finished';
+import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
 
 // TODO: Add the following projects:
 // - interactive letter
@@ -20,6 +20,23 @@ import { FinishedProject } from '@/types/finished';
 // - how to use ai guides
 // - claude story writer
 // - lawn care business
+
+export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
+
+    {
+        id: 'garpple',
+        title: 'Garpple',
+        subtitle: 'Garmin analytics for Apple Watch runners (145+ waitlist signups)',
+        link: 'https://www.garpple.com',
+        visuals: [
+            {
+                type: 'image',
+                src: '/finished/garpple/garpple-waitlist.png',
+                alt: 'Garpple'
+            }
+        ]
+    }
+];
 
 export const finishedProjects: FinishedProject[] = [
     {
@@ -76,6 +93,13 @@ export const finishedProjects: FinishedProject[] = [
                 alt: 'Grade Final Boss Demo'
             }
         ]
+    },
+    {
+        id: 'meet-or-not',
+        title: 'Meet or Not',
+        subtitle: 'Gen-AI tool to ensure your next meeting is productive',
+        month: 3,
+        year: 2024,
     },
     {
         id: 'local-jarvis',
