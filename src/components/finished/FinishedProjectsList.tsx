@@ -6,6 +6,7 @@ import { ArrowUpRight, FileText } from 'lucide-react';
 import { FinishedProject } from '@/types/finished';
 import { finishedProjects } from './FinishedProjectsData';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import './scrollbar.css';
 
 export function FinishedProjectsList() {
     // Sort projects by date (newest first)
@@ -28,9 +29,12 @@ export function FinishedProjectsList() {
     const renderVisuals = (visuals: FinishedProject['visuals']) => {
         if (!visuals || visuals.length === 0) return null;
 
+        const needsScroll = visuals.length > 3;
+
         return (
-            <div className="flex gap-4 mt-3">
-                {visuals.slice(0, 3).map((visual, index) => (
+            <div 
+                className={`flex gap-4 mt-3 ${needsScroll ? 'overflow-x-auto pb-1 thin-scrollbar' : ''}`}>
+                {visuals.map((visual, index) => (
                     <div key={index} className="flex-shrink-0">
                         {visual.type === 'video' ? (
                             <video
@@ -118,16 +122,33 @@ export function FinishedProjectsList() {
                                 </DialogContent>
                             </Dialog>
                         ) : (
-                            <Image
-                                src={visual.src}
-                                alt={visual.alt || `Visual ${index + 1}`}
-                                width={128}
-                                height={80}
-                                className="w-32 h-20 object-cover rounded border border-gray-200"
-                                loading="lazy"
-                                placeholder="blur"
-                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                            />
+                            <Dialog>
+                                <DialogTrigger asChild>
+                                    <div className="cursor-pointer">
+                                        <Image
+                                            src={visual.src}
+                                            alt={visual.alt || `Visual ${index + 1}`}
+                                            width={128}
+                                            height={80}
+                                            className="w-32 h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                            loading="lazy"
+                                            placeholder="blur"
+                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                        />
+                                    </div>
+                                </DialogTrigger>
+                                <DialogContent className="max-w-4xl max-h-[90vh] p-2">
+                                    <Image
+                                        src={visual.src}
+                                        alt={visual.alt || 'Image'}
+                                        width={800}
+                                        height={600}
+                                        className="w-full h-auto max-h-[80vh] object-contain"
+                                        placeholder="blur"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                    />
+                                </DialogContent>
+                            </Dialog>
                         )}
                     </div>
                 ))}
@@ -142,7 +163,7 @@ export function FinishedProjectsList() {
                 <div className="mb-16 ml-28">
                     <div className="flex items-end gap-4 mb-6">
                         <h1 className="text-4xl font-light text-black">
-                            everything i finished
+                            everything i built
                         </h1>
                         <p className="text-xs text-gray-500 pb-1">
                             - <a href="https://declankramper.com" className="hover:underline hover:text-gray-700 transition-colors">declan kramper</a>
