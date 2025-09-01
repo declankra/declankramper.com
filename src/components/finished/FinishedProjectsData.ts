@@ -1,17 +1,78 @@
 import { FinishedProject } from '@/types/finished';
 
+// TODO: Add the following projects:
+// - interactive letter
+// - kalo
+// - meet or not
+// - psprd
+// - race time calculator
+// - raspberry record player
+// - screencam recorder
+// - strava personality test
+// - upwardly
+// - validateidea
+// - website blocker
+// - melrose bagels
+// - ppt-2-prd
+// - sunlight sips chicago
+// - 1kby2025
+// - hackathon project
+// - how to use ai guides
+// - claude story writer
+// - lawn care business
+
 export const finishedProjects: FinishedProject[] = [
+    {
+        id: 'chitrack',
+        title: 'Chitrack',
+        subtitle: 'The most elegant way to track your Chicago morning commute',
+        month: 5,
+        year: 2025,
+        link: 'https://www.chitrack.com/?utm_source=portfolio&utm_campaign=everything_i_finished',
+        visuals: [
+            {
+                type: 'image',
+                src: '/finished/chitrack/ChiTrack.webp',
+                alt: 'Chitrack'
+            },
+            {
+                type: 'image',
+                src: '/finished/chitrack/caitlin_chitrack.png',
+                alt: 'Chitrack'
+            },
+            {
+                type: 'image',
+                src: '/finished/chitrack/campbell_chitrack.png',
+                alt: 'Chitrack'
+            },
+            {
+                type: 'image',
+                src: '/finished/chitrack/shoutout_chitrack.png',
+                alt: 'Chitrack'
+            },
+            {
+                type: 'video',
+                src: '/finished/chitrack/ability_to_view_all_upcoming_arrivals.mp4',
+                alt: 'Chitrack'
+            },
+            {
+                type: 'video',
+                src: '/finished/chitrack/improved_search_results_view.mp4',
+                alt: 'Chitrack'
+            }
+        ]
+    },
     {
         id: 'gradefinalboss',
         title: 'Grade Final Boss',
-        subtitle: 'a better rogerhub with personality',
+        subtitle: 'A better rogerhub with personality',
         month: 2,
         year: 2025,
         link: 'https://grade-final-boss-3lxl.vercel.app/',
         visuals: [
             {
                 type: 'gif',
-                src: '/videos/finished/grade-final-boss.gif',
+                src: '/finished/grade-final-boss.gif',
                 alt: 'Grade Final Boss Demo'
             }
         ]
@@ -19,18 +80,18 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'local-jarvis',
         title: 'Local Jarvis',
-        subtitle: '**Personal AI assistant that runs entirely on my MacBook using Ollama\'s OS model as a privacy-first alternative to Claude Code. It automatically indexes and updates my my notes using local vector database for RAG-powered context.**',
+        subtitle: 'Personal AI assistant that runs entirely on my MacBook using Ollama\'s OS model as a privacy-first alternative to Claude Code. It automatically indexes and updates my notes/memory using local vector database for RAG-powered context.',
         month: 8,
         year: 2025,
         visuals: [
             {
                 type: 'gif',
-                src: '/images/local-jarvis/local-jarvis.gif',
+                src: '/finished/local-jarvis/local-jarvis.gif',
                 alt: 'Local Jarvis Demo'
             },
             {
                 type: 'image',
-                src: '/images/local-jarvis/local-jarvis-log.png',
+                src: '/finished/local-jarvis/local-jarvis-log.png',
                 alt: 'Local Jarvis Log'
             }
         ]
@@ -44,7 +105,7 @@ export const finishedProjects: FinishedProject[] = [
         visuals: [
             {
                 type: 'video',
-                src: '/videos/finished/rc-tank.mp4',
+                src: '/finished/rc-tank.mp4',
                 alt: 'RC Tank'
             }
         ]
@@ -58,7 +119,7 @@ export const finishedProjects: FinishedProject[] = [
         visuals: [
             {
                 type: 'video',
-                src: '/videos/finished/remote-windshield-defroster.mp4',
+                src: '/finished/remote-windshield-defroster.mp4',
                 alt: 'Remote Windshield Defroster'
             }
         ]
@@ -75,7 +136,7 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/images/buildsTimeline/divvy-bottom.webp',
                 alt: 'Divvy Bike Business Case Preview',
-                pdfSrc: '/pdfs/finished/Divvy-Bike-Business-Case-Review.pdf'
+                pdfSrc: '/finished/Divvy-Bike-Business-Case-Review.pdf'
             }
         ]
     }
