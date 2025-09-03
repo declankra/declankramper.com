@@ -123,7 +123,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'rc-tank',
         title: 'RC Tank',
-        subtitle: 'Senior Design Toy Project - Arduino with 3D printed parts',
+        subtitle: 'Arduino with 3D printed parts',
         month: 4,
         year: 2022,
         visuals: [
@@ -131,20 +131,6 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'video',
                 src: '/finished/rc-tank.mp4',
                 alt: 'RC Tank'
-            }
-        ]
-    },
-    {
-        id: 'remote-windshield-defroster',
-        title: 'Remote Windshield Defroster',
-        subtitle: 'Senior Design Project - Bent metal portable housing with portable, remote control',
-        month: 10,
-        year: 2021,
-        visuals: [
-            {
-                type: 'video',
-                src: '/finished/remote-windshield-defroster.mp4',
-                alt: 'Remote Windshield Defroster'
             }
         ]
     },
@@ -163,5 +149,38 @@ export const finishedProjects: FinishedProject[] = [
                 pdfSrc: '/finished/Divvy-Bike-Business-Case-Review.pdf'
             }
         ]
+    },
+    {
+        id: 'next-level-lawn-care',
+        title: 'Next Level Lawn Care',
+        subtitle: 'My first business when I was 12. Made 60+ new friends and $50k.',
+        month: 1,
+        year: 2013,
+        visuals: [
+            {
+                type: 'image',
+                src: '/images/buildsTimeline/NextLevelLawnCare.webp',
+                alt: 'Next Level Lawn Care'
+            }
+        ]
     }
 ];
+
+
+//BACKLOG:
+/*{
+    id: 'remote-windshield-defroster',
+    title: 'Remote Windshield Defroster',
+    subtitle: 'Bent metal portable housing with portable, remote control',
+    month: 10,
+    year: 2021,
+    visuals: [
+        {
+            type: 'video',
+            src: '/finished/remote-windshield-defroster.mp4',
+            alt: 'Remote Windshield Defroster'
+        }
+    ]
+}
+
+*/
