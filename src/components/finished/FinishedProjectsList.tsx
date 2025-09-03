@@ -163,14 +163,14 @@ export function FinishedProjectsList() {
                 <div className="mb-16 ml-28">
                     <div className="flex items-end gap-4 mb-6">
                         <h1 className="text-4xl font-light text-black">
-                            everything i built
+                            Everything i built
                         </h1>
                         <p className="text-xs text-gray-500 pb-1">
                             - <a href="https://declankramper.com" className="hover:underline hover:text-gray-700 transition-colors">declan kramper</a>
                         </p>
                     </div>
-                    <h2 className="text-xl font-light text-gray-700">
-                        finishing is hard.
+                    <h2 className="text-lg font-light text-gray-700">
+                        because finishing is hard.
                     </h2>
                 </div>
 
