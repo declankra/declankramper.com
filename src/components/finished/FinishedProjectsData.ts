@@ -1,15 +1,10 @@
 import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
 
-// TODO: Add the following projects:
-// - claude story writer
-
-// relevant writing:
-// - how to build a full code prototype as a pm
-// - 
 
 // Left out
 // - psprd
 // - melrose bagels
+// - bud light euchre bracket
 // - 1kby2025
 
 export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
@@ -38,7 +33,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'local-jarvis',
         title: 'Local Jarvis',
-        subtitle: 'Personal AI assistant that runs entirely on my MacBook using Ollama\'s OS model as a privacy-first alternative to Claude Code. It automatically indexes and updates my notes/memory using local vector database for RAG-powered context.',
+        subtitle: 'Personal AI assistant that runs entirely on my MacBook using Ollama\'s OS model as a privacy-first alternative to Claude Code. It automatically indexes and updates my notes/memory using a local vector database for RAG-powered context.',
         month: 8,
         year: 2025,
         visuals: [
@@ -88,7 +83,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'screen-cam-recorder',
         title: 'Mac ScreenCam Recorder',
-        subtitle: 'I wanted to record my product demos and store them locally (alternative to Screen Studio)',
+        subtitle: 'I wanted to record my product demos and store them locally (alt to Screen Studio)',
         month: 5,
         year: 2025,
         visuals: [
@@ -190,13 +185,52 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/images/buildsTimeline/AspireHackathon.webp',
                 alt: 'PS Connect'
+            },
+            {
+                type: 'image',
+                src: '/finished/hackathon/hackathon-in-action.png',
+                alt: 'PS Connect'
+            }
+        ]
+    },
+    {
+        id: 'claude-story-creator',
+        title: 'Claude Story Creator',
+        subtitle: 'Create users stories in 20 minutes instead of 2.5 hours using Claude MCPs (internal tool v3)',
+        month: 8,
+        year: 2025,
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/claude-story-creator.mp4',
+                alt: 'Claude Story Creator'
+            }
+        ]
+    },
+    {
+        id: 'psprd',
+        title: 'psPRD.ai',
+        subtitle: 'Prototype for our firm\'s missing internal AI tool for product management (internal tool v2)',
+        month: 2,
+        year: 2025,
+        link: 'https://www.testing-new.site/',
+        visuals: [
+            {
+                type: 'image',
+                src: '/finished/psprd/psprd.png',
+                alt: 'PS PRD.ai'
+            },
+            {
+                type: 'video',
+                src: '/finished/psprd/psprd-demo.mp4',
+                alt: 'PS PRD.ai'
             }
         ]
     },
     {
     id: 'ppt-2-prd',
     title: 'Automated PRD Generator',
-    subtitle: 'Convert unstructured PowerPoint slides into a structured PRD (internal AI discovery tool v1)',
+    subtitle: 'Convert unstructured PowerPoint slides into a structured PRD (internal tool v1)',
     month: 2,
     year: 2025,
     link: 'https://ppt-2-prd.vercel.app/',
@@ -218,14 +252,19 @@ export const finishedProjects: FinishedProject[] = [
         visuals: [
             {
                 type: 'gif',
-                src: '/finished/grade-final-boss.gif',
+                src: '/finished/grade-final-boss/grade-final-boss.gif',
                 alt: 'Grade Final Boss Demo'
+            },
+            {
+                type: 'image',
+                src: '/finished/grade-final-boss/monster.png',
+                alt: 'Grade Final Boss Screenshot'
             }
         ]
     },
     {
-        id: 'Athlete Personality Test',
-        title: 'Athlete Personality Test',
+        id: 'Strava Personality Test',
+        title: 'Strava Personality Test',
         subtitle: 'What do your Strava posts say about you?',
         month: 1,
         year: 2025,
@@ -235,6 +274,11 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/images/buildsTimeline/AthletePersonalityTest.webp',
                 alt: 'Athlete Personality Test'
+            },
+            {
+                type: 'image',
+                src: '/finished/strava-personality-test/personality_result.png',
+                alt: 'Strava Personality Test Demo'
             }
         ]
     },
@@ -260,11 +304,42 @@ export const finishedProjects: FinishedProject[] = [
         month: 3,
         year: 2024,
         link: 'https://apps.apple.com/us/app/race-time-calculator/id6478423515?ppid=1dcc2c47-705e-4e5f-a97e-711ecd9089db',
+        learnMoreUrl: 'https://declankramper.notion.site/Race-Time-Predictor-App-6a485fdb13d84d07ab26e2aa7c3b2de0',
         visuals: [
             {
                 type: 'image',
                 src: '/images/buildsTimeline/RTCpreview.webp',
                 alt: 'Race Time Calculator'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/metrics.png',
+                alt: 'Race Time Calculator Metrics'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/process-chart.png',
+                alt: 'Race Time Calculator Process Chart'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/Results.png',
+                alt: 'Race Time Calculator Results'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/rate-it.png',
+                alt: 'Race Time Calculator Rate It'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/Feedback.png',
+                alt: 'Race Time Calculator Feedback'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/feedback-iteration.png',
+                alt: 'Race Time Calculator Feedback Iteration'
             }
         ]
     },
@@ -280,6 +355,16 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/images/buildsTimeline/MeetOrNot.webp',
                 alt: 'Meet or Not'
+            },
+            {
+                type: 'image',
+                src: '/finished/meet-or-not/flowchart-screenshot.png',
+                alt: 'Meet or Not Flowchart'
+            },
+            {
+                type: 'image',
+                src: '/finished/meet-or-not/results.jpeg',
+                alt: 'Meet or Not Meeting Summary'
             }
         ]
     },
@@ -295,7 +380,8 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/images/buildsTimeline/RecordPlayer.webp',
                 alt: 'Magic Record Player'
-            }
+            },
+
         ]
     },
     {
