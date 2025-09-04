@@ -6,11 +6,24 @@ import { ArrowUpRight, FileText, ChevronDown, Users, TrendingUp } from 'lucide-r
 import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
 import { finishedProjects, currentlyBuildingProjects } from './FinishedProjectsData';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { VideoModal } from '@/components/ui/video-modal';
+import { MobileWarningModal } from '@/components/ui/mobile-warning-modal';
+import { useMobileDetection } from '@/hooks/useMobileDetection';
 import './scrollbar.css';
 
 export function FinishedProjectsList() {
     const [isCurrentlyBuildingExpanded, setIsCurrentlyBuildingExpanded] = useState(true);
     const [isShippedExpanded, setIsShippedExpanded] = useState(true);
+    const [modalVideo, setModalVideo] = useState<string | null>(null);
+    const { isMobile, isLoaded } = useMobileDetection();
+    const [showMobileWarning, setShowMobileWarning] = useState(false);
+
+    // Show mobile warning modal when mobile is detected
+    React.useEffect(() => {
+        if (isLoaded && isMobile) {
+            setShowMobileWarning(true);
+        }
+    }, [isLoaded, isMobile]);
     
     const formatNumber = (num: number) => {
         return new Intl.NumberFormat('en-US').format(num);
@@ -53,28 +66,24 @@ export function FinishedProjectsList() {
                 {visuals.map((visual, index) => (
                     <div key={index} className="flex-shrink-0">
                         {visual.type === 'video' ? (
-                            <video
-                                src={visual.src}
-                                className="w-32 h-20 object-cover rounded border border-gray-200 cursor-pointer"
-                                preload="metadata"
-                                muted
-                                onMouseEnter={(e) => {
-                                    const video = e.target as HTMLVideoElement;
-                                    video.controls = true;
-                                }}
-                                onMouseLeave={(e) => {
-                                    const video = e.target as HTMLVideoElement;
-                                    if (video.paused) {
-                                        video.controls = false;
-                                    }
-                                }}
-                                onClick={(e) => {
-                                    const video = e.target as HTMLVideoElement;
-                                    if (video.paused) {
-                                        video.play();
-                                    }
-                                }}
-                            />
+                            <div 
+                                className="relative group cursor-pointer"
+                                onClick={() => setModalVideo(visual.src)}
+                            >
+                                <video
+                                    src={visual.src}
+                                    className="w-32 h-20 object-cover rounded border border-gray-200"
+                                    preload="metadata"
+                                    muted
+                                />
+                                <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity rounded flex items-center justify-center">
+                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
                         ) : visual.type === 'pdf' ? (
                             <div
                                 className="w-32 h-20 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
@@ -173,10 +182,10 @@ export function FinishedProjectsList() {
     };
 
     return (
-        <div className="min-h-screen bg-white py-12 ml-32">
+        <div className="min-h-screen bg-white py-12 ml-4 md:ml-32">
             <div className="max-w-4xl mx-auto px-4">
                 {/* Header */}
-                <div className="mb-16 ml-28">
+                <div className="mb-8 sm:mb-16 ml-4 md:ml-28">
                     <div className="flex items-end gap-4 mb-6">
                         <h1 className="text-4xl font-light text-black">
                             Everything i built
@@ -404,6 +413,21 @@ export function FinishedProjectsList() {
                     )}
                 </div>
             </div>
+            
+            {/* Video Modal */}
+            <VideoModal 
+                isOpen={!!modalVideo}
+                onClose={() => setModalVideo(null)}
+                videoSrc={modalVideo || ''}
+                autoPlay={true}
+                muted={false}
+            />
+
+            {/* Mobile Warning Modal */}
+            <MobileWarningModal 
+                isOpen={showMobileWarning}
+                onClose={() => setShowMobileWarning(false)}
+            />
         </div>
     );
 }
