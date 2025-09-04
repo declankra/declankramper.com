@@ -416,7 +416,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'next-level-lawn-care',
         title: 'Next Level Lawn Care',
-        subtitle: 'Started my first business when I was 12. Made 60+ new friends and $50k.',
+        subtitle: 'Started my first business when I was 12. Made 60+ new friends and $30k.',
         month: 1,
         year: 2013,
         visuals: [

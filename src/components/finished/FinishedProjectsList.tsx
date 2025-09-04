@@ -353,7 +353,7 @@ export function FinishedProjectsList() {
                                 <span className="px-2">|</span>
                                 Total Users: <span className="font-semibold">{formatNumber(3235)}</span>
                                 <span className="px-2">|</span>
-                                Value Created: <span className="font-semibold">{formatCurrency(50061)}</span>
+                                Value Created: <span className="font-semibold">{formatCurrency(30061)}</span>
                             </span>
                         </div>
                     </div>
@@ -364,7 +364,7 @@ export function FinishedProjectsList() {
                         <div className="text-xs text-gray-500 font-light">
                             Total Users: <span className="font-semibold">{formatNumber(3235)}</span>
                             <span className="px-2">|</span>
-                            Value Created: <span className="font-semibold">{formatCurrency(50061)}</span>
+                            Value Created: <span className="font-semibold">{formatCurrency(30061)}</span>
                         </div>
                     </div>
 
