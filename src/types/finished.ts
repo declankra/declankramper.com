@@ -12,6 +12,7 @@ export interface FinishedProject {
     month: number; // 1-12
     year: number;
     link?: string;
+    learnMoreUrl?: string;
     visuals?: FinishedProjectVisual[]; // 0-3 items
 }
 

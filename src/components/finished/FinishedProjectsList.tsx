@@ -182,10 +182,10 @@ export function FinishedProjectsList() {
     };
 
     return (
-        <div className="min-h-screen bg-white py-12 ml-4 md:ml-32">
+        <div className="min-h-screen bg-white py-12 ml-2 md:ml-32">
             <div className="max-w-4xl mx-auto px-4">
                 {/* Header */}
-                <div className="mb-8 sm:mb-16 ml-4 md:ml-28">
+                <div className="mb-8 sm:mb-16 ml-2 md:ml-28">
                     <div className="flex items-end gap-4 mb-6">
                         <h1 className="text-2xl sm:text-4xl font-light text-black">
                             Everything i built
@@ -312,7 +312,7 @@ export function FinishedProjectsList() {
                         )}
                         
                         {/* Divider line */}
-                        <div className="ml-4 md:ml-28 mt-12 mb-12 border-t border-gray-200"></div>
+                        <div className="ml-2 md:ml-28 mt-12 mb-12 border-t border-gray-200"></div>
                     </div>
                 )}
 
@@ -410,6 +410,19 @@ export function FinishedProjectsList() {
                                                     {/* Subtitle */}
                                                     <p className="text-sm sm:text-base font-light text-gray-600 mb-2">
                                                         {project.subtitle}
+                                                        {project.learnMoreUrl && (
+                                                            <>
+                                                                {' '}
+                                                                <a
+                                                                    href={project.learnMoreUrl}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                    className="hover:underline hover:text-gray-700 transition-colors"
+                                                                >
+                                                                    (learn more)
+                                                                </a>
+                                                            </>
+                                                        )}
                                                     </p>
 
                                                     {/* Visuals */}
@@ -438,6 +451,17 @@ export function FinishedProjectsList() {
                 isOpen={showMobileWarning}
                 onClose={() => setShowMobileWarning(false)}
             />
+
+            {/* Footnote */}
+            <div className="text-center py-8 px-4">
+                <p className="text-sm text-gray-500">
+                    i{' '}
+                    <a href="/writes" className="underline hover:text-gray-700 transition-colors">
+                        write
+                    </a>
+                    {' '}too...
+                </p>
+            </div>
         </div>
     );
 }
