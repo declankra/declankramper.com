@@ -19,11 +19,11 @@ export function FinishedProjectsList() {
     const [showMobileWarning, setShowMobileWarning] = useState(false);
 
     // Show mobile warning modal when mobile is detected
-    React.useEffect(() => {
-        if (isLoaded && isMobile) {
-            setShowMobileWarning(true);
-        }
-    }, [isLoaded, isMobile]);
+    // React.useEffect(() => {
+    //     if (isLoaded && isMobile) {
+    //         setShowMobileWarning(true);
+    //     }
+    // }, [isLoaded, isMobile]);
     
     const formatNumber = (num: number) => {
         return new Intl.NumberFormat('en-US').format(num);
@@ -62,7 +62,7 @@ export function FinishedProjectsList() {
 
         return (
             <div 
-                className={`flex gap-4 mt-3 ${needsScroll ? 'overflow-x-auto pb-1 thin-scrollbar' : ''}`}>
+                className={`flex gap-2 sm:gap-4 mt-3 ${needsScroll ? 'overflow-x-auto pb-1 thin-scrollbar' : ''}`}>
                 {visuals.map((visual, index) => (
                     <div key={index} className="flex-shrink-0">
                         {visual.type === 'video' ? (
@@ -72,7 +72,7 @@ export function FinishedProjectsList() {
                             >
                                 <video
                                     src={visual.src}
-                                    className="w-32 h-20 object-cover rounded border border-gray-200"
+                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200"
                                     preload="metadata"
                                     muted
                                 />
@@ -86,7 +86,7 @@ export function FinishedProjectsList() {
                             </div>
                         ) : visual.type === 'pdf' ? (
                             <div
-                                className="w-32 h-20 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
+                                className="w-24 h-16 sm:w-32 sm:h-20 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
                                 onClick={() => window.open(visual.src, '_blank')}
                             >
                                 <FileText className="w-6 h-6 text-gray-600 mb-1" />
@@ -101,7 +101,7 @@ export function FinishedProjectsList() {
                                             alt={visual.alt || `Visual ${index + 1}`}
                                             width={128}
                                             height={80}
-                                            className="w-32 h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                            className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
                                             loading="lazy"
                                             unoptimized
                                         />
@@ -127,7 +127,7 @@ export function FinishedProjectsList() {
                                             alt={visual.alt || `Visual ${index + 1}`}
                                             width={128}
                                             height={80}
-                                            className="w-32 h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                            className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
                                             loading="lazy"
                                             placeholder="blur"
                                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
@@ -155,7 +155,7 @@ export function FinishedProjectsList() {
                                             alt={visual.alt || `Visual ${index + 1}`}
                                             width={128}
                                             height={80}
-                                            className="w-32 h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                            className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
                                             loading="lazy"
                                             placeholder="blur"
                                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
@@ -187,14 +187,14 @@ export function FinishedProjectsList() {
                 {/* Header */}
                 <div className="mb-8 sm:mb-16 ml-4 md:ml-28">
                     <div className="flex items-end gap-4 mb-6">
-                        <h1 className="text-4xl font-light text-black">
+                        <h1 className="text-2xl sm:text-4xl font-light text-black">
                             Everything i built
                         </h1>
                         <p className="text-xs text-gray-500 pb-1">
                             - <a href="https://declankramper.com" className="hover:underline hover:text-gray-700 transition-colors">declan kramper</a>
                         </p>
                     </div>
-                    <h2 className="text-lg font-light text-gray-700">
+                    <h2 className="text-base sm:text-lg font-light text-gray-700">
                         because finishing is hard.
                     </h2>
                 </div>
@@ -234,9 +234,9 @@ export function FinishedProjectsList() {
                 {currentlyBuildingProjects.length > 0 && (
                     <div className="mb-12">
                         {/* Section header with toggle */}
-                        <div className="flex gap-12 mb-6">
+                        <div className="flex gap-4 sm:gap-12 mb-6">
                             {/* Blinking red dot column */}
-                            <div className="w-16 flex-shrink-0 flex justify-end items-start pt-1">
+                            <div className="w-12 sm:w-16 flex-shrink-0 flex justify-end items-start pt-1">
                                 <div className="relative">
                                     <div className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
                                     <div className="absolute inset-0 w-3 h-3 bg-red-600 rounded-full animate-ping"></div>
@@ -272,9 +272,9 @@ export function FinishedProjectsList() {
                         {isCurrentlyBuildingExpanded && (
                             <>
                                 {currentlyBuildingProjects.map((project, index) => (
-                                    <div key={project.id} className="flex gap-12 mb-8">
+                                    <div key={project.id} className="flex gap-4 sm:gap-12 mb-8">
                                         {/* Empty column for alignment (no dot for individual items) */}
-                                        <div className="w-16 flex-shrink-0">
+                                        <div className="w-12 sm:w-16 flex-shrink-0">
                                         </div>
 
                                         {/* Project content */}
@@ -286,20 +286,20 @@ export function FinishedProjectsList() {
                                                         href={project.link}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
+                                                        className="text-base sm:text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
                                                     >
                                                         {project.title}
                                                         <ArrowUpRight className="w-4 h-4" />
                                                     </a>
                                                 ) : (
-                                                    <h3 className="text-lg font-normal text-black">
+                                                    <h3 className="text-base sm:text-lg font-normal text-black">
                                                         {project.title}
                                                     </h3>
                                                 )}
                                             </div>
 
                                             {/* Subtitle */}
-                                            <p className="text-base font-light text-gray-600 mb-2">
+                                            <p className="text-sm sm:text-base font-light text-gray-600 mb-2">
                                                 {project.subtitle}
                                             </p>
 
@@ -312,16 +312,16 @@ export function FinishedProjectsList() {
                         )}
                         
                         {/* Divider line */}
-                        <div className="ml-28 mt-12 mb-12 border-t border-gray-200"></div>
+                        <div className="ml-4 md:ml-28 mt-12 mb-12 border-t border-gray-200"></div>
                     </div>
                 )}
 
                 {/* Shipped Section */}
                 <div className="mb-12">
                     {/* Section header with toggle */}
-                    <div className="flex gap-12 mb-6">
+                    <div className="flex gap-4 sm:gap-12 mb-6">
                         {/* Green dot column */}
-                        <div className="w-16 flex-shrink-0 flex justify-end items-start pt-1">
+                        <div className="w-12 sm:w-16 flex-shrink-0 flex justify-end items-start pt-1">
                             <div className="w-3 h-3 bg-green-600 rounded-full"></div>
                         </div>
 
@@ -348,13 +348,23 @@ export function FinishedProjectsList() {
                                 Shipped
                             </button>
                             
-                            {/* Impact numbers */}
-                            <span className="text-xs text-gray-500 font-light">
+                            {/* Impact numbers - hidden on mobile */}
+                            <span className="hidden sm:inline text-xs text-gray-500 font-light">
                                 <span className="px-2">|</span>
                                 Total Users: <span className="font-semibold">{formatNumber(3235)}</span>
                                 <span className="px-2">|</span>
                                 Value Created: <span className="font-semibold">{formatCurrency(50061)}</span>
                             </span>
+                        </div>
+                    </div>
+
+                    {/* Impact numbers - mobile only, on separate line */}
+                    <div className="sm:hidden flex gap-4 mb-6">
+                        <div className="w-12 flex-shrink-0"></div>
+                        <div className="text-xs text-gray-500 font-light">
+                            Total Users: <span className="font-semibold">{formatNumber(3235)}</span>
+                            <span className="px-2">|</span>
+                            Value Created: <span className="font-semibold">{formatCurrency(50061)}</span>
                         </div>
                     </div>
 
@@ -366,11 +376,11 @@ export function FinishedProjectsList() {
                                 .map(([year, projects]) => (
                                     <div key={year} className="mb-12">
                                         {projects.map((project, index) => (
-                                            <div key={project.id} className="flex gap-12 mb-8">
+                                            <div key={project.id} className="flex gap-4 sm:gap-12 mb-8">
                                                 {/* Year column (only show for first project of the year) */}
-                                                <div className="w-16 flex-shrink-0 text-right">
+                                                <div className="w-12 sm:w-16 flex-shrink-0 text-right">
                                                     {index === 0 && (
-                                                        <span className="text-lg font-normal text-gray-400">
+                                                        <span className="text-base sm:text-lg font-normal text-gray-400">
                                                             {year}
                                                         </span>
                                                     )}
@@ -385,20 +395,20 @@ export function FinishedProjectsList() {
                                                                 href={project.link}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
+                                                                className="text-base sm:text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
                                                             >
                                                                 {project.title}
                                                                 <ArrowUpRight className="w-4 h-4" />
                                                             </a>
                                                         ) : (
-                                                            <h3 className="text-lg font-normal text-black">
+                                                            <h3 className="text-base sm:text-lg font-normal text-black">
                                                                 {project.title}
                                                             </h3>
                                                         )}
                                                     </div>
 
                                                     {/* Subtitle */}
-                                                    <p className="text-base font-light text-gray-600 mb-2">
+                                                    <p className="text-sm sm:text-base font-light text-gray-600 mb-2">
                                                         {project.subtitle}
                                                     </p>
 
