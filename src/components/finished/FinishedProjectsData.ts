@@ -50,6 +50,20 @@ export const finishedProjects: FinishedProject[] = [
         ]
     },
     {
+        id: 'claude-story-creator',
+        title: 'Claude Story Writer',
+        subtitle: 'Create users stories in 20 mins instead of 2.5 hrs using Claude MCPs (internal tool v3)',
+        month: 8,
+        year: 2025,
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/claude-story-creator.mp4',
+                alt: 'Claude Story Creator'
+            }
+        ]
+    },
+    {
         id: 'interactive-letter',
         title: 'Interactive Personalized Digital Letter',
         subtitle: 'HR couldn\'t give me addresses for the real thing, so I made the next best thing',
@@ -190,20 +204,6 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/finished/hackathon/hackathon-in-action.png',
                 alt: 'PS Connect'
-            }
-        ]
-    },
-    {
-        id: 'claude-story-creator',
-        title: 'Claude Story Creator',
-        subtitle: 'Create users stories in 20 minutes instead of 2.5 hours using Claude MCPs (internal tool v3)',
-        month: 8,
-        year: 2025,
-        visuals: [
-            {
-                type: 'video',
-                src: '/finished/claude-story-creator.mp4',
-                alt: 'Claude Story Creator'
             }
         ]
     },

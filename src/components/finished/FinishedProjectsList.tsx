@@ -62,7 +62,7 @@ export function FinishedProjectsList() {
 
         return (
             <div 
-                className={`flex gap-2 sm:gap-4 mt-3 ${needsScroll ? 'overflow-x-auto pb-1 thin-scrollbar' : ''}`}>
+                className={`flex gap-1.5 sm:gap-3 mt-2 ${needsScroll ? 'overflow-x-auto pb-0.5 thin-scrollbar' : ''}`}>
                 {visuals.map((visual, index) => (
                     <div key={index} className="flex-shrink-0">
                         {visual.type === 'video' ? (
@@ -182,19 +182,19 @@ export function FinishedProjectsList() {
     };
 
     return (
-        <div className="min-h-screen bg-white py-12 ml-2 md:ml-32">
-            <div className="max-w-4xl mx-auto px-4">
+        <div className="min-h-screen bg-white py-8 ml-1 md:ml-22">
+            <div className="max-w-3xl mx-auto px-3">
                 {/* Header */}
-                <div className="mb-8 sm:mb-16 ml-2 md:ml-28">
-                    <div className="flex items-end gap-4 mb-6">
-                        <h1 className="text-2xl sm:text-4xl font-light text-black">
+                <div className="mb-6 sm:mb-11 ml-1 md:ml-20">
+                    <div className="flex items-end gap-3 mb-4">
+                        <h1 className="text-xl sm:text-3xl font-light text-black">
                             Everything i built
                         </h1>
-                        <p className="text-xs text-gray-500 pb-1">
+                        <p className="text-[10px] text-gray-500 pb-0.5">
                             - <a href="https://declankramper.com" className="hover:underline hover:text-gray-700 transition-colors">declan kramper</a>
                         </p>
                     </div>
-                    <h2 className="text-base sm:text-lg font-light text-gray-700">
+                    <h2 className="text-sm sm:text-base font-light text-gray-700">
                         because finishing is hard.
                     </h2>
                 </div>
@@ -232,19 +232,19 @@ export function FinishedProjectsList() {
 
                 {/* Currently Building Section */}
                 {currentlyBuildingProjects.length > 0 && (
-                    <div className="mb-12">
+                    <div className="mb-8">
                         {/* Section header with toggle */}
-                        <div className="flex gap-4 sm:gap-12 mb-6">
+                        <div className="flex gap-3 sm:gap-8 mb-4">
                             {/* Blinking red dot column */}
-                            <div className="w-12 sm:w-16 flex-shrink-0 flex justify-end items-start pt-1">
+                            <div className="w-8 sm:w-11 flex-shrink-0 flex justify-end items-start pt-0.5">
                                 <div className="relative">
-                                    <div className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
-                                    <div className="absolute inset-0 w-3 h-3 bg-red-600 rounded-full animate-ping"></div>
+                                    <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+                                    <div className="absolute inset-0 w-2 h-2 bg-red-600 rounded-full animate-ping"></div>
                                 </div>
                             </div>
 
                             {/* Content with chevron and title */}
-                            <div className="flex-1 max-w-2xl flex items-center gap-2">
+                            <div className="flex-1 max-w-xl flex items-center gap-1.5">
                                 {/* Chevron toggle button */}
                                 <button
                                     onClick={() => setIsCurrentlyBuildingExpanded(!isCurrentlyBuildingExpanded)}
@@ -252,7 +252,7 @@ export function FinishedProjectsList() {
                                     aria-label={isCurrentlyBuildingExpanded ? "Collapse section" : "Expand section"}
                                 >
                                     <ChevronDown 
-                                        className={`w-3 h-3 text-red-600 transition-transform ${
+                                        className={`w-2.5 h-2.5 text-red-600 transition-transform ${
                                             isCurrentlyBuildingExpanded ? '' : '-rotate-90'
                                         }`}
                                     />
@@ -261,7 +261,7 @@ export function FinishedProjectsList() {
                                 {/* Currently Building label */}
                                 <button
                                     onClick={() => setIsCurrentlyBuildingExpanded(!isCurrentlyBuildingExpanded)}
-                                    className="text-xs font-medium text-red-600 uppercase tracking-wider hover:text-red-700 transition-colors"
+                                    className="text-[10px] font-medium text-red-600 uppercase tracking-wider hover:text-red-700 transition-colors"
                                 >
                                     Currently Building
                                 </button>
@@ -272,34 +272,34 @@ export function FinishedProjectsList() {
                         {isCurrentlyBuildingExpanded && (
                             <>
                                 {currentlyBuildingProjects.map((project, index) => (
-                                    <div key={project.id} className="flex gap-4 sm:gap-12 mb-8">
+                                    <div key={project.id} className="flex gap-3 sm:gap-8 mb-6">
                                         {/* Empty column for alignment (no dot for individual items) */}
-                                        <div className="w-12 sm:w-16 flex-shrink-0">
+                                        <div className="w-8 sm:w-11 flex-shrink-0">
                                         </div>
 
                                         {/* Project content */}
-                                        <div className="flex-1 max-w-2xl">
+                                        <div className="flex-1 max-w-xl">
                                             {/* Title with optional link */}
-                                            <div className="flex items-center gap-2 mb-1">
+                                            <div className="flex items-center gap-1.5 mb-0.5">
                                                 {project.link ? (
                                                     <a
                                                         href={project.link}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-base sm:text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
+                                                        className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
                                                     >
                                                         {project.title}
-                                                        <ArrowUpRight className="w-4 h-4" />
+                                                        <ArrowUpRight className="w-3 h-3" />
                                                     </a>
                                                 ) : (
-                                                    <h3 className="text-base sm:text-lg font-normal text-black">
+                                                    <h3 className="text-sm sm:text-base font-normal text-black">
                                                         {project.title}
                                                     </h3>
                                                 )}
                                             </div>
 
                                             {/* Subtitle */}
-                                            <p className="text-sm sm:text-base font-light text-gray-600 mb-2">
+                                            <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
                                                 {project.subtitle}
                                             </p>
 
@@ -312,21 +312,21 @@ export function FinishedProjectsList() {
                         )}
                         
                         {/* Divider line */}
-                        <div className="ml-2 md:ml-28 mt-12 mb-12 border-t border-gray-200"></div>
+                        <div className="ml-1 md:ml-20 mt-8 mb-8 border-t border-gray-200"></div>
                     </div>
                 )}
 
                 {/* Shipped Section */}
-                <div className="mb-12">
+                <div className="mb-8">
                     {/* Section header with toggle */}
-                    <div className="flex gap-4 sm:gap-12 mb-6">
+                    <div className="flex gap-3 sm:gap-8 mb-4">
                         {/* Green dot column */}
-                        <div className="w-12 sm:w-16 flex-shrink-0 flex justify-end items-start pt-1">
-                            <div className="w-3 h-3 bg-green-600 rounded-full"></div>
+                        <div className="w-8 sm:w-11 flex-shrink-0 flex justify-end items-start pt-0.5">
+                            <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                         </div>
 
                         {/* Content with chevron and title */}
-                        <div className="flex-1 max-w-2xl flex items-center gap-2">
+                        <div className="flex-1 max-w-xl flex items-center gap-1.5">
                             {/* Chevron toggle button */}
                             <button
                                 onClick={() => setIsShippedExpanded(!isShippedExpanded)}
@@ -334,7 +334,7 @@ export function FinishedProjectsList() {
                                 aria-label={isShippedExpanded ? "Collapse section" : "Expand section"}
                             >
                                 <ChevronDown 
-                                    className={`w-3 h-3 text-green-600 transition-transform ${
+                                    className={`w-2.5 h-2.5 text-green-600 transition-transform ${
                                         isShippedExpanded ? '' : '-rotate-90'
                                     }`}
                                 />
@@ -343,28 +343,28 @@ export function FinishedProjectsList() {
                             {/* Shipped label */}
                             <button
                                 onClick={() => setIsShippedExpanded(!isShippedExpanded)}
-                                className="text-xs font-medium text-green-600 uppercase tracking-wider hover:text-green-700 transition-colors"
+                                className="text-[10px] font-medium text-green-600 uppercase tracking-wider hover:text-green-700 transition-colors"
                             >
                                 Shipped
                             </button>
                             
                             {/* Impact numbers - hidden on mobile */}
-                            <span className="hidden sm:inline text-xs text-gray-500 font-light">
+                            <span className="hidden sm:inline text-[10px] text-gray-500 font-light">
                                 <span className="px-2">|</span>
-                                Total Users: <span className="font-semibold">{formatNumber(3235)}</span>
+                                Total Users: <span className="font-semibold text-black">{formatNumber(3235)}</span>
                                 <span className="px-2">|</span>
-                                Value Created: <span className="font-semibold">{formatCurrency(30061)}</span>
+                                Value Created: <span className="font-semibold text-black">{formatCurrency(30061)}</span>
                             </span>
                         </div>
                     </div>
 
                     {/* Impact numbers - mobile only, on separate line */}
-                    <div className="sm:hidden flex gap-4 mb-6">
-                        <div className="w-12 flex-shrink-0"></div>
-                        <div className="text-xs text-gray-500 font-light">
-                            Total Users: <span className="font-semibold">{formatNumber(3235)}</span>
+                    <div className="sm:hidden flex gap-3 mb-4">
+                        <div className="w-8 flex-shrink-0"></div>
+                        <div className="text-[10px] text-gray-500 font-light">
+                            Total Users: <span className="font-semibold text-black">{formatNumber(3235)}</span>
                             <span className="px-2">|</span>
-                            Value Created: <span className="font-semibold">{formatCurrency(30061)}</span>
+                            Value Created: <span className="font-semibold text-black">{formatCurrency(30061)}</span>
                         </div>
                     </div>
 
@@ -374,41 +374,41 @@ export function FinishedProjectsList() {
                             {Object.entries(projectsByYear)
                                 .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
                                 .map(([year, projects]) => (
-                                    <div key={year} className="mb-12">
+                                    <div key={year} className="mb-8">
                                         {projects.map((project, index) => (
-                                            <div key={project.id} className="flex gap-4 sm:gap-12 mb-8">
+                                            <div key={project.id} className="flex gap-3 sm:gap-8 mb-6">
                                                 {/* Year column (only show for first project of the year) */}
-                                                <div className="w-12 sm:w-16 flex-shrink-0 text-right">
+                                                <div className="w-8 sm:w-11 flex-shrink-0 text-right">
                                                     {index === 0 && (
-                                                        <span className="text-base sm:text-lg font-normal text-gray-400">
+                                                        <span className="text-sm sm:text-base font-normal text-gray-400">
                                                             {year}
                                                         </span>
                                                     )}
                                                 </div>
 
                                                 {/* Project content */}
-                                                <div className="flex-1 max-w-2xl">
+                                                <div className="flex-1 max-w-xl">
                                                     {/* Title with optional link */}
-                                                    <div className="flex items-center gap-2 mb-1">
+                                                    <div className="flex items-center gap-1.5 mb-0.5">
                                                         {project.link ? (
                                                             <a
                                                                 href={project.link}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="text-base sm:text-lg font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-1"
+                                                                className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
                                                             >
                                                                 {project.title}
-                                                                <ArrowUpRight className="w-4 h-4" />
+                                                                <ArrowUpRight className="w-3 h-3" />
                                                             </a>
                                                         ) : (
-                                                            <h3 className="text-base sm:text-lg font-normal text-black">
+                                                            <h3 className="text-sm sm:text-base font-normal text-black">
                                                                 {project.title}
                                                             </h3>
                                                         )}
                                                     </div>
 
                                                     {/* Subtitle */}
-                                                    <p className="text-sm sm:text-base font-light text-gray-600 mb-2">
+                                                    <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
                                                         {project.subtitle}
                                                         {project.learnMoreUrl && (
                                                             <>
@@ -453,8 +453,8 @@ export function FinishedProjectsList() {
             />
 
             {/* Footnote */}
-            <div className="text-center py-8 px-4">
-                <p className="text-sm text-gray-500">
+            <div className="text-center py-6 px-3">
+                <p className="text-xs text-gray-500">
                     i{' '}
                     <a href="/writes" className="underline hover:text-gray-700 transition-colors">
                         write
