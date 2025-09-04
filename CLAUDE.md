@@ -30,6 +30,7 @@ This is a Next.js 14+ portfolio website with the following structure:
 - **Database**: Supabase (for contact form and analytics)
 - **Email**: Resend API for contact form
 - **Content**: Markdown files in `content/posts/` processed with gray-matter and remark
+- **Deployment**: Vercel (with Git LFS support for media assets)
 
 ### Directory Structure
 - `src/app/` - Next.js App Router pages and API routes
