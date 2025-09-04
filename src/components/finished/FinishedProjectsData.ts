@@ -8,7 +8,6 @@ import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
 // - 
 
 // Left out
-// - kalo
 // - psprd
 // - melrose bagels
 // - 1kby2025
@@ -31,7 +30,7 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
     {
         id: 'construction-industry-agent',
         title: 'Construction Industry Agent',
-        subtitle: 'Partnering with a Chicago-based fiber optics construction company to build an AI agent to automate the subimttal package workflow (and beyond)',
+        subtitle: 'Partnering with a Chicago-based fiber optics construction company to build an AI agent to automate the submittal package workflow (and beyond)',
     }
 ];
 
@@ -302,7 +301,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'kalo-website ',
         title: 'Recruiting Company Website Redesign',
-        subtitle: 'Redesigned Chicago-based recruiting company\'s website to improve user experience and conversion rates',
+        subtitle: 'Increased website traffic by 88% and converted 12% more visitors into leads',
         month: 8,
         year: 2022,
         visuals: [
