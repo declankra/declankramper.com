@@ -1,10 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
+import { VideoModal } from '@/components/ui/video-modal';
 
 export default function RunsPage() {
+  const [showVideoModal, setShowVideoModal] = useState(false);
   return (
     <div className="min-h-screen flex flex-col items-center p-4 md:p-8 relative">
       {/* Breadcrumb at the top */}
@@ -56,6 +59,25 @@ export default function RunsPage() {
           transition={{ delay: 0.6, duration: 0.6 }}
         >
           More thoughts and numbers coming soon
+        </motion.p>
+        
+        {/* Training note */}
+        <motion.p 
+          className="text-sm text-gray-500 text-center mt-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7, duration: 0.6 }}
+        >
+          (currently{' '}
+          <Link 
+            href="https://www.strava.com/athletes/98367252" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="underline hover:text-gray-700 transition-colors"
+          >
+            training
+          </Link>
+          {' '}to qualify for Boston in Chicago on Oct 12)
         </motion.p>
       </div>
     </div>
