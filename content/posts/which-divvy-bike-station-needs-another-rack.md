@@ -88,7 +88,7 @@ The handful of high-DPI docks represent structural pain points inside an otherwi
 3. **Revenue lens** – model upside from longer ride minutes or membership retention, not just cost savings.
 4. **E-bike stray distance** – another proxy for docking friction, especially where charging docks are scarce. ([planetizen.com](https://www.planetizen.com/news/2024/05/128815-e-bikes-contributing-bike-share-growth?utm_source=chatgpt.com))
 
----
+
 
 ### Main Critique (MOO) of the current approach
 
