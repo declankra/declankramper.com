@@ -208,7 +208,7 @@ export const finishedProjects: FinishedProject[] = [
         ]
     },
     {
-        id: 'psprd',
+        id: 'psPRD',
         title: 'psPRD.ai',
         subtitle: 'Prototype for our firm\'s missing internal AI tool for product management (internal tool v2)',
         month: 2,
@@ -217,12 +217,12 @@ export const finishedProjects: FinishedProject[] = [
         visuals: [
             {
                 type: 'image',
-                src: '/finished/psprd/psprd.png',
+                src: '/finished/psPRD/psPRD.png',
                 alt: 'PS PRD.ai'
             },
             {
                 type: 'video',
-                src: '/finished/psprd/psprd-demo.mp4',
+                src: '/finished/psPRD/psPRD-demo.mp4',
                 alt: 'PS PRD.ai'
             }
         ]
