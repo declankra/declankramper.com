@@ -318,6 +318,21 @@ export const finishedProjects: FinishedProject[] = [
             },
             {
                 type: 'image',
+                src: '/finished/race-time-calculator/code-architecture.png',
+                alt: 'Race Time Calculator Code Architecture'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/great-job-20-dollar.png',
+                alt: 'Race Time Calculator Great Job 20 Dollar'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/key_events.png',
+                alt: 'Race Time Calculator Metrics 2'
+            },
+            {
+                type: 'image',
                 src: '/finished/race-time-calculator/process-chart.png',
                 alt: 'Race Time Calculator Process Chart'
             },
