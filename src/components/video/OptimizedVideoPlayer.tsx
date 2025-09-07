@@ -130,12 +130,7 @@ export function OptimizedVideoPlayer({ src, title, posterFrame }: OptimizedVideo
                         </div>
                     )}
 
-                    {/* Loading state */}
-                    {isLoading && !hasError && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <Loader2 className="w-12 h-12 text-white animate-spin" />
-                        </div>
-                    )}
+                    {/* Loading state - removed since native controls show their own spinner */}
 
                     {/* Play button overlay (when paused and video hasn't started) */}
                     {showPlayButton && !hasError && isVideoReady && (
