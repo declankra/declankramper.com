@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Download, Share, ExternalLink } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Mail, Download, Share } from 'lucide-react';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import { toast } from 'sonner';
 
@@ -85,60 +83,48 @@ export default function ResumePage() {
           className="text-center mb-12"
         >
           {/* Name */}
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4">
             Declan Kramper
           </h1>
           
-          {/* Contact Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-
-            
-            <Button
+          {/* Contact Links */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <button
               onClick={handleDownload}
-              variant="outline"
-              size="lg"
-              className="flex items-center gap-2"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
             >
-              <Download className="w-4 h-4" />
-              Download Resume
-            </Button>
+              <Download className="w-3.5 h-3.5" />
+              download resume
+            </button>
 
-            <Button
+            <button
               onClick={handleEmailClick}
-              variant="default"
-              size="lg"
-              className="flex items-center gap-2"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
             >
-              <Mail className="w-4 h-4" />
-              Contact via Email
-            </Button>
+              <Mail className="w-3.5 h-3.5" />
+              email me
+            </button>
             
-            <Button
+            <button
               onClick={handleShare}
-              variant="ghost"
-              size="lg"
-              className="flex items-center gap-2"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
             >
-              <Share className="w-4 h-4" />
-              Share
-            </Button>
+              <Share className="w-3.5 h-3.5" />
+              share this page
+            </button>
           </div>
         </motion.div>
 
-        {/* Resume Preview Card */}
+        {/* Resume Preview */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full"
         >
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle>Resume Preview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {/* PDF Preview Container */}
-              <div className="w-full border rounded-lg overflow-hidden bg-muted/50">
-                <div className="aspect-[8.5/11] w-full">
+          {/* PDF Preview Container */}
+          <div className="w-full rounded-lg overflow-hidden shadow-sm">
+            <div className="aspect-[8.5/11] w-full">
                   {pdfExists === true ? (
                     // Show actual PDF with zoom and navigation controls
                     <iframe
@@ -171,17 +157,18 @@ export default function ResumePage() {
                           {pdfExists === null ? 'Loading...' : 'Add your resume.pdf to the public folder to display it here'}
                         </p>
                         {pdfExists === false && (
-                          <Button onClick={handleDownload} variant="outline" size="sm">
-                            Download PDF
-                          </Button>
+                          <button 
+                            onClick={handleDownload}
+                            className="text-muted-foreground hover:text-foreground transition-colors text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+                          >
+                            download pdf
+                          </button>
                         )}
                       </div>
                     </div>
                   )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </motion.div>
 
         {/* Additional Actions */}
@@ -194,9 +181,12 @@ export default function ResumePage() {
           <p className="text-sm text-muted-foreground mb-4">
             Want to talk about product, building cool stuff, or just say hi? I'd love to hear from you.
           </p>
-          <Button onClick={handleEmailClick} variant="link">
+          <button 
+            onClick={handleEmailClick}
+            className="text-muted-foreground hover:text-foreground transition-colors text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+          >
             contact@dkbuilds.co
-          </Button>
+          </button>
         </motion.div>
       </div>
     </div>

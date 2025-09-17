@@ -26,7 +26,15 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
         id: 'construction-industry-agent',
         title: 'Construction Industry Agent',
         subtitle: 'Partnering with a Chicago-based fiber optics construction company to build an AI agent to automate the submittal package workflow (and beyond)',
+        visuals: [
+            {
+                type: 'image',
+                src: '/finished/elite-ai/Submittal-Requirements-Gathering.png',
+                alt: 'Submittal Requirements Gathering'
+            }
+        ]
     }
+
 ];
 
 export const finishedProjects: FinishedProject[] = [
