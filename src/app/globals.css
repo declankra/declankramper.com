@@ -64,3 +64,30 @@
     @apply border-[hsl(var(--border))];
   }
 }
+
+@layer components {
+  .prose details {
+    @apply border border-border rounded-lg bg-background shadow-none;
+  }
+  .prose details summary {
+    @apply cursor-pointer px-4 py-2 text-sm font-medium bg-secondary/60 rounded-lg;
+  }
+  .prose details[open] summary {
+    @apply bg-secondary/40;
+  }
+  .prose details > *:not(summary) {
+    @apply px-4 py-3 text-sm leading-relaxed text-foreground/90;
+  }
+  .prose video {
+    @apply rounded-lg border border-border my-6;
+  }
+  .prose figure {
+    @apply my-6;
+  }
+  .prose figure img {
+    @apply rounded-lg border border-border;
+  }
+  .prose figure figcaption {
+    @apply mt-2 text-[10px] text-foreground/70;
+  }
+}
