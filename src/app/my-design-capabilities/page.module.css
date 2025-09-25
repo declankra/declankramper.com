@@ -46,3 +46,14 @@
   height: 6px; /* match global styling */
   width: 6px;
 }
+
+/* Spacing after full assets (caption + scrollbar included) */
+.page :global(.media-row),
+.page :global(.media-section) {
+  margin-bottom: 1.25rem !important; /* slightly more space after horizontal galleries */
+}
+
+/* Single media blocks (image/video + caption) */
+.page :global(.prose :not(.media-row) > figure) {
+  margin-bottom: 2rem !important;
+}

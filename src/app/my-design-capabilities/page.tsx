@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import styles from './page.module.css';
+import ScrollbarsActivator from './ScrollbarsActivator';
 
 export const metadata: Metadata = {
   title: 'My Design Capabilities - Declan Kramper',
@@ -14,7 +15,8 @@ export const metadata: Metadata = {
 
 export default function MyDesignCapabilitiesPage() {
   return (
-    <main className="mx-auto max-w-2xl px-4 py-12">
+    <main id="mdc-root" className={`${styles.page} mx-auto max-w-2xl px-4 py-12`}>
+      <ScrollbarsActivator rootId="mdc-root" />
       <BreadcrumbNav
         items={[
           { href: '/', label: 'home' },
@@ -40,8 +42,7 @@ export default function MyDesignCapabilitiesPage() {
       >
         <h2>Design is how it works</h2>
         <p>
-          I think of design more-so as <em>how it works</em>, rather than the surface aesthetics (visual/feel/auditory)
-          that would normally first come to mind. The aesthetics are certainly a factor, but not the only, and certainly
+          I see design primarily as <em>how it works</em>, not the surface aesthetics (visual, tactile, auditory) that typically come to mind. The aesthetics are certainly a factor, but not the only, and certainly
           not the most important (in my opinion).
         </p>
         <p>
@@ -59,13 +60,12 @@ export default function MyDesignCapabilitiesPage() {
           <img
             src="/writes/design-capabilities/chitrack-direction.png"
             alt="Chitrack user picking their direction to track"
-            data-media-size="md"
+            data-media-size="lg"
           />
-          <figcaption className={styles.caption}>Chitrack user picking a direction to track at a nearby station</figcaption>
+          <figcaption className={styles.caption}>Chitrack user picking a direction at a nearby station</figcaption>
           </figure>
         <p>
-          Or how I used Google Apps Script and wrote a function that allowed us to track feedback on a product in an
-          interface that we didn't control by easily clicking one link.
+          Or how I used Google Apps Script to write a function that let us track product feedback in an interface we didn’t control, so the user only needed to click once.
         </p>
         <div className="media-row">
           <figure>
@@ -86,26 +86,25 @@ export default function MyDesignCapabilitiesPage() {
           So here's some more examples of things I built that are designed (i.e. work) for the purpose they serve
         </h2>
         <p>
-          For the Garpple running app, the magic moment is when runners see their health data on their phone in a way they've never seen
-          before — so we do that in their first two taps.
+          For the Garpple running app, the magic moment is when runners see their health data on their phone in a way they've always wanted — so they experience it after their first two taps.
         </p>
         <div className="media-row">
           <figure>
-            <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="md" />
+            <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="sm" />
             <figcaption>Garpple launch screen</figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="md" />
+            <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="sm" />
             <figcaption>Getting necessaryhealthkit access right away </figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="md" />
+            <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="sm" />
             <figcaption>Immediately showing the magic moment</figcaption>
           </figure>
         </div>
         <p>
           When I couldn't deliver hand written notes to colleagues as a way to thank them for their impact, the next
-          best thing to make it "real" was a 3D experience where they could digitally touch and open the letter
+          best thing was to make it "real" with a 3D experience where they could digitally touch and open the letter
           themselves.
         </p>
         <figure>
@@ -113,11 +112,11 @@ export default function MyDesignCapabilitiesPage() {
           <figcaption className={styles.caption}>User opening the letter themselves</figcaption>
           </figure>
         <p>
-          An app that sparks conversations about yourself on a social platform should be easy to share.
+          An app that sparks conversations for a social platform should be easy to share.
         </p>
         <figure>
-          <img src="/writes/design-capabilities/strava-share.png" alt="Concept for sharing Strava workouts" data-media-size="md" />
-          <figcaption className={styles.caption}>Results screen with prominent relation to other results and share button</figcaption>
+          <img src="/writes/design-capabilities/strava-share.png" alt="Concept for sharing Strava workouts" data-media-size="lg" />
+          <figcaption className={styles.caption}>Results screen with prominent sections for sharing and comparing to other results</figcaption>
           </figure>
         <p>
           Answering an ambiguous question ("Which Divvy bike station in Chicago needs another rack?") should have an
@@ -144,7 +143,7 @@ export default function MyDesignCapabilitiesPage() {
           <img
             src="/writes/design-capabilities/show-dont-tell.gif"
             alt="Show don't tell motion experiment"
-            data-media-size="md"
+            data-media-size="lg"
           />
           <figcaption className={styles.caption}>/everything-i-built</figcaption>
           </figure>
@@ -168,19 +167,19 @@ export default function MyDesignCapabilitiesPage() {
         <p>They should allow for easy feedback (necessity to improve!)</p>
         <div className="media-row">
           <figure>
-            <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="md" />
+            <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="sm" />
             <figcaption>Race Time Calculator feedback</figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="md" />
+            <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="sm" />
             <figcaption>Chitrack feedback component</figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="md" />
+            <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="sm" />
             <figcaption>Chitrack feedback screen</figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="md" />
+            <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="sm" />
             <figcaption>Garpple feedback component</figcaption>
           </figure>
         </div>
@@ -191,21 +190,21 @@ export default function MyDesignCapabilitiesPage() {
           </figure>
         <p>and user-centric</p>
         <div className="media-row">
-          <figure>
-            <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="md" />
-            <figcaption>Race Time Calculator user flow diagram</figcaption>
-          </figure>
-          <figure>
-            <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="md" />
+        <figure>
+            <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="lg" />
             <figcaption>Meet-or-Not user flow diagram</figcaption>
           </figure>
+          <figure>
+            <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="lg" />
+            <figcaption>Race Time Calculator user flow diagram</figcaption>
+          </figure>
         </div>
-        <p>with micro-interactions that make the experience stand out</p>
+        <p>with micro-interactions that make the experience stand out.</p>
         <figure>
           <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="lg" />
           <figcaption className={styles.caption}>Farmmatch concept site with slick search animation</figcaption>
           </figure>
-        <p>we shouldn't shy away from inspiration as building blocks!</p>
+        <p>They shouldn't shy away from inspiration as building blocks</p>
         <div className="media-row">
           <figure>
             <img src="/writes/design-capabilities/psPRD-inspiration.png" alt="Product spec inspiration board" data-media-size="md" />
@@ -216,7 +215,7 @@ export default function MyDesignCapabilitiesPage() {
             <figcaption>my inspired implementation for psPRD</figcaption>
           </figure>
         </div>
-        <p>and also update the interaction decisions to account for capabilities of new technologies</p>
+        <p>and they should adjust interaction decisions to reflect the capabilities of emerging technologies.</p>
         <div className="media-row">
           <figure>
             <img src="/writes/design-capabilities/meet-or-not-preload.png" alt="Meet-or-Not preload state" data-media-size="md" />
