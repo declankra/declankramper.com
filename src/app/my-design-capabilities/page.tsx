@@ -1,3 +1,6 @@
+import { Metadata } from 'next';
+import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
+
 export const metadata: Metadata = {
   title: 'My Design Capabilities - Declan Kramper',
   description: 'Thoughts on design and how I (currently) do it.',
@@ -87,7 +90,7 @@ export default function MyDesignCapabilitiesPage() {
           themselves.
         </p>
         <figure>
-          <img src="/writes/design-capabilities/interactive-letter-touch.gif" alt="Interactive letter responding to touch input" data-media-size="md" />
+          <img src="/writes/design-capabilities/interactive-letter-touch.gif" alt="Interactive letter responding to touch input" data-media-size="lg" />
         </figure>
         <p>
           An app that sparks conversations about yourself on a social platform should be easy to share.
@@ -119,8 +122,8 @@ export default function MyDesignCapabilitiesPage() {
         <p>They should be delightful: fun and uniquely human (in a way only the creator can do!)</p>
         <div className="media-row">
           <img src="/writes/design-capabilities/grade-calculator-white-monster.png" alt="Grade calculator interface" data-media-size="md" />
-          <img src="/writes/design-capabilities/game.gif" alt="Animated prototype of a playful mini game" data-media-size="md" />
-          <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="md" />
+          <img src="/writes/design-capabilities/game.gif" alt="Animated prototype of a playful mini game" data-media-size="lg" />
+          <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="lg" />
         </div>
         <p>They should allow for easy feedback (necessity to improve!)</p>
         <div className="media-row">
@@ -130,7 +133,7 @@ export default function MyDesignCapabilitiesPage() {
           <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="md" />
         </div>
         <p>They should be intuitive (even if you've never used it before!)</p>
-        <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsInline muted data-media-size="md" />
+        <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsInline muted data-media-size="lg" />
         <p>and user-centric</p>
         <div className="media-row">
           <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="md" />
@@ -138,7 +141,7 @@ export default function MyDesignCapabilitiesPage() {
         </div>
         <p>with micro-interactions that make the experience stand out</p>
         <figure>
-          <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="md" />
+          <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="lg" />
         </figure>
         <p>we shouldn't shy away from inspiration as building blocks!</p>
         <div className="media-row">
@@ -154,5 +157,3 @@ export default function MyDesignCapabilitiesPage() {
     </main>
   );
 }
-import { Metadata } from 'next';
-import BreadcrumbNav from '@/components/layout/BreadcrumbNav';

@@ -95,6 +95,20 @@
   .prose video[data-media-size] {
     @apply block;
   }
+  /* Center any non-carousel assets (single media not in .media-row) */
+  .prose :not(.media-row) > img[data-media-size],
+  .prose :not(.media-row) > video[data-media-size] {
+    @apply mx-auto;
+  }
+  .prose :not(.media-row) > figure > img[data-media-size],
+  .prose :not(.media-row) > figure > video[data-media-size] {
+    @apply mx-auto;
+  }
+  /* Also center videos even if size data-attr is missing */
+  .prose :not(.media-row) > video,
+  .prose :not(.media-row) > figure > video {
+    @apply mx-auto;
+  }
   .prose img[data-media-size="xs"],
   .prose img[data-size="xs"] {
     @apply w-24 h-16 sm:w-32 sm:h-20 object-cover;
@@ -108,6 +122,12 @@
   .prose video[data-media-size="md"],
   .prose video[data-size="md"] {
     @apply w-48 sm:w-64;
+  }
+  .prose img[data-media-size="lg"],
+  .prose img[data-size="lg"],
+  .prose video[data-media-size="lg"],
+  .prose video[data-size="lg"] {
+    @apply w-72 sm:w-96;
   }
   .prose img[data-media-size="square"],
   .prose img[data-size="square"] {
@@ -174,6 +194,11 @@
   img.blog-media[data-size="md"],
   img.blog-media.media-md {
     @apply w-48 sm:w-64;
+  }
+  img.blog-media[data-media-size="lg"],
+  img.blog-media[data-size="lg"],
+  img.blog-media.media-lg {
+    @apply w-72 sm:w-96;
   }
   img.blog-media[data-media-size="square"],
   img.blog-media[data-size="square"],
