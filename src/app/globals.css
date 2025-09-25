@@ -90,6 +90,41 @@
   .prose figure figcaption {
     @apply mt-2 text-[10px] text-foreground/70;
   }
+  /* Fallback sizing for inline media when rehype class isn't present */
+  .prose img[data-media-size],
+  .prose video[data-media-size] {
+    @apply block;
+  }
+  .prose img[data-media-size="xs"],
+  .prose img[data-size="xs"] {
+    @apply w-24 h-16 sm:w-32 sm:h-20 object-cover;
+  }
+  .prose img[data-media-size="sm"],
+  .prose img[data-size="sm"] {
+    @apply w-32 sm:w-40;
+  }
+  .prose img[data-media-size="md"],
+  .prose img[data-size="md"],
+  .prose video[data-media-size="md"],
+  .prose video[data-size="md"] {
+    @apply w-48 sm:w-64;
+  }
+  .prose img[data-media-size="square"],
+  .prose img[data-size="square"] {
+    @apply w-24 h-24 sm:w-32 sm:h-32 object-cover;
+  }
+  /* Default cap for regular images without explicit size */
+  .prose img:not([data-media-size]):not([data-size]) {
+    max-width: min(100%, 720px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  /* Remove extra padding when tiny thumbs are inside a figure */
+  .prose figure:has(> img[data-media-size="xs"]) {
+    padding: 0 !important;
+    border-width: 0 !important;
+    background: transparent !important;
+  }
   .blog-media {
     @apply block w-full h-auto rounded-lg border border-border;
     max-width: min(100%, 720px);
@@ -149,7 +184,7 @@
     @apply -mx-4 flex gap-3 overflow-x-auto pb-3 px-4;
     scroll-snap-type: x proximity;
   }
-  .media-row > :is(figure, img.blog-media, video.blog-media) {
+  .media-row > :is(figure, img.blog-media, video.blog-media, img, video) {
     @apply flex-none;
     scroll-snap-align: start;
   }
