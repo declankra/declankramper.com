@@ -163,6 +163,14 @@ export default function MyDesignCapabilitiesPage() {
             <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="lg" />
             <figcaption>Presentations that are lively and visually engaging</figcaption>
           </figure>
+          <figure>
+            <img src="/writes/design-capabilities/Chitrack-one.png" alt="Chitrack playful onboarding screen" data-media-size="lg" />
+            <figcaption>☝️ minute till train arrives</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/Chitrack-run.png" alt="Chitrack post-run summary screen" data-media-size="lg" />
+            <figcaption>Two minutes away means its time to run!</figcaption>
+          </figure>
         </div>
         <p>They should allow for easy feedback (necessity to improve!)</p>
         <div className="media-row">
