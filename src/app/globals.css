@@ -90,4 +90,111 @@
   .prose figure figcaption {
     @apply mt-2 text-[10px] text-foreground/70;
   }
+  .blog-media {
+    @apply block w-full h-auto rounded-lg border border-border;
+    max-width: min(100%, 720px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  img.blog-media {
+    @apply bg-background;
+  }
+  img.blog-media[data-media-type="gif"] {
+    image-rendering: auto;
+  }
+  img.blog-media[data-media-size],
+  img.blog-media[data-size],
+  img.blog-media.media-card,
+  img.blog-media.media-sm,
+  img.blog-media.media-md,
+  img.blog-media.media-square {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  img.blog-media[data-media-size="card"],
+  img.blog-media[data-size="card"],
+  img.blog-media.media-card {
+    @apply w-24 h-16 sm:w-32 sm:h-20 object-cover;
+  }
+  img.blog-media[data-media-size="sm"],
+  img.blog-media[data-size="sm"],
+  img.blog-media.media-sm {
+    @apply w-32 sm:w-40;
+  }
+  /* Match FinishedProjects thumbnails: 96x64 (mobile), 128x80 (sm+) */
+  img.blog-media[data-media-size="xs"],
+  img.blog-media[data-size="xs"],
+  img.blog-media.media-xs {
+    @apply w-24 h-16 sm:w-32 sm:h-20 object-cover;
+  }
+
+  /* Remove extra wrapper padding/border when showing tiny thumbs */
+  .prose figure:has(> img.blog-media[data-media-size="xs"]) {
+    padding: 0 !important;
+    border-width: 0 !important;
+    background: transparent !important;
+  }
+  img.blog-media[data-media-size="md"],
+  img.blog-media[data-size="md"],
+  img.blog-media.media-md {
+    @apply w-48 sm:w-64;
+  }
+  img.blog-media[data-media-size="square"],
+  img.blog-media[data-size="square"],
+  img.blog-media.media-square {
+    @apply w-24 h-24 sm:w-32 sm:h-32 object-cover;
+  }
+  .media-row {
+    @apply -mx-4 flex gap-3 overflow-x-auto pb-3 px-4;
+    scroll-snap-type: x proximity;
+  }
+  .media-row > :is(figure, img.blog-media, video.blog-media) {
+    @apply flex-none;
+    scroll-snap-align: start;
+  }
+  .media-row::-webkit-scrollbar {
+    height: 6px;
+  }
+  .media-row::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .media-row::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  /* Horizontal card scroller grouping each h3 section */
+  .media-section {
+    @apply -mx-4 flex gap-4 overflow-x-auto px-4 pb-6;
+    scroll-snap-type: x proximity;
+  }
+  .media-section > .media-card {
+    @apply flex-none rounded-2xl border border-border bg-background/80 p-4 shadow-sm;
+    scroll-snap-align: start;
+    min-width: min(100%, 22rem);
+  }
+  @media (min-width: 640px) {
+    .media-section > .media-card {
+      min-width: 22rem;
+    }
+  }
+  .media-section::-webkit-scrollbar {
+    height: 6px;
+  }
+  .media-section::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .media-section::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  .media-card > h3 {
+    @apply mb-3 text-base font-medium leading-tight text-foreground;
+  }
+  .media-card .media-row {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

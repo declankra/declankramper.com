@@ -10,6 +10,13 @@ import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import { BlogPost } from '@/types/blog';
 
+type HastNode = {
+  type?: string;
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: HastNode[];
+};
+
 // Define the directory where blog posts are stored
 const postsDirectory = path.join(process.cwd(), 'content/posts');
 
@@ -78,8 +85,68 @@ async function markdownToHtml(markdown: string): Promise<string> {
     })
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
+    .use(rehypeEnhanceMedia)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
 
   return result.toString();
+}
+
+// Lightweight rehype plugin to normalize media elements that appear in blog posts
+function rehypeEnhanceMedia() {
+  return (tree: HastNode) => {
+    const visit = (node?: HastNode) => {
+      if (!node || typeof node !== 'object') {
+        return;
+      }
+
+      if (node.type === 'element' && typeof node.tagName === 'string') {
+        const tag = node.tagName.toLowerCase();
+        if (tag === 'img' || tag === 'video') {
+          const properties = (node.properties ??= {});
+          const classList = normalizeClassList(properties.className);
+
+          if (!classList.includes('blog-media')) {
+            classList.push('blog-media');
+          }
+
+          if (tag === 'img') {
+            const src = typeof properties.src === 'string' ? properties.src : '';
+            if (!properties.loading) {
+              properties.loading = 'lazy';
+            }
+            if (!properties.decoding) {
+              properties.decoding = 'async';
+            }
+            if (src.endsWith('.gif')) {
+              properties['data-media-type'] = properties['data-media-type'] ?? 'gif';
+            }
+          }
+
+          properties.className = classList;
+        }
+      }
+
+      if (Array.isArray(node.children)) {
+        node.children.forEach(visit);
+      }
+    };
+
+    visit(tree);
+  };
+}
+
+function normalizeClassList(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item));
+  }
+
+  if (typeof value === 'string') {
+    return value
+      .split(/\s+/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  return [];
 }
