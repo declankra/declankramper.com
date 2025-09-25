@@ -38,6 +38,7 @@
     "remark": "^15.0.1",
     "remark-footnotes": "^3.0.0",
     "remark-gfm": "^4.0.0",
+    "remark-html": "^16.0.1",
     "remark-rehype": "^11.1.2",
     "resend": "^4.1.2",
     "sonner": "^2.0.1",

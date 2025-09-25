@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
@@ -15,8 +16,8 @@ type MediaItem = {
 };
 
 type Subsection = {
-  heading: string;
-  description?: string;
+  heading?: ReactNode;
+  description?: ReactNode;
   media: MediaItem[];
 };
 
@@ -46,7 +47,14 @@ const sections: Section[] = [
     title: 'Creative in technical constraints',
     subsections: [
       {
-        heading: "Chitrack first of it's kind",
+        description: (
+          <>
+            Like how I built a never-before-done (I checked!) dual-API approach to combine static GTFS stations data with
+            dynamic stop API Data to allows Chicago transit riders to select for{' '}
+            <span className="italic">direction</span> specific train routes because that's{' '}
+            <span className="italic">what makes sense</span>.
+          </>
+        ),
         media: [
           {
             src: '/writes/design-capabilities/Chitrack-direction.png',
@@ -351,10 +359,12 @@ export default function MyDesignCapabilitiesPage() {
           <section key={section.title} className="space-y-10">
             <h2 className="text-2xl font-semibold tracking-tight text-foreground">{section.title}</h2>
             <div className="space-y-10">
-              {section.subsections.map((subsection) => (
-                <div key={subsection.heading} className="space-y-4">
+              {section.subsections.map((subsection, index) => (
+                <div key={`${section.title}-${index}`} className="space-y-4">
                   <div>
-                    <h3 className="text-lg font-medium text-foreground">{subsection.heading}</h3>
+                    {subsection.heading && (
+                      <h3 className="text-lg font-medium text-foreground">{subsection.heading}</h3>
+                    )}
                     {subsection.description && (
                       <p className="mt-2 text-sm text-foreground/70">{subsection.description}</p>
                     )}
