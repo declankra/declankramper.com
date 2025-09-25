@@ -90,15 +90,15 @@ export default function MyDesignCapabilitiesPage() {
         </p>
         <div className="media-row">
           <figure>
-            <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="sm" />
+            <img src="/writes/design-capabilities/garpple-onboarding-1.png" alt="Garpple onboarding step one" data-media-size="sm" />
             <figcaption>Garpple launch screen</figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="sm" />
+            <img src="/writes/design-capabilities/garpple-onboarding-2.png" alt="Garpple onboarding step two" data-media-size="sm" />
             <figcaption>Getting necessaryhealthkit access right away </figcaption>
           </figure>
           <figure>
-            <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="sm" />
+            <img src="/writes/design-capabilities/garpple-onboarding-3.png" alt="Garpple onboarding step three" data-media-size="sm" />
             <figcaption>Immediately showing the magic moment</figcaption>
           </figure>
         </div>
