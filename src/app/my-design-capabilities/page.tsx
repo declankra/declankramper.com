@@ -48,7 +48,7 @@ export default function MyDesignCapabilitiesPage() {
         <p>
           My sense of design is tactical, practical, and focused on the purpose. And the purpose is achieving whatever
           end goal the user has; therefore, it should start with the user. Then, we can get creative in all the avenues
-          to design for that goal in a way that it works. Sometimes that means getting creative in how how we engineer
+          to design for that goal in a way that works. Sometimes that means getting creative in how how we engineer
           parts of the solution because of technical constraints.
         </p>
         <p>
@@ -231,7 +231,7 @@ export default function MyDesignCapabilitiesPage() {
           </figure>
           <figure>
             <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="md" />
-            <figcaption>So that the results screen wasn't empty when user navigated to it!</figcaption>
+            <figcaption>So that the results screen wasn't empty when users navigated to it!</figcaption>
           </figure>
         </div>
       </article>

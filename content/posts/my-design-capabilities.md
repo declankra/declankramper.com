@@ -10,7 +10,7 @@ preview: Thoughts on design and how I (currently) do it.
 
 I see design primarily as _how it works_, not the surface aesthetics (visual, tactile, auditory) that typically come to mind. The aesthetics are certainly a factor, but not the only, and certainly not the most important (in my opinion).
 
-My sense of design is tactical, practical, and focused on the purpose. And the purpose is achieving whatever end goal the user has; therefore, it should start with the user. Then, we can get creative in all the avenues to design for that goal in a way that it works. Sometimes that means getting creative in how we engineer parts of the solution because of technical constraints.
+My sense of design is tactical, practical, and focused on the purpose. And the purpose is achieving whatever end goal the user has; therefore, it should start with the user. Then, we can get creative in all the avenues to design for that goal in a way that works. Sometimes that means getting creative in how we engineer parts of the solution because of technical constraints.
 
 Like how I built a never-before-done (I checked!) dual-API approach to combine static GTFS stations data with dynamic stop API data to allow Chicago transit riders to select for _direction_ specific train routes because that's _what makes sense_.
 
@@ -198,6 +198,6 @@ And they should adjust interaction decisions to reflect the capabilities of emer
   </figure>
   <figure>
     <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="md" />
-    <figcaption>So that the results screen wasn't empty when user navigated to it!</figcaption>
+    <figcaption>So that the results screen wasn't empty when users navigated to it!</figcaption>
   </figure>
 </div>
