@@ -44,7 +44,7 @@ const sizeAttributes: Record<MediaSize, string> = {
 
 const sections: Section[] = [
   {
-    title: 'Creative in technical constraints',
+    title: '',
     subsections: [
       {
         description: (
