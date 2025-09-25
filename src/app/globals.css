@@ -234,16 +234,6 @@
     @apply flex-none;
     scroll-snap-align: start;
   }
-  .media-row::-webkit-scrollbar {
-    height: 6px;
-  }
-  .media-row::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .media-row::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--border));
-    border-radius: 9999px;
-  }
   /* Horizontal card scroller grouping each h3 section */
   .media-section {
     @apply -mx-4 flex gap-4 overflow-x-auto px-4 pb-6;
@@ -253,6 +243,47 @@
     @apply flex-none rounded-2xl border border-border bg-background/80 p-4 shadow-sm;
     scroll-snap-align: start;
     min-width: min(100%, 22rem);
+  }
+  .media-row,
+  .media-section {
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+  }
+  .media-row:hover,
+  .media-row:focus,
+  .media-row:focus-within,
+  .media-row.scrolling,
+  .media-section:hover,
+  .media-section:focus,
+  .media-section:focus-within,
+  .media-section.scrolling {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--border)) transparent;
+  }
+  .media-row::-webkit-scrollbar,
+  .media-section::-webkit-scrollbar {
+    height: 0;
+    width: 0;
+  }
+  .media-row::-webkit-scrollbar-track,
+  .media-section::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .media-row::-webkit-scrollbar-thumb,
+  .media-section::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--border));
+    border-radius: 9999px;
+  }
+  .media-row:hover::-webkit-scrollbar,
+  .media-row:focus::-webkit-scrollbar,
+  .media-row:focus-within::-webkit-scrollbar,
+  .media-row.scrolling::-webkit-scrollbar,
+  .media-section:hover::-webkit-scrollbar,
+  .media-section:focus::-webkit-scrollbar,
+  .media-section:focus-within::-webkit-scrollbar,
+  .media-section.scrolling::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
   }
   @media (min-width: 640px) {
     .media-section > .media-card {

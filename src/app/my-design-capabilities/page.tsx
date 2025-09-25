@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import styles from './page.module.css';
-import ScrollbarsActivator from './ScrollbarsActivator';
+import ScrollbarsActivator from '@/components/layout/ScrollbarsActivator';
 
 export const metadata: Metadata = {
   title: 'My Design Capabilities - Declan Kramper',

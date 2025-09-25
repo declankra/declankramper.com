@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Badge } from "@/components/ui/badge";
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
+import ScrollbarsActivator from '@/components/layout/ScrollbarsActivator';
 
 // Generate all possible paths at build time
 export async function generateStaticParams() {
@@ -43,8 +44,9 @@ export default async function BlogPost({ params }: { params: { slug: string } })
   }
 
   return (
-    <article className="max-w-2xl mx-auto px-4 py-8">
-            <BreadcrumbNav
+    <article id="writes-post-root" className="max-w-2xl mx-auto px-4 py-8">
+      <ScrollbarsActivator rootId="writes-post-root" />
+      <BreadcrumbNav
         items={[
           { href: "/", label: "home" },
           { href: "/writes", label: "writes" },

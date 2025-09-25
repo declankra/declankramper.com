@@ -3,206 +3,193 @@ title: My Design Capabilities
 date: "2025-09-24"
 categories:
   - Product
-preview: thoughts on design and how i (currently) do it
+preview: Thoughts on design and how I (currently) do it.
 ---
 
+## Design is how it works
 
-## Creative in technical constraints
+I see design primarily as _how it works_, not the surface aesthetics (visual, tactile, auditory) that typically come to mind. The aesthetics are certainly a factor, but not the only, and certainly not the most important (in my opinion).
 
-### Chitrack first of it's kind
+My sense of design is tactical, practical, and focused on the purpose. And the purpose is achieving whatever end goal the user has; therefore, it should start with the user. Then, we can get creative in all the avenues to design for that goal in a way that it works. Sometimes that means getting creative in how we engineer parts of the solution because of technical constraints.
+
+Like how I built a never-before-done (I checked!) dual-API approach to combine static GTFS stations data with dynamic stop API data to allow Chicago transit riders to select for _direction_ specific train routes because that's _what makes sense_.
+
+<figure>
+  <img
+    src="/writes/design-capabilities/chitrack-direction.png"
+    alt="Chitrack user picking their direction to track"
+    data-media-size="lg"
+  />
+  <figcaption style="text-align:center;">Chitrack user picking a direction at a nearby station</figcaption>
+</figure>
+
+Or how I used Google Apps Script to write a function that let us track product feedback in an interface we didn't control, so the user only needed to click once.
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/Chitrack-direction.png" alt="Chitrack map screen highlighting the runner's next turn" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/ec-chatbot-link.png" alt="Chatbot flow linking to support" data-media-size="md" />
+    <figcaption>Chatbot replying with a link to trigger the app script</figcaption>
+  </figure>
+  <figure>
+    <img src="/writes/design-capabilities/ec-chatbot-success.png" alt="Chatbot success confirmation" data-media-size="md" />
+    <figcaption>User successfully triggered the app script</figcaption>
+  </figure>
+  <figure>
+    <img src="/writes/design-capabilities/ec-chatbot-log.png" alt="Chatbot log of conversations" data-media-size="md" />
+    <figcaption>Logging the feedback from the app script</figcaption>
   </figure>
 </div>
 
-### Feedback in GPT chatbot
+## So here's some more examples of things I built that are designed (i.e. work) for the purpose they serve
+
+For the Garpple running app, the magic moment is when runners see their health data on their phone in a way they've always wanted -- so they experience it after their first two taps.
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/ec-chatbot-link.png" alt="Chatbot flow linking to concierge support" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="sm" />
+    <figcaption>Garpple launch screen</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/ec-chatbot-log.png" alt="Chatbot log of customer conversations" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="sm" />
+    <figcaption>Getting necessaryhealthkit access right away </figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/ec-chatbot-success.png" alt="Chatbot success confirmation screen" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="sm" />
+    <figcaption>Immediately showing the magic moment</figcaption>
   </figure>
 </div>
 
+When I couldn't deliver hand written notes to colleagues as a way to thank them for their impact, the next best thing was to make it "real" with a 3D experience where they could digitally touch and open the letter themselves.
 
+<figure>
+  <img src="/writes/design-capabilities/interactive-letter-touch.gif" alt="Interactive letter responding to touch input" data-media-size="lg" />
+  <figcaption style="text-align:center;">User opening the letter themselves</figcaption>
+</figure>
 
-## Purpose
+An app that sparks conversations for a social platform should be easy to share.
 
-### Magic Moment as soon as possible to show them something they've never seen before
+<figure>
+  <img src="/writes/design-capabilities/strava-share.png" alt="Concept for sharing Strava workouts" data-media-size="lg" />
+  <figcaption style="text-align:center;">Results screen with prominent sections for sharing and comparing to other results</figcaption>
+</figure>
+
+Answering an ambiguous question ("Which Divvy bike station in Chicago needs another rack?") should have an experiment designed such that there can be a recommendation.
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/divvy-design.png" alt="Divvy wireframe highlighting key states" data-media-size="md" />
+    <figcaption>Breaking down the problem into a measurable metric</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/divvy-data.png" alt="Divvy dashboard showing ride volume data" data-media-size="md" />
+    <figcaption>Gathered the data</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/divvy-recommendation.png" alt="Divvy station recommendation module" data-media-size="md" />
+    <figcaption>Turned the data into a recommendation</figcaption>
   </figure>
 </div>
 
-### Connection: so make it real
+A portfolio given to a recruiter should clearly showcase your work ("show, don't tell") in a format that's easy to scan because they have limited time.
+
+<figure>
+  <img
+    src="/writes/design-capabilities/show-dont-tell.gif"
+    alt="Show don't tell motion experiment"
+    data-media-size="lg"
+  />
+  <figcaption style="text-align:center;">/everything-i-built</figcaption>
+</figure>
+
+## And in general, I believe my designs should follow a few ideals
+
+They should be delightful: fun and uniquely human (in a way only the creator can do!).
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/interactive-letter-touch.gif" alt="Interactive letter responding to touch input" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/grade-calculator-white-monster.png" alt="Grade calculator interface" data-media-size="md" />
+    <figcaption>Drinking white monster energy drinks to study is a shared experience</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/show-dont-tell.gif" alt="Show don't tell motion experiment" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/game.gif" alt="Animated prototype of a playful mini game" data-media-size="lg" />
+    <figcaption>The game on my website homepage</figcaption>
+  </figure>
+  <figure>
+    <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="lg" />
+    <figcaption>Presentations that are lively and visually engaging</figcaption>
   </figure>
 </div>
 
-### Enable people to share and experience with others
+They should allow for easy feedback (necessity to improve!).
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/strava-share.png" alt="Concept for sharing Strava workouts" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="sm" />
+    <figcaption>Race Time Calculator feedback</figcaption>
+  </figure>
+  <figure>
+    <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="sm" />
+    <figcaption>Chitrack feedback component</figcaption>
+  </figure>
+  <figure>
+    <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="sm" />
+    <figcaption>Chitrack feedback screen</figcaption>
+  </figure>
+  <figure>
+    <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="sm" />
+    <figcaption>Garpple feedback component</figcaption>
   </figure>
 </div>
 
-### Design experiments to be testable so you can use data to diagnose problems
+They should be intuitive (even if you've never used it before!).
+
+<figure>
+  <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsinline muted data-media-size="lg"></video>
+  <figcaption style="text-align:center;">Placing an image on the box plays music?!</figcaption>
+</figure>
+
+And user-centric.
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/divvy-data.png" alt="Divvy dashboard showing ride volume data" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="lg" />
+    <figcaption>Meet-or-Not user flow diagram</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/divvy-design.png" alt="Divvy wireframe highlighting key interaction states" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/divvy-recommendation.png" alt="Divvy recommendations module" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="lg" />
+    <figcaption>Race Time Calculator user flow diagram</figcaption>
   </figure>
 </div>
 
-## Other principles
+With micro-interactions that make the experience stand out.
 
-### Delightful: Fun and uniquely human
+<figure>
+  <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="lg" />
+  <figcaption style="text-align:center;">Farmmatch concept site with slick search animation</figcaption>
+</figure>
+
+They shouldn't shy away from inspiration as building blocks.
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/Chitrack-one.png" alt="Chitrack onboarding screen introducing the guided run" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/psPRD-inspiration.png" alt="Product spec inspiration board" data-media-size="md" />
+    <figcaption>chatPRD inspiration</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/Chitrack-run.png" alt="Chitrack in-run view with pace and coaching prompts" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/grade-calculator-white-monster.png" alt="Grade calculator interface for the White Monster project" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/game.gif" alt="Animated prototype of a playful mini game" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/psPRD-implementation.png" alt="Product spec implementation roadmap" data-media-size="md" />
+    <figcaption>my inspired implementation for psPRD</figcaption>
   </figure>
 </div>
 
-### Feedback to learn
+And they should adjust interaction decisions to reflect the capabilities of emerging technologies.
 
 <div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/meet-or-not-preload.png" alt="Meet-or-Not preload state" data-media-size="md" />
+    <figcaption>When LLMs first came out, they were slow so we needed a "preload" state</figcaption>
   </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-</div>
-
-### Intuitive magic record player controls
-
-<div class="media-row">
-  <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsinline muted data-media-size="md" class="rounded-lg border border-border"></video>
-</div>
-
-### User-centric design
-
-<div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-</div>
-
-### Simple language
-
-<div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/garpple-simple-language.png" alt="Garpple screen simplifying language for users" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-</div>
-
-### Micro-interactions
-
-<div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-</div>
-
-### Take inspiration
-
-<div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/psPRD-inspiration.png" alt="Product spec inspiration board" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/psPRD-implementation.png" alt="Product spec implementation roadmap" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-</div>
-
-
-### Account for new technologies
-
-<div class="media-row">
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/meet-or-not-preload.png" alt="Meet-or-Not preload state" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
-  </figure>
-  <figure class="flex-none rounded-lg border border-border bg-background p-3">
-    <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="xs" />
-    <figcaption class="mt-2 text-xs text-foreground/70">Add caption here.</figcaption>
+  <figure>
+    <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="md" />
+    <figcaption>So that the results screen wasn't empty when user navigated to it!</figcaption>
   </figure>
 </div>

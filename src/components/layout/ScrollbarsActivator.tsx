@@ -14,32 +14,35 @@ export default function ScrollbarsActivator({ rootId }: Props) {
 
     const timers = new WeakMap<EventTarget, number>();
 
-    const onScroll = (e: Event) => {
-      const target = e.currentTarget as HTMLElement | null;
+    const onScroll = (event: Event) => {
+      const target = event.currentTarget as HTMLElement | null;
       if (!target) return;
+
       target.classList.add("scrolling");
-      const prev = timers.get(target);
-      if (prev) window.clearTimeout(prev);
-      const t = window.setTimeout(() => {
+
+      const previous = timers.get(target);
+      if (previous) window.clearTimeout(previous);
+
+      const next = window.setTimeout(() => {
         target.classList.remove("scrolling");
         timers.delete(target);
       }, 700);
-      timers.set(target, t);
+
+      timers.set(target, next);
     };
 
-    nodes.forEach((el) => {
-      el.addEventListener("scroll", onScroll, { passive: true });
+    nodes.forEach((element) => {
+      element.addEventListener("scroll", onScroll, { passive: true });
     });
 
     return () => {
-      nodes.forEach((el) => {
-        el.removeEventListener("scroll", onScroll as EventListener);
-        const t = timers.get(el);
-        if (t) window.clearTimeout(t);
+      nodes.forEach((element) => {
+        element.removeEventListener("scroll", onScroll as EventListener);
+        const timer = timers.get(element);
+        if (timer) window.clearTimeout(timer);
       });
     };
   }, [rootId]);
 
   return null;
 }
-
