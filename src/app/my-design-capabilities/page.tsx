@@ -28,7 +28,7 @@ export default function MyDesignCapabilitiesPage() {
 
       <article
         className="prose prose-neutral dark:prose-invert max-w-none
-          prose-p:text-sm prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/95 prose-p:mb-4
+          prose-p:text-[15px] prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/95 prose-p:mb-4
           prose-headings:font-medium prose-headings:tracking-normal prose-headings:mt-8 prose-headings:mb-4
           prose-h2:text-xl prose-h3:text-base
           prose-pre:bg-secondary/50 prose-pre:border-0
@@ -57,19 +57,28 @@ export default function MyDesignCapabilitiesPage() {
         <figure>
           <img
             src="/writes/design-capabilities/chitrack-direction.png"
-            alt="Chitrack map screen highlighting direction-specific train routes"
+            alt="Chitrack user picking their direction to track"
             data-media-size="md"
           />
+          <figcaption>Chitrack user picking a direction to track at a nearby station</figcaption>
         </figure>
         <p>
           Or how I used Google Apps Script and wrote a function that allowed us to track feedback on a product in an
           interface that we didn't control by easily clicking one link.
         </p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/ec-chatbot-link.png" alt="Chatbot flow linking to support" data-media-size="md" />
-          <img src="/writes/design-capabilities/ec-chatbot-success.png" alt="Chatbot success confirmation" data-media-size="md" />
-          <img src="/writes/design-capabilities/ec-chatbot-log.png" alt="Chatbot log of conversations" data-media-size="md" />
-
+          <figure>
+            <img src="/writes/design-capabilities/ec-chatbot-link.png" alt="Chatbot flow linking to support" data-media-size="md" />
+            <figcaption>Chatbot replying with a link to trigger the app script</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/ec-chatbot-success.png" alt="Chatbot success confirmation" data-media-size="md" />
+            <figcaption>User successfully triggered the app script</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/ec-chatbot-log.png" alt="Chatbot log of conversations" data-media-size="md" />
+            <figcaption>Logging the feedback from the app script</figcaption>
+          </figure>
         </div>
 
         <h2>
@@ -77,12 +86,21 @@ export default function MyDesignCapabilitiesPage() {
         </h2>
         <p>
           For the Garpple running app, the magic moment is when runners see their health data on their phone in a way they've never seen
-          before — so we do that in their first two clicks.
+          before — so we do that in their first two taps.
         </p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="md" />
-          <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="md" />
-          <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="md" />
+          <figure>
+            <img src="/writes/design-capabilities/garpple-onboarding-1.PNG" alt="Garpple onboarding step one" data-media-size="md" />
+            <figcaption>Garpple launch screen</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/garpple-onboarding-2.PNG" alt="Garpple onboarding step two" data-media-size="md" />
+            <figcaption>Getting necessaryhealthkit access right away </figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/garpple-onboarding-3.PNG" alt="Garpple onboarding step three" data-media-size="md" />
+            <figcaption>Immediately showing the magic moment</figcaption>
+          </figure>
         </div>
         <p>
           When I couldn't deliver hand written notes to colleagues as a way to thank them for their impact, the next
@@ -91,21 +109,32 @@ export default function MyDesignCapabilitiesPage() {
         </p>
         <figure>
           <img src="/writes/design-capabilities/interactive-letter-touch.gif" alt="Interactive letter responding to touch input" data-media-size="lg" />
+          <figcaption>User opening the letter themselves</figcaption>
         </figure>
         <p>
           An app that sparks conversations about yourself on a social platform should be easy to share.
         </p>
         <figure>
           <img src="/writes/design-capabilities/strava-share.png" alt="Concept for sharing Strava workouts" data-media-size="md" />
+          <figcaption>Results screen with prominent relation to other results and share button</figcaption>
         </figure>
         <p>
           Answering an ambiguous question ("Which Divvy bike station in Chicago needs another rack?") should have an
           experiment designed such that there can be a recommendation.
         </p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/divvy-data.png" alt="Divvy dashboard showing ride volume data" data-media-size="md" />
-          <img src="/writes/design-capabilities/divvy-design.png" alt="Divvy wireframe highlighting key states" data-media-size="md" />
-          <img src="/writes/design-capabilities/divvy-recommendation.png" alt="Divvy station recommendation module" data-media-size="md" />
+        <figure>
+            <img src="/writes/design-capabilities/divvy-design.png" alt="Divvy wireframe highlighting key states" data-media-size="md" />
+            <figcaption>Breaking down the problem into a measurable metric</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/divvy-data.png" alt="Divvy dashboard showing ride volume data" data-media-size="md" />
+            <figcaption>Gathered the data</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/divvy-recommendation.png" alt="Divvy station recommendation module" data-media-size="md" />
+            <figcaption>Turned the data into a recommendation</figcaption>
+          </figure>
         </div>
         <p>
           A portfolio given to a recruiter should clearly showcase your work ("show, don't tell") in a format that's easy to scan because they have limited time
@@ -116,42 +145,86 @@ export default function MyDesignCapabilitiesPage() {
             alt="Show don't tell motion experiment"
             data-media-size="md"
           />
+          <figcaption>/everything-i-built</figcaption>
         </figure>
 
         <h2>And in general, I believe my designs should follow a few ideals</h2>
         <p>They should be delightful: fun and uniquely human (in a way only the creator can do!)</p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/grade-calculator-white-monster.png" alt="Grade calculator interface" data-media-size="md" />
-          <img src="/writes/design-capabilities/game.gif" alt="Animated prototype of a playful mini game" data-media-size="lg" />
-          <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="lg" />
+          <figure>
+            <img src="/writes/design-capabilities/grade-calculator-white-monster.png" alt="Grade calculator interface" data-media-size="md" />
+            <figcaption>Drinking white monster energy drinks to study is a shared experience</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/game.gif" alt="Animated prototype of a playful mini game" data-media-size="lg" />
+            <figcaption>The game on my website homepage</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/pm-advantage-creative.gif" alt="Narrated motion for PM Advantage creative concept" data-media-size="lg" />
+            <figcaption>Presentations that are lively and visually engaging</figcaption>
+          </figure>
         </div>
         <p>They should allow for easy feedback (necessity to improve!)</p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="md" />
-          <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="md" />
-          <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="md" />
-          <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="md" />
+          <figure>
+            <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="md" />
+            <figcaption>RTC feedback summary</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="md" />
+            <figcaption>Chitrack post-run feedback survey</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="md" />
+            <figcaption>Chitrack qualitative feedback digest</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="md" />
+            <figcaption>Garpple feedback prompt</figcaption>
+          </figure>
         </div>
         <p>They should be intuitive (even if you've never used it before!)</p>
-        <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsInline muted data-media-size="lg" />
+        <figure>
+          <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsInline muted data-media-size="lg" />
+          <figcaption>Magic record player: intuitive interaction demo</figcaption>
+        </figure>
         <p>and user-centric</p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="md" />
-          <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="md" />
+          <figure>
+            <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="md" />
+            <figcaption>RTC escalation flow diagram</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="md" />
+            <figcaption>Meet-or-Not flow overview</figcaption>
+          </figure>
         </div>
         <p>with micro-interactions that make the experience stand out</p>
         <figure>
           <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="lg" />
+          <figcaption>Farmmatch animated search for crop buyers</figcaption>
         </figure>
         <p>we shouldn't shy away from inspiration as building blocks!</p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/psPRD-inspiration.png" alt="Product spec inspiration board" data-media-size="md" />
-          <img src="/writes/design-capabilities/psPRD-implementation.png" alt="Product spec implementation roadmap" data-media-size="md" />
+          <figure>
+            <img src="/writes/design-capabilities/psPRD-inspiration.png" alt="Product spec inspiration board" data-media-size="md" />
+            <figcaption>Product spec inspiration board</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/psPRD-implementation.png" alt="Product spec implementation roadmap" data-media-size="md" />
+            <figcaption>Product spec implementation roadmap</figcaption>
+          </figure>
         </div>
         <p>and also update the interaction decisions to account for capabilities of new technologies</p>
         <div className="media-row">
-          <img src="/writes/design-capabilities/meet-or-not-preload.png" alt="Meet-or-Not preload state" data-media-size="md" />
-          <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="md" />
+          <figure>
+            <img src="/writes/design-capabilities/meet-or-not-preload.png" alt="Meet-or-Not preload state" data-media-size="md" />
+            <figcaption>Meet-or-Not preload state</figcaption>
+          </figure>
+          <figure>
+            <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="md" />
+            <figcaption>Meet-or-Not result screen</figcaption>
+          </figure>
         </div>
       </article>
     </main>

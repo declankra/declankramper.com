@@ -84,11 +84,22 @@
   .prose figure {
     @apply my-6;
   }
+  /* Single-media figures: make the caption match media width */
+  .prose :not(.media-row) > figure {
+    display: inline-table; /* shrink-wrap to widest child (image/video) */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+  .prose :not(.media-row) > figure > figcaption {
+    display: table-caption; /* binds width to the figure (image width) */
+    caption-side: bottom;
+  }
   .prose figure img {
     @apply rounded-lg border border-border;
   }
   .prose figure figcaption {
-    @apply mt-2 text-[10px] text-foreground/70;
+    @apply mt-2 text-[10px] text-foreground/70 text-left;
   }
   /* Fallback sizing for inline media when rehype class isn't present */
   .prose img[data-media-size],
@@ -208,6 +219,13 @@
   .media-row {
     @apply -mx-4 flex gap-3 overflow-x-auto pb-3 px-4;
     scroll-snap-type: x proximity;
+  }
+  /* When using figures inside media rows, remove default vertical margins */
+  .media-row figure {
+    @apply my-0;
+  }
+  .media-row figure figcaption {
+    @apply mt-1;
   }
   .media-row > :is(figure, img.blog-media, video.blog-media, img, video) {
     @apply flex-none;
