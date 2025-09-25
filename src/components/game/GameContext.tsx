@@ -66,6 +66,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isGracePeriodActive, setIsGracePeriodActive] = useState<boolean>(false);
   const [gameOverReason, setGameOverReason] = useState<'collision' | 'trailShrunk' | 'exited' | null>(null);
   
+  const playerCursorRef = useRef<Cursor | null>(null);
+  const computerCursorsRef = useRef<Cursor[]>([]);
   const gameLoopRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
   const speedIncreaseIntervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -76,7 +78,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Initialize player cursor
   useEffect(() => {
     if (gameState === 'inactive' || gameState === 'instructions') {
-      setPlayerCursor({
+      const initialCursor: Cursor = {
         id: 'player',
         color: 'rgba(0, 0, 0, 0.8)',
         x: 0,
@@ -84,7 +86,9 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         trail: [], 
         speed: 0,
         direction: { x: 0, y: 0 }
-      });
+      };
+      setPlayerCursor(initialCursor);
+      playerCursorRef.current = initialCursor;
       setIsGracePeriodActive(false);
       if (gracePeriodTimerRef.current) {
         clearTimeout(gracePeriodTimerRef.current);
@@ -92,6 +96,14 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
   }, [gameState]);
+
+  useEffect(() => {
+    playerCursorRef.current = playerCursor;
+  }, [playerCursor]);
+
+  useEffect(() => {
+    computerCursorsRef.current = computerCursors;
+  }, [computerCursors]);
 
   // Initialize computer cursors when game starts
   const initializeComputerCursors = () => {
@@ -132,14 +144,18 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ];
     
     console.log('Created computer cursors:', cursors);
+    computerCursorsRef.current = cursors;
     setComputerCursors(cursors);
   };
 
   // Update player position
   const updatePlayerPosition = (x: number, y: number) => {
-    if (playerCursor && gameState === 'active') {
+    if (gameState === 'active') {
       setPlayerCursor(prev => {
-        if (!prev) return null;
+        if (!prev) {
+          playerCursorRef.current = prev;
+          return prev;
+        }
         
         let newTrail = [...prev.trail];
 
@@ -154,22 +170,27 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
             newTrail.push({ x, y });
         }
         
-        return {
+        const updatedCursor = {
           ...prev,
           x,
           y,
           trail: newTrail
         };
+        playerCursorRef.current = updatedCursor;
+        return updatedCursor;
       });
     }
   };
 
   // Check for collisions between player and computer trails
   const checkCollisions = (): 'collision' | 'trailShrunk' | false => {
-    if (!playerCursor) return false;
+    const player = playerCursorRef.current;
+    const computers = computerCursorsRef.current;
+
+    if (!player) return false;
     
     // UPDATED: Check if player's trail has shrunk to zero AFTER grace period
-    if (!isGracePeriodActive && playerCursor.trail.length === 0 && gameState === 'active') {
+    if (!isGracePeriodActive && player.trail.length === 0 && gameState === 'active') {
         console.log("Game over: Player trail length reached zero after grace period.");
         return 'trailShrunk';
     }
@@ -178,13 +199,13 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const threshold = 10;
     
     // Check collisions with each computer cursor trail
-    for (const computer of computerCursors) {
+    for (const computer of computers) {
       for (const point of computer.trail) {
         const distance = Math.sqrt(
-          Math.pow(playerCursor.x - point.x, 2) + 
-          Math.pow(playerCursor.y - point.y, 2)
+          Math.pow(player.x - point.x, 2) + 
+          Math.pow(player.y - point.y, 2)
         );
-        
+
         if (distance < threshold) {
           console.log("Game over: Collision detected.");
           return 'collision';
@@ -213,7 +234,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Update computer cursors
     console.log("Game loop: Before setComputerCursors");
     setComputerCursors(prev => {
-      return prev.map(cursor => {
+      const updatedCursors = prev.map(cursor => {
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
         
@@ -259,6 +280,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           trail: newTrail
         };
       });
+      computerCursorsRef.current = updatedCursors;
+      return updatedCursors;
     });
     console.log("Game loop: After setComputerCursors");
     
@@ -300,10 +323,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     speedIncreaseIntervalRef.current = setInterval(() => {
       setComputerCursors(prev => {
         console.log('Increasing computer cursor speeds');
-        return prev.map(cursor => ({
+        const fasterCursors = prev.map(cursor => ({
           ...cursor,
           speed: cursor.speed * 1.1
         }));
+        computerCursorsRef.current = fasterCursors;
+        return fasterCursors;
       });
     }, 3140);
 
@@ -341,7 +366,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Reset game function
   const resetGame = () => {
     setGameState('instructions');
-    setPlayerCursor({
+    const resetCursor: Cursor = {
       id: 'player',
       color: 'rgba(0, 0, 0, 0.8)',
       x: 0,
@@ -349,8 +374,11 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       trail: [], 
       speed: 0,
       direction: { x: 0, y: 0 }
-    });
+    };
+    setPlayerCursor(resetCursor);
+    playerCursorRef.current = resetCursor;
     setComputerCursors([]);
+    computerCursorsRef.current = [];
     setSurvivalTime(0);
     // Reset timer reference to ensure clean state
     lastTimeRef.current = 0;
@@ -483,6 +511,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           playerTrailShrinkIntervalRef.current = setInterval(() => {
           setPlayerCursor(prev => {
             if (!prev) {
+              playerCursorRef.current = prev;
               return prev;
             }
             
@@ -490,6 +519,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (prev.trail.length === 0) {
               console.log("Game over: Player trail length reached zero during shrinking.");
               endGame('trailShrunk');
+              playerCursorRef.current = prev;
               return prev;
             }
             
@@ -503,10 +533,12 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
               endGame('trailShrunk');
             }
             
-            return {
+            const updatedCursor = {
               ...prev,
               trail: newTrail
             };
+            playerCursorRef.current = updatedCursor;
+            return updatedCursor;
           });
         }, PLAYER_TRAIL_SHRINK_INTERVAL);
       }
