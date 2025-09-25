@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
+import styles from './page.module.css';
 
 export const metadata: Metadata = {
   title: 'My Design Capabilities - Declan Kramper',
@@ -60,8 +61,8 @@ export default function MyDesignCapabilitiesPage() {
             alt="Chitrack user picking their direction to track"
             data-media-size="md"
           />
-          <figcaption>Chitrack user picking a direction to track at a nearby station</figcaption>
-        </figure>
+          <figcaption className={styles.caption}>Chitrack user picking a direction to track at a nearby station</figcaption>
+          </figure>
         <p>
           Or how I used Google Apps Script and wrote a function that allowed us to track feedback on a product in an
           interface that we didn't control by easily clicking one link.
@@ -109,15 +110,15 @@ export default function MyDesignCapabilitiesPage() {
         </p>
         <figure>
           <img src="/writes/design-capabilities/interactive-letter-touch.gif" alt="Interactive letter responding to touch input" data-media-size="lg" />
-          <figcaption>User opening the letter themselves</figcaption>
-        </figure>
+          <figcaption className={styles.caption}>User opening the letter themselves</figcaption>
+          </figure>
         <p>
           An app that sparks conversations about yourself on a social platform should be easy to share.
         </p>
         <figure>
           <img src="/writes/design-capabilities/strava-share.png" alt="Concept for sharing Strava workouts" data-media-size="md" />
-          <figcaption>Results screen with prominent relation to other results and share button</figcaption>
-        </figure>
+          <figcaption className={styles.caption}>Results screen with prominent relation to other results and share button</figcaption>
+          </figure>
         <p>
           Answering an ambiguous question ("Which Divvy bike station in Chicago needs another rack?") should have an
           experiment designed such that there can be a recommendation.
@@ -145,8 +146,8 @@ export default function MyDesignCapabilitiesPage() {
             alt="Show don't tell motion experiment"
             data-media-size="md"
           />
-          <figcaption>/everything-i-built</figcaption>
-        </figure>
+          <figcaption className={styles.caption}>/everything-i-built</figcaption>
+          </figure>
 
         <h2>And in general, I believe my designs should follow a few ideals</h2>
         <p>They should be delightful: fun and uniquely human (in a way only the creator can do!)</p>
@@ -168,62 +169,62 @@ export default function MyDesignCapabilitiesPage() {
         <div className="media-row">
           <figure>
             <img src="/writes/design-capabilities/RTC-feedback.png" alt="RTC feedback summary" data-media-size="md" />
-            <figcaption>RTC feedback summary</figcaption>
+            <figcaption>Race Time Calculator feedback</figcaption>
           </figure>
           <figure>
             <img src="/writes/design-capabilities/Chitrack-feedback.png" alt="Chitrack post-run feedback survey" data-media-size="md" />
-            <figcaption>Chitrack post-run feedback survey</figcaption>
+            <figcaption>Chitrack feedback component</figcaption>
           </figure>
           <figure>
             <img src="/writes/design-capabilities/Chitrack-feedback2.png" alt="Chitrack qualitative feedback digest" data-media-size="md" />
-            <figcaption>Chitrack qualitative feedback digest</figcaption>
+            <figcaption>Chitrack feedback screen</figcaption>
           </figure>
           <figure>
             <img src="/writes/design-capabilities/Garpple-feedback.png" alt="Garpple feedback prompt" data-media-size="md" />
-            <figcaption>Garpple feedback prompt</figcaption>
+            <figcaption>Garpple feedback component</figcaption>
           </figure>
         </div>
         <p>They should be intuitive (even if you've never used it before!)</p>
         <figure>
           <video src="/writes/design-capabilities/Magic-record-player-intuitive.mov" controls playsInline muted data-media-size="lg" />
-          <figcaption>Magic record player: intuitive interaction demo</figcaption>
-        </figure>
+          <figcaption className={styles.caption}>Placing an image on the box plays music?!</figcaption>
+          </figure>
         <p>and user-centric</p>
         <div className="media-row">
           <figure>
             <img src="/writes/design-capabilities/rtc-flow.png" alt="RTC escalation flow diagram" data-media-size="md" />
-            <figcaption>RTC escalation flow diagram</figcaption>
+            <figcaption>Race Time Calculator user flow diagram</figcaption>
           </figure>
           <figure>
             <img src="/writes/design-capabilities/meet-or-not-flow.png" alt="Meet-or-Not flow overview" data-media-size="md" />
-            <figcaption>Meet-or-Not flow overview</figcaption>
+            <figcaption>Meet-or-Not user flow diagram</figcaption>
           </figure>
         </div>
         <p>with micro-interactions that make the experience stand out</p>
         <figure>
           <img src="/writes/design-capabilities/farmmatch-search-gif.gif" alt="Farmmatch animated search for crop buyers" data-media-size="lg" />
-          <figcaption>Farmmatch animated search for crop buyers</figcaption>
-        </figure>
+          <figcaption className={styles.caption}>Farmmatch concept site with slick search animation</figcaption>
+          </figure>
         <p>we shouldn't shy away from inspiration as building blocks!</p>
         <div className="media-row">
           <figure>
             <img src="/writes/design-capabilities/psPRD-inspiration.png" alt="Product spec inspiration board" data-media-size="md" />
-            <figcaption>Product spec inspiration board</figcaption>
+            <figcaption>chatPRD inspiration</figcaption>
           </figure>
           <figure>
             <img src="/writes/design-capabilities/psPRD-implementation.png" alt="Product spec implementation roadmap" data-media-size="md" />
-            <figcaption>Product spec implementation roadmap</figcaption>
+            <figcaption>my inspired implementation for psPRD</figcaption>
           </figure>
         </div>
         <p>and also update the interaction decisions to account for capabilities of new technologies</p>
         <div className="media-row">
           <figure>
             <img src="/writes/design-capabilities/meet-or-not-preload.png" alt="Meet-or-Not preload state" data-media-size="md" />
-            <figcaption>Meet-or-Not preload state</figcaption>
+            <figcaption>When LLMs first came out, they were slow so we needed a "preload" state</figcaption>
           </figure>
           <figure>
             <img src="/writes/design-capabilities/meet-or-not-result.png" alt="Meet-or-Not result screen" data-media-size="md" />
-            <figcaption>Meet-or-Not result screen</figcaption>
+            <figcaption>So that the results screen wasn't empty when user navigated to it!</figcaption>
           </figure>
         </div>
       </article>
