@@ -55,7 +55,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
       />
       {/* Post Header */}
       <header className="mt-10 mb-8">
-        <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex items-baseline justify-between gap-3 mb-3">
           <div className="flex flex-wrap gap-1.5">
             {post.categories.map((category: string) => (
               <Badge key={category} variant="secondary" className="text-[10px] px-1.5 py-0">

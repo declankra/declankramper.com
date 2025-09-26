@@ -28,7 +28,7 @@ export default function PostList({ posts }: PostListProps) {
         >
           <Link href={`/writes/${post.slug}`} className="block space-y-2">
             {/* Categories */}
-            <div className="flex items-start justify-between gap-3 mb-1">
+            <div className="flex items-baseline justify-between gap-3 mb-1">
               <div className="flex flex-wrap gap-2">
                 {post.categories.map((category) => (
                   <Badge 
@@ -40,7 +40,7 @@ export default function PostList({ posts }: PostListProps) {
                   </Badge>
                 ))}
               </div>
-              <time className="shrink-0 text-xs text-muted-foreground leading-6 tracking-tight">
+              <time className="shrink-0 text-xs text-foreground/70 leading-6 tracking-tight">
                 {new Date(post.date).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'short',
