@@ -53,36 +53,36 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           { label: post.title, current: true }
         ]}
       />
-    {/* Post Header */}
-    <header className="mb-6">
-      <div className="flex flex-wrap gap-1.5 mb-3">
-        {post.categories.map((category: string) => (
-          <Badge key={category} variant="secondary" className="text-[10px] px-1.5 py-0">
-            {category.toLowerCase()}
-          </Badge>
-        ))}
-      </div>
-      <h1 className="text-3xl font-semibold tracking-tight text-foreground mb-1.5">{post.title}</h1>
-      <time 
-        dateTime={post.date}
-        className="text-[10px] text-foreground/70 block tracking-tight"
-      >
-        {new Date(post.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}
-      </time>
-    </header>
+      {/* Post Header */}
+      <header className="mt-10 mb-8">
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div className="flex flex-wrap gap-1.5">
+            {post.categories.map((category: string) => (
+              <Badge key={category} variant="secondary" className="text-[10px] px-1.5 py-0">
+                {category.toLowerCase()}
+              </Badge>
+            ))}
+          </div>
+          <time 
+            dateTime={post.date}
+            className="shrink-0 text-[10px] text-foreground/70 leading-6 tracking-tight"
+          >
+            {new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+        </div>
+        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{post.title}</h1>
+        <p className="mt-3 text-sm text-foreground/70">
+          {post.preview}
+        </p>
+      </header>
 
-    {/* Post Preview */}
-    <div className="text-xs text-foreground/70 mb-6 italic tracking-tight">
-      {post.preview}
-    </div>
-
-    {/* Post Content */}
-    <div 
-      className="prose prose-neutral dark:prose-invert max-w-none 
+      {/* Post Content */}
+      <div 
+        className="prose prose-neutral dark:prose-invert max-w-none 
           prose-p:text-[15px] prose-p:leading-loose prose-p:tracking-normal prose-p:text-foreground/95 prose-p:mb-4
           prose-headings:font-bold prose-headings:tracking-normal prose-headings:mt-8 prose-headings:mb-4
           prose-h2:text-xl prose-h3:text-base
@@ -109,7 +109,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           [&_li>ol]:mt-2
           [&_p+ol]:mt-2"
         dangerouslySetInnerHTML={{ __html: post.content }} 
-    />
+      />
     </article>
   );
 }

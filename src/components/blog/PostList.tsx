@@ -28,16 +28,25 @@ export default function PostList({ posts }: PostListProps) {
         >
           <Link href={`/writes/${post.slug}`} className="block space-y-2">
             {/* Categories */}
-            <div className="flex flex-wrap gap-2 mb-1">
-              {post.categories.map((category) => (
-                <Badge 
-                  key={category} 
-                  variant="secondary"
-                  className="text-xs px-2 py-0 bg-transparent hover:bg-transparent text-muted-foreground"
-                >
-                  {category.toLowerCase()}
-                </Badge>
-              ))}
+            <div className="flex items-start justify-between gap-3 mb-1">
+              <div className="flex flex-wrap gap-2">
+                {post.categories.map((category) => (
+                  <Badge 
+                    key={category} 
+                    variant="secondary"
+                    className="text-xs px-2 py-0 bg-transparent hover:bg-transparent text-muted-foreground"
+                  >
+                    {category.toLowerCase()}
+                  </Badge>
+                ))}
+              </div>
+              <time className="shrink-0 text-xs text-muted-foreground leading-6 tracking-tight">
+                {new Date(post.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}
+              </time>
             </div>
             
             {/* Title */}
@@ -50,14 +59,6 @@ export default function PostList({ posts }: PostListProps) {
               {post.preview}
             </p>
             
-            {/* Date */}
-            <time className="text-xs text-muted-foreground block">
-              {new Date(post.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}
-            </time>
           </Link>
         </motion.article>
       ))}
