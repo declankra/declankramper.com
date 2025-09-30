@@ -12,13 +12,38 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
     {
         id: 'garpple',
         title: 'Garpple',
-        subtitle: 'Garmin analytics for Apple Watch runners (145+ waitlist signups)',
+        subtitle: 'Garmin analytics for Apple Watch runners (170+ waitlist signups). Just went live.',
         link: 'https://www.garpple.com',
         visuals: [
             {
                 type: 'image',
                 src: '/finished/garpple/garpple-waitlist.png',
-                alt: 'Garpple'
+                alt: 'Garpple Waitlist'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/garpple_signup.png',
+                alt: 'Garpple Signup'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/homeview.png',
+                alt: 'Garpple Home View'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/homeview1.jpeg',
+                alt: 'Garpple Home View 1'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/homeview2.jpeg',
+                alt: 'Garpple Home View 2'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/dylan_email_release.png',
+                alt: 'Garpple Email Release'
             }
         ]
     },
@@ -363,6 +388,11 @@ export const finishedProjects: FinishedProject[] = [
                 type: 'image',
                 src: '/finished/race-time-calculator/feedback-iteration.png',
                 alt: 'Race Time Calculator Feedback Iteration'
+            },
+            {
+                type: 'image',
+                src: '/finished/race-time-calculator/rtc-feedback.png',
+                alt: 'RTC Feedback for Garpple'
             }
         ]
     },
