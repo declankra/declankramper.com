@@ -3,6 +3,17 @@ import { TimelineItem } from './BuildsTimeline';
 export const timelineItems: TimelineItem[] = [
     {
         type: 'work',
+        id: 'garpple',
+        title: 'Garpple | IOS App',
+        date: '2025-09',
+        year: 2025,
+        media: '/images/buildsTimeline/Garpple-AppIcon.webp',
+        preview: 'Garmin analytics for serious Apple Watch runners',
+        description: 'App just went live on the app store 9/28; Validated idea by gathering 168+ organic waitlist signups at [Garpple.com](http://www.garpple.com). \n\n Inspired by feedback from Race Time Calculator, serious runners (specifically those without a Garmin and training for their subsequent race), struggle to understand if they\'re making progress towards their goals because of the limited prescriptive insights through existing IOS applications. There\'s a proven need for a better way to get data out of your Apple Watch to acheive your goals.\n\n (Also selfishly built to help me qualify for the Boston Marathon while training to qualify for the Bostom Marathon.)',
+        link: 'https://apps.apple.com/us/app/garpple-pro-running-analytics/id6752552132'      
+    },
+    {
+        type: 'work',
         id: 'divvy-live',
         title: 'Divvy Bike Business Case | Live Dashboard',
         date: '2025-06',
