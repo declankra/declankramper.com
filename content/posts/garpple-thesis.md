@@ -8,7 +8,7 @@ preview: "the problem, why i care, what im doing about it, and why we'll win"
 
 ## Problem → Mission → Vision
 
-**MAIN PROBLEM STATEMENT:** Runners struggle to maintain motivation during the months between races when progress is invisible.
+**MAIN PROBLEM STATEMENT:** Runners struggle to see (1) progress overtime and (2) maintain motivation during the months between races when progress is invisible.
 
 Progress in running happens slowly over weeks and months through consistent training, but runners can't tell if their training is actually working because: they don't race frequently enough to track PRs, the improvements are too gradual to notice day-to-day, and they have to manually dig through different views and months of data to compare similar efforts.
 
