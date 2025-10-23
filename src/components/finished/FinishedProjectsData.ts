@@ -56,6 +56,16 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
                 type: 'image',
                 src: '/finished/elite-ai/Submittal-Requirements-Gathering.png',
                 alt: 'Submittal Requirements Gathering'
+            },
+            {
+                type: 'image',
+                src: '/finished/elite-ai/upload-specs.png',
+                alt: 'Upload Specs'
+            },
+            {
+                type: 'image',
+                src: '/finished/elite-ai/submittal-dashboard.png',
+                alt: 'Submittal Dashboard'
             }
         ]
     }
