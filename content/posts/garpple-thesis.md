@@ -16,7 +16,7 @@ This causes runners to train with uncertainty — frustrated and unmotivated whe
 
 **MISSION:**
 Help runners maintain motivation and build confidence in their training by showing them evidence of progress they can't see elsewhere — both during training blocks when improvement feels invisible, and across training blocks when they forget how far they've come.
-*More concisely: Show runners evidence of progress over time so they have confidence their training is working — even between races.*
+*More concisely: Show runners evidence of progress over time so they have confidence their training is working (even between races).*
 
 **VISION / Why do I care?**
 I'm passionate about helping people see how they're getting better over time because I've experienced firsthand the power of consistency and long time horizons. The growth curve is hard to see when you're zoomed into the immediate, but when you set appropriate time horizons and work hard consistently you’re able to achieve above-average results. That's running.
