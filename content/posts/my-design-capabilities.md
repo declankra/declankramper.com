@@ -201,3 +201,7 @@ And they should adjust interaction decisions to reflect the capabilities of emer
     <figcaption>So that the results screen wasn't empty when users navigated to it!</figcaption>
   </figure>
 </div>
+
+---
+
+**P.S.** I wrote a follow-up to this piece on what I think was missing and what I'm doing about it now: [How I'm Improving My Design Sense](/writes/how-im-improving-my-design-sense).
