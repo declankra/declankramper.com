@@ -5,44 +5,50 @@ categories: ["Product", "dkBuilds"]
 preview: "the problem, why i care, what im doing about it, and why we'll win"
 ---
 
-
 ## Problem → Mission → Vision
 
-**MAIN PROBLEM STATEMENT:** Runners struggle to see (1) progress overtime and (2) maintain motivation during the months between races when progress is invisible.
+**MAIN PROBLEM STATEMENT**
+
+Runners struggle to see (1) progress overtime and (2) maintain motivation during the months between races when progress is invisible.
 
 Progress in running happens slowly over weeks and months through consistent training, but runners can't tell if their training is actually working because: they don't race frequently enough to track PRs, the improvements are too gradual to notice day-to-day, and they have to manually dig through different views and months of data to compare similar efforts.
 
-This causes runners to train with uncertainty — frustrated and unmotivated when they can't see the improvement that's actually happening, even though their fitness IS improving.
+This causes runners to train discouraged, blind to genuine progress because they can't see the fitness gains they're actually making.
 
-**MISSION:**
-Help runners maintain motivation and build confidence in their training by showing them evidence of progress they can't see elsewhere — both during training blocks when improvement feels invisible, and across training blocks when they forget how far they've come.
+**MISSION**
+
+Help runners maintain motivation and build confidence in their training by showing them evidence of progress they can't see elsewhere - both during training blocks when improvement feels invisible and across training blocks when they forget how far they've come.
 *More concisely: Show runners evidence of progress over time so they have confidence their training is working (even between races).*
 
 **VISION / Why do I care?**
+
 I'm passionate about helping people see how they're getting better over time because I've experienced firsthand the power of consistency and long time horizons. The growth curve is hard to see when you're zoomed into the immediate, but when you set appropriate time horizons and work hard consistently you’re able to achieve above-average results. That's running.
-I don't want to build for the person who runs one race and disappears. But if they download this app, I want them to come back. I want to help people keep running because running changes lives and improves health — and those are the two things I've always cared most about: health and finding purpose.
+
+I don't want to build for the person who runs one race and disappears. But if they download this app, I want them to come back. I want to help people keep running because running changes lives and improves health. And those are the two things I've always cared most about: health and finding purpose.
+
 Too many people quit not because they aren't improving, but because they can't see they're improving (this is true in life and in running). If I can give people confidence in their training over time, I can help them stay consistent. And consistency in running carries over into other aspect of life: it teaches you the value of showing up, believing in yourself (trusting the process), and playing the long game.
 
 ## Core Assumption → Hypothesis → North Star → Thesis
 
 **CORE ASSUMPTION (What you're testing):**
 
-"When runners see evidence that they're making progress over time, they gain confidence in their training, which reinforces consistency and sustains motivation during periods when improvement would otherwise feel invisible."
+When runners see evidence that they're making progress over time, they gain confidence in their training, which reinforces consistency and sustains motivation during periods when improvement would otherwise feel invisible.
 
 **More simply:** Visible progress → Confidence → Sustained consistency
 
-**HYPOTHESIS (How I'll test it):**
-"If we automatically surface evidence of longitudinal progress, then runners will open the app 3-5x/week (after every run) because:
+**HYPOTHESIS (How I'll test it)**
+
+If we automatically surface evidence of longitudinal progress, then runners will open the app 3-5x/week (after ~every run) because:
 
 - It gives them positive reinforcement for work already done (not guilt for work undone)
 - It answers the question no other app answers well: 'Am I getting better?’
-- It creates confidence during training blocks when races aren't validating progress"
+- It creates confidence during training blocks when races aren't validating progress
 
-**NORTH STAR METRIC:**
+**NORTH STAR METRIC**
 
-**Weekly Active Users (WAU) who open the app 4+ times in a week (WAU_4+)**
+**People who open the app 4+ times in a week (WAU_4+)**
 
-Why 4x/week? Matches the ICP's typical running cadence (3-5x/week). You want them coming back after each run to see how that run compares to past efforts, plus periodic check-ins to see longitudinal progress.
+Why 4x/week? Matches the ICP's typical running cadence (3-5x/week). I want them coming back after each run to see how that run compares to past efforts, plus periodic check-ins to see longitudinal progress.
 
 **How I’ll know if the core assumption is working:**
 
@@ -59,13 +65,13 @@ Why 4x/week? Matches the ICP's typical running cadence (3-5x/week). You want the
 - Session length increases over time (more data = more engagement with comparisons)
 - Qualitative feedback: "I can finally see I'm getting better" vs "cool data"
 
-**THESIS (Why I'll win):**
-We'll win because we're solving a real, poorly-addressed problem (invisible progress between races) with three compounding advantages:
+**THESIS (Why I'll win)**
 
-1. **Unique positioning:** We're the only app optimized for longitudinal progress tracking over months/years, not weekly summaries or daily prescriptions
+I'll win because we're solving a real, poorly-addressed problem (invisible progress between races) with three distinct advantages:
+
+1. **Unique positioning:** We're the only app optimized for longitudinal progress tracking over months/years, not weekly summaries or daily prescriptions.
 2. **Behavioral advantage:** Progress tracking = passive consumption + positive emotions. Prescriptive apps = active effort + guilt. We align with revealed preferences, not stated preferences.
-3. **Founder-product fit:** I’m a serious hobby runner building for serious hobby runners. I understand the problem viscerally because I live it. And I can move faster than established competitors because its me + AI — iterating based on real runner feedback with no overhead.
-
+3. **Founder-product fit:** I’m a serious hobby runner building for serious hobby runners. I understand the problem because I live it. And I can move faster than established competitors because its me + AI iterating based on real runner feedback with no overhead.
 
 ### SUPPORTING INFORMATION
 
@@ -89,7 +95,7 @@ We'll win because we're solving a real, poorly-addressed problem (invisible prog
 - Garmin shows you current fitness (today's VO2 max, training load)
 - **Nobody shows you:** "Here's proof you're getting fitter over time"
 
-**Your One-Sentence Positioning:**
+**One-Sentence Positioning:**
 "Garpple shows you if your training is working — the one thing all those other apps can't tell you."
 
 **Unique Solution:** Automatic longitudinal comparisons without manual effort. We do the work of finding similar workouts across months, surfacing trends, and showing comparison progress — so runners don't have to manually dig through their history to answer "Am I getting better?" With nudges in the right direction instead of prescriptive changes that people don't do and ultimately lead to guilt.
@@ -107,7 +113,7 @@ Who most desperately needs it?
 
 **The Serious Hobbyist Runner**
 
-*Post-newbie runners (1-3 years experience, training 3-5x/week without a coach) who can't tell if their consistent work is actually making them better.*
+*Post-newbie runners (1-3 years experience, training 3-5x/week without a coach) who can't see if/how their consistent work is actually making them better*
 
 **Demographics:**
 
@@ -119,7 +125,7 @@ Who most desperately needs it?
 
 **Psychographics:**
 
-- **Core emotional state:** "I'm putting in the work but can't tell if it's paying off"
+- Core emotional state: "I'm putting in the work but can't tell if it's paying off"
 - Past the phase where every run is a PR
 - Committed enough to train consistently but not elite/obsessive
 - Goal-oriented (wants to get faster, not just finish)
@@ -179,7 +185,7 @@ Who most desperately needs it?
 - "Training without a coach? Here's your progress tracker.”
 - "Finally know if your training is paying off — without waiting for race day."
 
-## **3 Biggest Risks (framed as questions)**
+### **3 Biggest Risks (framed as questions)**
 
 **Risk 1: "Does visible progress actually drive sustained engagement, or just one-time curiosity?"**
 My core assumption is: Visible progress → Confidence → Sustained consistency. But what if showing runners their progress is interesting *once* but doesn't create enough value to make them open the app 4x/week? This breaks my hypothesis that automatic longitudinal progress will drive 4+ opens per week. If retention drops after the initial "aha moment," then visible progress creates one-off interest but not habit.
@@ -218,6 +224,13 @@ If the matching is bad, comparisons are meaningless. If it's too complex, it tak
 - Improve gradually with user feedback ("This comparison doesn't feel right")
 - Ship fast, iterate based on real usage — perfect matching isn't required for V1 if the insight is directionally correct
 
+P.S.: To mitigate risk of just “moving fast and being unique”:
+
+1. **Build community from Day 1:** Make early users feel like co-founders, not customers
+2. **Go narrow and deep:** Own "progress tracking for Norwegian Singles Approach (NSA) running community" completely before expanding
+3. **Charge early:** Prove willingness to pay ASAP (even if it's just $5/month for beta access)
+4. **Build my brand:** Be the face of this. Content, presence, personality. Strava is a faceless company. You're a real runner.
+
 ---
 
 Sources that informed this:
@@ -227,3 +240,7 @@ Sources that informed this:
 - 65 pieces of in-app feedback from Race Time Calculator
 - Competitive Analysis of HealthFit’s 353 app store reviews
 - Numerous customer conversations, text messages, and emailing
+
+---
+
+You can download the app [here](https://apps.apple.com/us/app/garpple-pro-running-analytics/id6752552132)
