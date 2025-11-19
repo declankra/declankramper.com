@@ -38,7 +38,7 @@ I loved tuning into [12 Days of OpenAI](https://openai.com/12-days/) (a play on 
 I’ll learn a lot between now and the end of the month. In the days spent passively thinking[^2] about this challenge, I came up with some thoughts on...
 
 1. **how does one pick an idea?**
-    - Pick something you would love to sell. Like the thought of you going around and telling everyone about the product is exciting, feels natural. You can believe in an idea, but not want to make the product. (e.g. I think [upwardly](http://www.wakeupwardly.com) would do a lot of good, has good intentions, and social accountability in consumer apps make things *work* and I believe in in the benefits of getting up early, but I wouldn’t want to sell anyone on it. Versus a clean, modern, minimalist, bad-ass chicago transit tracker app? hell yeah.
+    - Pick something you would love to sell. Like the thought of you going around and telling everyone about the product is exciting, feels natural. You can believe in an idea, but not want to make the product. (e.g. I think [upwardly](https://upwardly.vercel.app) would do a lot of good, has good intentions, and social accountability in consumer apps make things *work* and I believe in in the benefits of getting up early, but I wouldn't want to sell anyone on it. Versus a clean, modern, minimalist, bad-ass chicago transit tracker app? hell yeah.
 2. **what will help me succeed?**
     - Getting narrow, staying narrow
     - Defining a single ‘done’ requirement
