@@ -331,7 +331,7 @@ export const finishedProjects: FinishedProject[] = [
         subtitle: 'Validate your idea before building it using a starter-kit based on product principles',
         month: 11,
         year: 2024,
-        link: 'https://www.validateidea.now/?utm_source=portfolio',
+        link: 'https://landing-page-nu-plum-69.vercel.app/?utm_source=portfolio',
         visuals: [
             {
                 type: 'image',

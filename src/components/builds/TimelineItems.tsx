@@ -125,7 +125,7 @@ export const timelineItems: TimelineItem[] = [
         media: '/images/buildsTimeline/ValidateIdea.webp',
         preview: 'Starter-kit landing page to validate your SaaS idea while building it',
         description: "Like many of you, I struggle with decision paralysis from having too many ideas and *no clear way to know which idea I should go all-in on*. I wanted a faster way to figure out if people cared about my ideas *before* investing months into building.\n\nSo I built ValidateIdea to solve this problem - a full-stack starter kit landing page that focuses on understanding user needs before needing to get deep into lines of code.\n\nLaunched on ProductHunt to a measly 7 upvotes, it's a reminder that if you're not using your products, no one else will either. And whatever you're going to say, use less words.\n\nDespite only **3 people signing up** and **4 github repo clones**, I learned a tremendous amount - both technical (how to build web apps) and ever-growing product skills (positioning and marketing).",
-        link: 'https://www.validateidea.now/?utm_source=portfolio'
+        link: 'https://landing-page-nu-plum-69.vercel.app/?utm_source=portfolio'
     },
 
     {
