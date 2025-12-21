@@ -112,7 +112,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     console.log('Initializing computer cursors, screen size:', screenWidth, screenHeight);
     
-    // Create 3 computer cursors with different colors
+    // Create 5 computer cursors with different colors
     const cursors: Cursor[] = [
       {
         id: 'computer1',
@@ -135,6 +135,24 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {
         id: 'computer3',
         color: 'rgba(0, 255, 0, 0.8)', // Green
+        x: Math.random() * screenWidth,
+        y: Math.random() * screenHeight,
+        trail: [],
+        speed: 2,
+        direction: getRandomDirection()
+      },
+      {
+        id: 'computer4',
+        color: 'rgba(147, 51, 234, 0.8)', // Purple
+        x: Math.random() * screenWidth,
+        y: Math.random() * screenHeight,
+        trail: [],
+        speed: 2,
+        direction: getRandomDirection()
+      },
+      {
+        id: 'computer5',
+        color: 'rgba(249, 115, 22, 0.8)', // Orange
         x: Math.random() * screenWidth,
         y: Math.random() * screenHeight,
         trail: [],
@@ -325,7 +343,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('Increasing computer cursor speeds');
         const fasterCursors = prev.map(cursor => ({
           ...cursor,
-          speed: cursor.speed * 1.1
+          speed: cursor.speed * 1.2
         }));
         computerCursorsRef.current = fasterCursors;
         return fasterCursors;
