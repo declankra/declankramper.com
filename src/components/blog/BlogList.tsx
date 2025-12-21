@@ -44,7 +44,7 @@ export default function BlogList({ initialPosts }: BlogListProps) {
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">Declan Kramper</h1>
         <div className="space-y-1">
           <p className="text-sm text-muted-foreground">Writes</p>
-          <p className="text-xs text-muted-foreground">to think deeper. the intended audience is not you.</p>
+          <p className="text-xs text-muted-foreground">thoughts on a few of the things i'm thinking about to think deeper.</p>
         </div>
       </header>
       

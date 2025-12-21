@@ -1,7 +1,7 @@
 ---
 title: "Garpple Thesis"
 date: "2025-10-19"
-categories: ["Product", "dkBuilds"]
+categories: ["Product"]
 preview: "the problem, why i care, and what im doing about it to win"
 ---
 

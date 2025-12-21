@@ -34,7 +34,7 @@ export default function PostList({ posts }: PostListProps) {
                   <Badge 
                     key={category} 
                     variant="secondary"
-                    className="text-xs px-2 py-0 bg-transparent hover:bg-transparent text-muted-foreground"
+                    className="text-xs pl-0 pr-2 py-0 bg-transparent hover:bg-transparent text-muted-foreground"
                   >
                     {category.toLowerCase()}
                   </Badge>

@@ -1,7 +1,7 @@
 ---
 title: "ChiTrack: why i built it and what i learned"
 date: "2025-06-03"
-categories: ["Product", "dkBuilds"]
+categories: ["Product"]
 preview: "simple is not easy"
 ---
 
