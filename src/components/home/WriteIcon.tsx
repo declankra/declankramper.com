@@ -51,6 +51,10 @@ export default function WriteIcon() {
       </svg>
 
       <style jsx global>{`
+        .write-icon {
+          transform: translateY(5px);
+        }
+
         .write-link:hover .pencil-body,
         .write-link:hover .pencil-tip,
         .write-link:hover .pencil-eraser {

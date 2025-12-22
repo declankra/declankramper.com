@@ -13,8 +13,23 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
         id: 'garpple',
         title: 'Garpple',
         subtitle: 'Garmin analytics for Apple Watch runners (170+ waitlist signups). Just went live.',
-        link: 'https://www.garpple.com',
+        link: 'https://www.surgent.run',
         visuals: [
+            {
+                type: 'image',
+                src: '/finished/garpple/surgent-landing.webp',
+                alt: 'Surgent Landing Page'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/surgent-1.0-app-store.webp',
+                alt: 'Surgent App Store'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/surgent-shared-with-friends.webp',
+                alt: 'Surgent Shared With Friends'
+            },
             {
                 type: 'image',
                 src: '/finished/garpple/garpple-waitlist.png',
@@ -24,11 +39,6 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
                 type: 'image',
                 src: '/finished/garpple/garpple_signup.png',
                 alt: 'Garpple Signup'
-            },
-            {
-                type: 'image',
-                src: '/finished/garpple/homeview.png',
-                alt: 'Garpple Home View'
             },
             {
                 type: 'image',
@@ -54,6 +64,11 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
         visuals: [
             {
                 type: 'image',
+                src: '/finished/elite-ai/elite-dashboard.webp',
+                alt: 'Elite dashboard'
+            },
+            {
+                type: 'image',
                 src: '/finished/elite-ai/Submittal-Requirements-Gathering.png',
                 alt: 'Submittal Requirements Gathering'
             },
@@ -61,11 +76,6 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
                 type: 'image',
                 src: '/finished/elite-ai/upload-specs.png',
                 alt: 'Upload Specs'
-            },
-            {
-                type: 'image',
-                src: '/finished/elite-ai/submittal-dashboard.png',
-                alt: 'Submittal Dashboard'
             }
         ]
     }
