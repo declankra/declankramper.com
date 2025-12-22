@@ -57,6 +57,7 @@ const useCarouselSound = (isMuted?: boolean) => {
   const noiseBufferRef = useRef<AudioBuffer | null>(null)
   const swooshBufferRef = useRef<AudioBuffer | null>(null)
   const isMutedRef = useRef(Boolean(isMuted))
+  const isUnlockedRef = useRef(false)
 
   useEffect(() => {
     isMutedRef.current = Boolean(isMuted)
@@ -92,6 +93,31 @@ const useCarouselSound = (isMuted?: boolean) => {
     }
     return context
   }, [])
+
+  const resumeContext = useCallback(async () => {
+    const context = ensureContext()
+    if (!context) return null
+    if (context.state !== 'running') {
+      try {
+        await context.resume()
+      } catch {
+        return context
+      }
+    }
+    if (!isUnlockedRef.current) {
+      const buffer = context.createBuffer(1, 1, context.sampleRate)
+      const source = context.createBufferSource()
+      const gain = context.createGain()
+      gain.gain.value = 0
+      source.buffer = buffer
+      source.connect(gain)
+      gain.connect(context.destination)
+      source.start(0)
+      source.stop(context.currentTime + 0.01)
+      isUnlockedRef.current = true
+    }
+    return context
+  }, [ensureContext])
 
   const playDetent = useCallback(
     (velocityX: number) => {
@@ -199,8 +225,8 @@ const useCarouselSound = (isMuted?: boolean) => {
   )
 
   const prime = useCallback(() => {
-    ensureContext()
-  }, [ensureContext])
+    void resumeContext()
+  }, [resumeContext])
 
   useEffect(() => {
     return () => {
@@ -278,13 +304,44 @@ const ProofCarousel = memo(
   const detentSpacingPx = isSmall ? 16 : isMedium ? 18 : 22
   const detentAccumulatorRef = useRef(0)
   const { playDetent, playSwoosh, prime } = useCarouselSound(isAudioMuted)
+  const hasPrimedRef = useRef(false)
 
   useEffect(() => {
     detentAccumulatorRef.current = 0
   }, [detentSpacingPx])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const unlockOnce = () => {
+      if (hasPrimedRef.current) return
+      hasPrimedRef.current = true
+      prime()
+    }
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        prime()
+      }
+    }
+    window.addEventListener('pointerdown', unlockOnce, { passive: true })
+    window.addEventListener('touchstart', unlockOnce, { passive: true })
+    window.addEventListener('keydown', unlockOnce)
+    window.addEventListener('pageshow', unlockOnce)
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => {
+      window.removeEventListener('pointerdown', unlockOnce)
+      window.removeEventListener('touchstart', unlockOnce)
+      window.removeEventListener('keydown', unlockOnce)
+      window.removeEventListener('pageshow', unlockOnce)
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
+  }, [prime])
+
   const handleDrag = useCallback(
     (_: unknown, info: { delta: { x: number }; velocity: { x: number } }) => {
+      if (!hasPrimedRef.current) {
+        hasPrimedRef.current = true
+        prime()
+      }
       rotation.set(rotation.get() + info.delta.x * 0.35)
       detentAccumulatorRef.current += info.delta.x
       const step = detentSpacingPx
