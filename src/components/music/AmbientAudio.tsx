@@ -9,7 +9,6 @@ const FADE_DURATION = 2000 // 2 seconds
 const TARGET_VOLUME = 0.15 // 15% volume
 
 interface AmbientAudioProps {
-  onAudioStarted?: () => void
   onAudioReady?: (audio: HTMLAudioElement) => void
   onAudioStateChange?: (state: { isPlaying: boolean; isMuted: boolean }) => void
 }
@@ -19,7 +18,6 @@ export interface AmbientAudioControls {
 }
 
 const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(function AmbientAudio({
-  onAudioStarted,
   onAudioReady,
   onAudioStateChange
 }: AmbientAudioProps, ref) {
@@ -28,14 +26,12 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
   const [isPlaying, setIsPlaying] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
-  const [hasUserPreference, setHasUserPreference] = useState(false)
 
   // Check localStorage for user preference
   useEffect(() => {
     const savedPreference = localStorage.getItem('ambient-audio-muted')
     if (savedPreference !== null) {
       setIsMuted(savedPreference === 'true')
-      setHasUserPreference(true)
     }
   }, [])
 
@@ -87,7 +83,6 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
       setIsPlaying(true)
       if (shouldAnnounceStart) {
         setIsInitialized(true)
-        onAudioStarted?.()
       }
       fadeIn()
     } catch (error) {
@@ -96,33 +91,7 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
     } finally {
       isStartingRef.current = false
     }
-  }, [fadeIn, isInitialized, onAudioStarted])
-
-  // Start playing audio (only once)
-  const startAudio = useCallback(async () => {
-    if (isInitialized || !audioRef.current) return
-    if (isMuted) {
-      setIsMuted(false)
-      audioRef.current.muted = false
-      localStorage.setItem('ambient-audio-muted', 'false')
-    }
-    await playAudio()
-  }, [isInitialized, isMuted, playAudio])
-
-  // Handle global click to start audio
-  useEffect(() => {
-    if (isInitialized) return
-
-    const handleClick = () => {
-      startAudio()
-    }
-
-    document.addEventListener('click', handleClick, { once: true })
-
-    return () => {
-      document.removeEventListener('click', handleClick)
-    }
-  }, [isInitialized, startAudio])
+  }, [fadeIn, isInitialized])
 
   // Handle mute toggle
   const toggleMute = useCallback(() => {

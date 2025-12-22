@@ -13,6 +13,7 @@ interface Product {
 
 interface DualitySectionProps {
   products?: Product[]
+  isAudioMuted?: boolean
 }
 
 const defaultProducts: Product[] = [
@@ -49,8 +50,180 @@ const useMediaQuery = (query: string, defaultValue = false) => {
   return matches
 }
 
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))
+
+const useCarouselSound = (isMuted?: boolean) => {
+  const audioContextRef = useRef<AudioContext | null>(null)
+  const noiseBufferRef = useRef<AudioBuffer | null>(null)
+  const swooshBufferRef = useRef<AudioBuffer | null>(null)
+  const isMutedRef = useRef(Boolean(isMuted))
+
+  useEffect(() => {
+    isMutedRef.current = Boolean(isMuted)
+  }, [isMuted])
+
+  const ensureContext = useCallback(() => {
+    if (typeof window === 'undefined' || isMutedRef.current) return null
+    const context = audioContextRef.current ?? new AudioContext()
+    audioContextRef.current = context
+    if (context.state === 'suspended') {
+      context.resume().catch(() => undefined)
+    }
+    if (!noiseBufferRef.current) {
+      const length = Math.floor(context.sampleRate * 0.04)
+      const buffer = context.createBuffer(1, length, context.sampleRate)
+      const data = buffer.getChannelData(0)
+      for (let i = 0; i < length; i += 1) {
+        const decay = 1 - i / length
+        data[i] = (Math.random() * 2 - 1) * decay
+      }
+      noiseBufferRef.current = buffer
+    }
+    if (!swooshBufferRef.current) {
+      const length = Math.floor(context.sampleRate * 0.35)
+      const buffer = context.createBuffer(1, length, context.sampleRate)
+      const data = buffer.getChannelData(0)
+      for (let i = 0; i < length; i += 1) {
+        const t = i / length
+        const envelope = Math.sin(Math.PI * t) * (1 - t * 0.2)
+        data[i] = (Math.random() * 2 - 1) * envelope
+      }
+      swooshBufferRef.current = buffer
+    }
+    return context
+  }, [])
+
+  const playDetent = useCallback(
+    (velocityX: number) => {
+      if (typeof window === 'undefined' || isMutedRef.current || document.hidden) return
+      const intensity = clamp(Math.abs(velocityX) / 900, 0.2, 1)
+
+      const context = ensureContext()
+      if (!context || !noiseBufferRef.current) return
+
+      const startTime = context.currentTime
+
+      const noise = context.createBufferSource()
+      noise.buffer = noiseBufferRef.current
+
+      const noiseFilter = context.createBiquadFilter()
+      noiseFilter.type = 'bandpass'
+      noiseFilter.frequency.value = 900 + intensity * 700
+      noiseFilter.Q.value = 1.6 + intensity * 0.8
+
+      const noiseGain = context.createGain()
+      noiseGain.gain.setValueAtTime(0.0001, startTime)
+      noiseGain.gain.linearRampToValueAtTime(0.02 + intensity * 0.03, startTime + 0.004)
+      noiseGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.045)
+
+      const ping = context.createOscillator()
+      ping.type = 'triangle'
+      ping.frequency.setValueAtTime(260 + intensity * 160, startTime)
+      ping.frequency.exponentialRampToValueAtTime(180 + intensity * 120, startTime + 0.07)
+
+      const pingGain = context.createGain()
+      pingGain.gain.setValueAtTime(0.0001, startTime)
+      pingGain.gain.linearRampToValueAtTime(0.018 + intensity * 0.025, startTime + 0.006)
+      pingGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.09)
+
+      const clack = context.createOscillator()
+      clack.type = 'square'
+      clack.frequency.setValueAtTime(140 + intensity * 90, startTime)
+      clack.frequency.exponentialRampToValueAtTime(90 + intensity * 60, startTime + 0.05)
+
+      const clackGain = context.createGain()
+      clackGain.gain.setValueAtTime(0.0001, startTime)
+      clackGain.gain.linearRampToValueAtTime(0.012 + intensity * 0.02, startTime + 0.004)
+      clackGain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.05)
+
+
+      noise.connect(noiseFilter)
+      noiseFilter.connect(noiseGain)
+      noiseGain.connect(context.destination)
+
+      ping.connect(pingGain)
+      pingGain.connect(context.destination)
+
+      clack.connect(clackGain)
+      clackGain.connect(context.destination)
+
+      noise.start(startTime)
+      noise.stop(startTime + 0.06)
+      ping.start(startTime)
+      ping.stop(startTime + 0.1)
+      clack.start(startTime)
+      clack.stop(startTime + 0.06)
+    },
+    [ensureContext]
+  )
+
+  const playSwoosh = useCallback(
+    (velocityX: number) => {
+      if (typeof window === 'undefined' || isMutedRef.current || document.hidden) return
+      const intensity = clamp(Math.abs(velocityX) / 1400, 0, 1)
+      if (intensity < 0.3) return
+
+      const context = ensureContext()
+      if (!context || !swooshBufferRef.current) return
+
+      const startTime = context.currentTime
+      const source = context.createBufferSource()
+      source.buffer = swooshBufferRef.current
+
+      const highpass = context.createBiquadFilter()
+      highpass.type = 'highpass'
+      highpass.frequency.value = 140
+
+      const lowpass = context.createBiquadFilter()
+      lowpass.type = 'lowpass'
+      const startCutoff = 1800 + intensity * 2000
+      const endCutoff = 550 + intensity * 450
+      lowpass.frequency.setValueAtTime(startCutoff, startTime)
+      lowpass.frequency.exponentialRampToValueAtTime(endCutoff, startTime + 0.28)
+
+      const gain = context.createGain()
+      const peak = 0.03 + intensity * 0.05
+      gain.gain.setValueAtTime(0.0001, startTime)
+      gain.gain.linearRampToValueAtTime(peak, startTime + 0.03)
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.32)
+
+      source.connect(highpass)
+      highpass.connect(lowpass)
+      lowpass.connect(gain)
+      gain.connect(context.destination)
+
+      source.start(startTime)
+      source.stop(startTime + 0.35)
+    },
+    [ensureContext]
+  )
+
+  const prime = useCallback(() => {
+    ensureContext()
+  }, [ensureContext])
+
+  useEffect(() => {
+    return () => {
+      if (audioContextRef.current) {
+        audioContextRef.current.close().catch(() => undefined)
+        audioContextRef.current = null
+      }
+    }
+  }, [])
+
+  return { playDetent, playSwoosh, prime }
+}
+
 const ProofCarousel = memo(
-  ({ products, maxHeight }: { products: Product[]; maxHeight?: number }) => {
+  ({
+    products,
+    maxHeight,
+    isAudioMuted
+  }: {
+    products: Product[]
+    maxHeight?: number
+    isAudioMuted?: boolean
+  }) => {
   const isSmall = useMediaQuery('(max-width: 640px)')
   const isMedium = useMediaQuery('(max-width: 1024px)')
   const minFaces = Math.max(products.length, 3)
@@ -102,6 +275,41 @@ const ProofCarousel = memo(
     })
   }, [])
 
+  const detentSpacingPx = isSmall ? 16 : isMedium ? 18 : 22
+  const detentAccumulatorRef = useRef(0)
+  const { playDetent, playSwoosh, prime } = useCarouselSound(isAudioMuted)
+
+  useEffect(() => {
+    detentAccumulatorRef.current = 0
+  }, [detentSpacingPx])
+
+  const handleDrag = useCallback(
+    (_: unknown, info: { delta: { x: number }; velocity: { x: number } }) => {
+      rotation.set(rotation.get() + info.delta.x * 0.35)
+      detentAccumulatorRef.current += info.delta.x
+      const step = detentSpacingPx
+      while (Math.abs(detentAccumulatorRef.current) >= step) {
+        detentAccumulatorRef.current -= Math.sign(detentAccumulatorRef.current) * step
+        playDetent(info.velocity.x)
+      }
+    },
+    [detentSpacingPx, playDetent, rotation]
+  )
+
+  const handleDragEnd = useCallback(
+    (_: unknown, info: { velocity: { x: number } }) => {
+      rotation.set(rotation.get() + info.velocity.x * 0.08)
+      detentAccumulatorRef.current = 0
+      if (Math.abs(info.velocity.x) > 140) {
+        playDetent(info.velocity.x)
+      }
+      if (Math.abs(info.velocity.x) > 650) {
+        playSwoosh(info.velocity.x)
+      }
+    },
+    [playDetent, playSwoosh, rotation]
+  )
+
   return (
     <div
       className="relative w-full overflow-hidden"
@@ -115,8 +323,9 @@ const ProofCarousel = memo(
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.05}
-        onDrag={(_, info) => rotation.set(rotation.get() + info.delta.x * 0.35)}
-        onDragEnd={(_, info) => rotation.set(rotation.get() + info.velocity.x * 0.08)}
+        onDragStart={prime}
+        onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
         className="relative flex h-full w-full items-center justify-center cursor-grab active:cursor-grabbing select-none"
         style={{
           rotateY: rotationSpring,
@@ -168,7 +377,8 @@ const ProofCarousel = memo(
 ProofCarousel.displayName = 'ProofCarousel'
 
 export default function DualitySection({
-  products = defaultProducts
+  products = defaultProducts,
+  isAudioMuted
 }: DualitySectionProps) {
   const carouselWrapRef = useRef<HTMLDivElement | null>(null)
   const [carouselHeight, setCarouselHeight] = useState<number | null>(null)
@@ -254,7 +464,11 @@ export default function DualitySection({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6, ease: fadeInEase }}
         >
-          <ProofCarousel products={products} maxHeight={carouselHeight ?? undefined} />
+          <ProofCarousel
+            products={products}
+            maxHeight={carouselHeight ?? undefined}
+            isAudioMuted={isAudioMuted}
+          />
         </motion.div>
       </div>
     </div>

@@ -74,7 +74,7 @@ The controls are grouped by **Audio**, **Visual**, and **Synchronicity**. Each c
 - Temporal smoothing
 
 **Configurable**
-- **Beat source** (auto / bpm / beatmap)
+- **Beat source** (auto only)
 - **Beat multiplier** (1x / 2x / 4x / off‑beats)
 - **Offset** (fine timing shift ±100 ms)
 - **Pulse shape** (sharp / smooth / gated)
@@ -211,7 +211,7 @@ The attached reference shows a chrome, hardware‑like control strip. We’ll ad
 
 **Phase 2 — Remix Systems**
 - Multiple visual engines
-- Beat source selection (auto / bpm / beatmap)
+- Beat source stays automatic (no bpm/beatmap modes)
 
 **Phase 3 — Premium Experience**
 - Chrome UI polish + haptics (where possible)

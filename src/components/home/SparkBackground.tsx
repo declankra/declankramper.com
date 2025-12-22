@@ -2,15 +2,7 @@
 
 import { useCallback, useEffect, useRef } from 'react'
 
-type BeatMode = 'auto' | 'bpm' | 'times'
 type BeatType = 'kick' | 'snare' | 'hat' | 'other'
-
-interface BeatMap {
-  mode?: BeatMode
-  bpm?: number
-  offset?: number
-  times?: number[]
-}
 
 interface Spark {
   x: number
@@ -38,7 +30,6 @@ interface Flash {
 interface SparkBackgroundProps {
   audio?: HTMLAudioElement | null
   isActive?: boolean
-  beatMapUrl?: string
 }
 
 interface BeatCheck {
@@ -51,8 +42,6 @@ const MIN_BEAT_INTERVAL_MS = 180
 const BASS_MIN_HZ = 40
 const BASS_MAX_HZ = 200
 const FLUX_MAX_HZ = 2000
-const DEFAULT_BPM = 120
-const DEFAULT_OFFSET = 0
 const MIN_BEAT_INTERVAL_S = MIN_BEAT_INTERVAL_MS / 1000
 
 const ENERGY_HIGHPASS_HZ = 30
@@ -79,8 +68,7 @@ const toUnit = (db: number) => clamp((db + 100) / 100, 0, 1)
 
 export default function SparkBackground({
   audio,
-  isActive = false,
-  beatMapUrl
+  isActive = false
 }: SparkBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const animationRef = useRef<number>()
@@ -120,44 +108,11 @@ export default function SparkBackground({
     typeHighEnd: number
   } | null>(null)
 
-  const beatMapRef = useRef<BeatMap | null>(null)
-  const beatIndexRef = useRef(0)
-  const nextBeatTimeRef = useRef(0)
   const lastAudioTimeRef = useRef(0)
 
   useEffect(() => {
     isActiveRef.current = isActive
   }, [isActive])
-
-  useEffect(() => {
-    if (!beatMapUrl) return
-    let cancelled = false
-
-    fetch(beatMapUrl)
-      .then(response => (response.ok ? response.json() : null))
-      .then((data: BeatMap | null) => {
-        if (cancelled || !data) return
-        const normalized: BeatMap = {
-          mode: data.mode,
-          bpm: typeof data.bpm === 'number' ? data.bpm : undefined,
-          offset: typeof data.offset === 'number' ? data.offset : undefined,
-          times: Array.isArray(data.times)
-            ? data.times.filter(time => typeof time === 'number' && time >= 0).sort((a, b) => a - b)
-            : undefined
-        }
-
-        beatMapRef.current = normalized
-        beatIndexRef.current = 0
-        nextBeatTimeRef.current = normalized.offset ?? DEFAULT_OFFSET
-      })
-      .catch(() => {
-        // If beat map fails, we fall back to auto detection.
-      })
-
-    return () => {
-      cancelled = true
-    }
-  }, [beatMapUrl])
 
   useEffect(() => {
     if (!audio || audioContextRef.current) return
@@ -558,54 +513,6 @@ export default function SparkBackground({
     return { fired, intensity, type }
   }, [classifyBeatType, computeBeatSignal])
 
-  const checkBeatFromMap = useCallback((currentTime: number): BeatCheck => {
-    const beatMap = beatMapRef.current
-    if (!beatMap) return { fired: false, intensity: 1, type: 'other' }
-
-    const mode: BeatMode =
-      beatMap.mode ??
-      (beatMap.times && beatMap.times.length > 0
-        ? 'times'
-        : beatMap.bpm
-          ? 'bpm'
-          : 'auto')
-
-    if (mode === 'auto') {
-      return checkBeatFromEnergy()
-    }
-
-    let fired = false
-    if (mode === 'times' && beatMap.times && beatMap.times.length > 0) {
-      const times = beatMap.times
-      let index = beatIndexRef.current
-      while (index < times.length && currentTime + 0.03 >= times[index]) {
-        fired = true
-        index += 1
-      }
-      beatIndexRef.current = index
-    }
-
-    if (mode === 'bpm') {
-      const bpm = beatMap.bpm ?? DEFAULT_BPM
-      const interval = 60 / bpm
-      const offset = beatMap.offset ?? DEFAULT_OFFSET
-      if (!nextBeatTimeRef.current || nextBeatTimeRef.current < offset) {
-        nextBeatTimeRef.current = offset
-      }
-      while (currentTime + 0.03 >= nextBeatTimeRef.current) {
-        fired = true
-        nextBeatTimeRef.current += interval
-      }
-    }
-
-    const signal = computeBeatSignal()
-    return {
-      fired,
-      intensity: signal ? clamp(0.6 + signal.energyOnset * 14 + signal.fluxOnset * 6, 0.6, 2.2) : 1,
-      type: signal ? classifyBeatType(signal) : 'other'
-    }
-  }, [checkBeatFromEnergy, classifyBeatType, computeBeatSignal])
-
   const drawFrame = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) {
@@ -625,16 +532,11 @@ export default function SparkBackground({
     if (isActiveRef.current) {
       const currentTime = audio?.currentTime ?? 0
       if (currentTime + 0.1 < lastAudioTimeRef.current) {
-        beatIndexRef.current = 0
-        nextBeatTimeRef.current = beatMapRef.current?.offset ?? DEFAULT_OFFSET
         resetDetectorState()
       }
       lastAudioTimeRef.current = currentTime
 
-      const beatCheck = beatMapRef.current
-        ? checkBeatFromMap(currentTime)
-        : checkBeatFromEnergy()
-
+      const beatCheck = checkBeatFromEnergy()
       if (beatCheck.fired) {
         spawnBeatBurst(beatCheck.intensity, beatCheck.type)
       }
@@ -696,7 +598,7 @@ export default function SparkBackground({
     }
 
     animationRef.current = requestAnimationFrame(drawFrame)
-  }, [audio, checkBeatFromEnergy, checkBeatFromMap, resetDetectorState, spawnBeatBurst])
+  }, [audio, checkBeatFromEnergy, resetDetectorState, spawnBeatBurst])
 
   useEffect(() => {
     animationRef.current = requestAnimationFrame(drawFrame)

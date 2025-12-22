@@ -31,7 +31,6 @@ function HomeContent() {
   const { setGameState, gameState } = useGame()
   const [isReadmeOpen, setIsReadmeOpen] = useState(false)
   const [readmeOrigin, setReadmeOrigin] = useState({ x: 0, y: 0 })
-  const [audioStarted, setAudioStarted] = useState(false)
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null)
   const [audioState, setAudioState] = useState({ isPlaying: false, isMuted: false })
   const heroTitleRef = useRef<HTMLHeadingElement | null>(null)
@@ -87,7 +86,6 @@ function HomeContent() {
       <SparkBackground
         audio={audioElement}
         isActive={audioState.isPlaying && !audioState.isMuted}
-        beatMapUrl="/beatmaps/little-voices.json"
       />
 
       {/* Cursor Trail Effect (game only) */}
@@ -99,13 +97,12 @@ function HomeContent() {
       {/* Audio System */}
       <AmbientAudio
         ref={audioControlsRef}
-        onAudioStarted={() => setAudioStarted(true)}
         onAudioReady={setAudioElement}
         onAudioStateChange={setAudioState}
       />
 
       {/* Main Content */}
-      <main className="relative z-10 flex h-[100svh] flex-col justify-start overflow-hidden px-8 pt-20 md:px-16 md:pt-24 lg:px-24 lg:pt-28">
+      <main className="relative z-10 flex h-auto flex-col justify-start overflow-visible px-8 pt-20 md:h-[100svh] md:overflow-hidden md:px-16 md:pt-24 lg:px-24 lg:pt-28">
         <div className="flex min-h-0 flex-1 flex-col">
           {/* Hero Section */}
           <div className="flex min-h-0 flex-1 flex-col max-w-7xl">
@@ -127,7 +124,7 @@ function HomeContent() {
 
             {/* Duality Section - Below Hero */}
             <div className="mt-6 md:mt-10 flex min-h-0 flex-1 flex-col">
-              <DualitySection />
+              <DualitySection isAudioMuted={audioState.isMuted} />
             </div>
           </div>
 
