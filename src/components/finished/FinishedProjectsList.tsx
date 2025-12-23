@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight, FileText, ChevronDown } from 'lucide-react';
-import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
-import { finishedProjects, currentlyBuildingProjects } from './FinishedProjectsData';
+import { FinishedProject, CurrentlyBuildingProject, Testimonial } from '@/types/finished';
+import { finishedProjects, currentlyBuildingProjects, testimonials } from './FinishedProjectsData';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { VideoModal } from '@/components/ui/video-modal';
 import { MobileWarningModal } from '@/components/ui/mobile-warning-modal';
@@ -27,22 +27,33 @@ export function FinishedProjectsList() {
     //     }
     // }, [isLoaded, isMobile]);
     
-    // Sort projects by date (newest first)
-    const sortedProjects = [...finishedProjects].sort((a, b) => {
+    // Create a union type for timeline items
+    type TimelineItem = 
+        | (FinishedProject & { type: 'project' })
+        | (Testimonial & { type: 'testimonial' });
+
+    // Combine projects and testimonials with type discriminator
+    const allTimelineItems: TimelineItem[] = [
+        ...finishedProjects.map(p => ({ ...p, type: 'project' as const })),
+        ...testimonials.map(t => ({ ...t, type: 'testimonial' as const }))
+    ];
+
+    // Sort all items by date (newest first)
+    const sortedItems = allTimelineItems.sort((a, b) => {
         if (a.year !== b.year) {
             return b.year - a.year;
         }
         return b.month - a.month;
     });
 
-    // Group projects by year
-    const projectsByYear = sortedProjects.reduce((acc, project) => {
-        if (!acc[project.year]) {
-            acc[project.year] = [];
+    // Group items by year
+    const itemsByYear = sortedItems.reduce((acc, item) => {
+        if (!acc[item.year]) {
+            acc[item.year] = [];
         }
-        acc[project.year].push(project);
+        acc[item.year].push(item);
         return acc;
-    }, {} as Record<number, FinishedProject[]>);
+    }, {} as Record<number, TimelineItem[]>);
 
     const renderVisuals = (visuals: FinishedProject['visuals'] | CurrentlyBuildingProject['visuals']) => {
         if (!visuals || visuals.length === 0) return null;
@@ -180,7 +191,7 @@ export function FinishedProjectsList() {
                 <BreadcrumbNav
                     items={[
                         { href: "/", label: "home" },
-                        { href: "/everything-i-built", label: "builds", current: true }
+                        { href: "/builds", label: "builds", current: true }
                     ]}
                 />
             </div>
@@ -189,7 +200,7 @@ export function FinishedProjectsList() {
                 {/* Header */}
                 <div className="mb-6 sm:mb-11 ml-1 md:ml-20">
                     <h1 className="text-xl sm:text-3xl font-light text-black mb-4">
-                        Everything i built
+                        Everything i've built
                     </h1>
                     <h2 className="text-sm sm:text-base font-light text-gray-700">
                         because ideas are meant to be built and finishing matters
@@ -316,16 +327,16 @@ export function FinishedProjectsList() {
                         </div>
                     </div>
 
-                    {/* Collapsible content - Projects by year */}
+                    {/* Collapsible content - Projects and testimonials by year */}
                     {isShippedExpanded && (
                         <>
-                            {Object.entries(projectsByYear)
+                            {Object.entries(itemsByYear)
                                 .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-                                .map(([year, projects]) => (
+                                .map(([year, items]) => (
                                     <div key={year} className="mb-8">
-                                        {projects.map((project, index) => (
-                                            <div key={project.id} className="flex gap-3 sm:gap-8 mb-6">
-                                                {/* Year column (only show for first project of the year) */}
+                                        {items.map((item, index) => (
+                                            <div key={item.id} className="flex gap-3 sm:gap-8 mb-6">
+                                                {/* Year column (only show for first item of the year) */}
                                                 <div className="w-8 sm:w-11 flex-shrink-0 text-right">
                                                     {index === 0 && (
                                                         <span className="text-sm sm:text-base font-normal text-gray-400">
@@ -334,48 +345,63 @@ export function FinishedProjectsList() {
                                                     )}
                                                 </div>
 
-                                                {/* Project content */}
-                                                <div className="flex-1 max-w-xl">
-                                                    {/* Title with optional link */}
-                                                    <div className="flex items-center gap-1.5 mb-0.5">
-                                                        {project.link ? (
-                                                            <a
-                                                                href={project.link}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
-                                                            >
-                                                                {project.title}
-                                                                <ArrowUpRight className="w-3 h-3" />
-                                                            </a>
-                                                        ) : (
-                                                            <h3 className="text-sm sm:text-base font-normal text-black">
-                                                                {project.title}
-                                                            </h3>
-                                                        )}
+                                                {/* Content - different rendering for projects vs testimonials */}
+                                                {item.type === 'testimonial' ? (
+                                                    /* Testimonial content */
+                                                    <div className="flex-1 max-w-xl">
+                                                        <div className="border-l-2 border-gray-200 pl-3 py-1">
+                                                            <p className="text-xs sm:text-sm font-light text-gray-600 italic">
+                                                                "{item.text}"
+                                                            </p>
+                                                            <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
+                                                                — {item.title}
+                                                            </p>
+                                                        </div>
                                                     </div>
-
-                                                    {/* Subtitle */}
-                                                    <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
-                                                        {project.subtitle}
-                                                        {project.learnMoreUrl && (
-                                                            <>
-                                                                {' '}
+                                                ) : (
+                                                    /* Project content */
+                                                    <div className="flex-1 max-w-xl">
+                                                        {/* Title with optional link */}
+                                                        <div className="flex items-center gap-1.5 mb-0.5">
+                                                            {item.link ? (
                                                                 <a
-                                                                    href={project.learnMoreUrl}
+                                                                    href={item.link}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
-                                                                    className="hover:underline hover:text-gray-700 transition-colors"
+                                                                    className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
                                                                 >
-                                                                    (learn more)
+                                                                    {item.title}
+                                                                    <ArrowUpRight className="w-3 h-3" />
                                                                 </a>
-                                                            </>
-                                                        )}
-                                                    </p>
+                                                            ) : (
+                                                                <h3 className="text-sm sm:text-base font-normal text-black">
+                                                                    {item.title}
+                                                                </h3>
+                                                            )}
+                                                        </div>
 
-                                                    {/* Visuals */}
-                                                    {renderVisuals(project.visuals)}
-                                                </div>
+                                                        {/* Subtitle */}
+                                                        <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
+                                                            {item.subtitle}
+                                                            {item.learnMoreUrl && (
+                                                                <>
+                                                                    {' '}
+                                                                    <a
+                                                                        href={item.learnMoreUrl}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="hover:underline hover:text-gray-700 transition-colors"
+                                                                    >
+                                                                        (learn more)
+                                                                    </a>
+                                                                </>
+                                                            )}
+                                                        </p>
+
+                                                        {/* Visuals */}
+                                                        {renderVisuals(item.visuals)}
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>

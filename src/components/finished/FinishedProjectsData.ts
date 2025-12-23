@@ -1,4 +1,4 @@
-import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
+import { FinishedProject, CurrentlyBuildingProject, Testimonial } from '@/types/finished';
 
 
 // Left out
@@ -465,6 +465,20 @@ export const finishedProjects: FinishedProject[] = [
         ]
     },
     {
+        id: 'sunbelt-consulting',
+        title: 'Locations Map Redesign for Retail Client',
+        subtitle: 'Led a 12-person team, shipped 27 features in 15 months, achieved #1 usability score across a site serving 400k weekly sessions and reduced customer support calls by 30%',
+        month: 10,
+        year: 2023,
+        visuals: [
+            {
+                type: 'image',
+                src: '/images/buildsTimeline/SunbeltRentals.webp',
+                alt: 'Sunbelt Rentals Locations Map'
+            }
+        ]
+    },
+    {
         id: 'kalo-website ',
         title: 'Recruiting Company Website Redesign',
         subtitle: 'Increased website traffic by 88% and converted 12% more visitors into leads',
@@ -506,6 +520,44 @@ export const finishedProjects: FinishedProject[] = [
                 alt: 'Next Level Lawn Care'
             }
         ]
+    }
+];
+
+export const testimonials: Testimonial[] = [
+    {
+        id: 'sheldon-feedback',
+        title: 'EVP, Product Management',
+        text: '+1 really appreciate you putting yourself out there Declan',
+        month: 1,
+        year: 2025
+    },
+    {
+        id: 'martha-feedback',
+        title: 'Senior Product Manager',
+        text: "During your presentation, you mentioned being young and naive, but let me tell you—that doesn't stop you from already being a rockstar.",
+        month: 1,
+        year: 2025
+    },
+    {
+        id: 'tyler-feedback-1',
+        title: 'Director of Product Management, Client',
+        text: 'Given he is a self-starter, we often just counted on him figuring things out (which he did).',
+        month: 11,
+        year: 2023
+    },
+    {
+        id: 'tyler-feedback-2',
+        title: 'Director of Product Management, Client',
+        text: 'Declan was self-motivated to get to an outcome, which is perhaps the GREATEST skill a product person can have.',
+        month: 9,
+        year: 2023
+    },
+    {
+        id: 'next-level-feedback',
+        title: 'First Customer, Next Level Lawn Care',
+        text: 'Dec, for the past several years you have been providing lawn mowing services for our front yard in a timely and quality manner, and have received many compliments regarding our yard.',
+        month: 2,
+        year: 2013
     }
 ];
 

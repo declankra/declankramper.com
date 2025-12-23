@@ -23,3 +23,11 @@ export interface CurrentlyBuildingProject {
     link?: string;
     visuals?: FinishedProjectVisual[];
 }
+
+export interface Testimonial {
+    id: string;
+    title: string; // e.g., "EVP, Product Management" or "Director of PM, Client"
+    text: string;
+    month: number; // 1-12
+    year: number;
+}
