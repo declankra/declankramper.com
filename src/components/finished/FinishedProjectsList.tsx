@@ -2,13 +2,15 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, FileText, ChevronDown, Users, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, FileText, ChevronDown } from 'lucide-react';
 import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
 import { finishedProjects, currentlyBuildingProjects } from './FinishedProjectsData';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { VideoModal } from '@/components/ui/video-modal';
 import { MobileWarningModal } from '@/components/ui/mobile-warning-modal';
 import { useMobileDetection } from '@/hooks/useMobileDetection';
+import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
+import ReadingProgress from '@/components/blog/ReadingProgress';
 import './scrollbar.css';
 
 export function FinishedProjectsList() {
@@ -24,19 +26,6 @@ export function FinishedProjectsList() {
     //         setShowMobileWarning(true);
     //     }
     // }, [isLoaded, isMobile]);
-    
-    const formatNumber = (num: number) => {
-        return new Intl.NumberFormat('en-US').format(num);
-    };
-
-    const formatCurrency = (num: number) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-        }).format(num);
-    };
     
     // Sort projects by date (newest first)
     const sortedProjects = [...finishedProjects].sort((a, b) => {
@@ -182,53 +171,30 @@ export function FinishedProjectsList() {
     };
 
     return (
-        <div className="min-h-screen bg-white py-8 ml-1 md:ml-22">
+        <div className="relative min-h-screen bg-white pt-16 ml-1 md:ml-22">
+            {/* Reading Progress Bar */}
+            <ReadingProgress />
+
+            {/* Breadcrumb - absolute positioned like writes page */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4">
+                <BreadcrumbNav
+                    items={[
+                        { href: "/", label: "home" },
+                        { href: "/everything-i-built", label: "builds", current: true }
+                    ]}
+                />
+            </div>
+
             <div className="max-w-3xl mx-auto px-3">
                 {/* Header */}
                 <div className="mb-6 sm:mb-11 ml-1 md:ml-20">
-                    <div className="flex items-end gap-3 mb-4">
-                        <h1 className="text-xl sm:text-3xl font-light text-black">
-                            Everything i built
-                        </h1>
-                        <p className="text-[10px] text-gray-500 pb-0.5">
-                            - <a href="https://declankramper.com" className="hover:underline hover:text-gray-700 transition-colors">declan kramper</a>
-                        </p>
-                    </div>
+                    <h1 className="text-xl sm:text-3xl font-light text-black mb-4">
+                        Everything i built
+                    </h1>
                     <h2 className="text-sm sm:text-base font-light text-gray-700">
-                        because finishing is hard.
+                        because ideas are meant to be built and finishing matters
                     </h2>
                 </div>
-
-                {/* Impact Metrics */}
-                {/* <div className="ml-28 mb-12">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-lg">
-                        {/* Total Users */}
-                        {/* <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                                <Users className="w-4 h-4 text-gray-400" />
-                                <p className="text-xs font-light text-gray-600 uppercase tracking-wider">
-                                    Total Users
-                                </p>
-                            </div>
-                            <p className="text-3xl font-light text-black">
-                                {formatNumber(3235)}
-                            </p>
-                        </div> */}
-
-                        {/* Value Created */}
-                        {/* <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                                <TrendingUp className="w-4 h-4 text-gray-400" />
-                                <p className="text-xs font-light text-gray-600 uppercase tracking-wider">
-                                    Value Created (revenue)
-                                </p>
-                            </div>
-                            <p className="text-3xl font-light text-black">
-                                {formatCurrency(50061)}
-                            </p>
-                        </div>
-                    </div>
-                </div> */}
 
                 {/* Currently Building Section */}
                 {currentlyBuildingProjects.length > 0 && (
@@ -347,24 +313,6 @@ export function FinishedProjectsList() {
                             >
                                 Shipped
                             </button>
-                            
-                            {/* Impact numbers - hidden on mobile */}
-                            <span className="hidden sm:inline text-[10px] text-gray-500 font-light">
-                                <span className="px-2">|</span>
-                                Total Users: <span className="font-semibold text-black">{formatNumber(3235)}</span>
-                                <span className="px-2">|</span>
-                                Value Created: <span className="font-semibold text-black">{formatCurrency(30061)}</span>
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Impact numbers - mobile only, on separate line */}
-                    <div className="sm:hidden flex gap-3 mb-4">
-                        <div className="w-8 flex-shrink-0"></div>
-                        <div className="text-[10px] text-gray-500 font-light">
-                            Total Users: <span className="font-semibold text-black">{formatNumber(3235)}</span>
-                            <span className="px-2">|</span>
-                            Value Created: <span className="font-semibold text-black">{formatCurrency(30061)}</span>
                         </div>
                     </div>
 

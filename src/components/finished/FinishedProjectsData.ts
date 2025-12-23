@@ -10,9 +10,37 @@ import { FinishedProject, CurrentlyBuildingProject } from '@/types/finished';
 export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
 
     {
-        id: 'garpple',
-        title: 'Garpple',
-        subtitle: 'Garmin analytics for Apple Watch runners (170+ waitlist signups). Just went live.',
+        id: 'construction-industry-agent',
+        title: 'Construction Industry Agent',
+        subtitle: 'Partnering with a Chicago-based fiber optics construction company to build an AI agent to automate the submittal package workflow (and beyond)',
+        visuals: [
+            {
+                type: 'image',
+                src: '/finished/elite-ai/elite-dashboard.webp',
+                alt: 'Elite dashboard'
+            },
+            {
+                type: 'image',
+                src: '/finished/elite-ai/Submittal-Requirements-Gathering.png',
+                alt: 'Submittal Requirements Gathering'
+            },
+            {
+                type: 'image',
+                src: '/finished/elite-ai/upload-specs.png',
+                alt: 'Upload Specs'
+            }
+        ]
+    }
+
+];
+
+export const finishedProjects: FinishedProject[] = [
+    {
+        id: 'Surgent',
+        title: 'Surgent',
+        subtitle: 'Objective-only performance analytics for runners to see progress over time (170+ waitlist signups). Just went live.',
+        month: 11,
+        year: 2025,
         link: 'https://www.surgent.run',
         visuals: [
             {
@@ -24,6 +52,11 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
                 type: 'image',
                 src: '/finished/garpple/surgent-1.0-app-store.webp',
                 alt: 'Surgent App Store'
+            },
+            {
+                type: 'image',
+                src: '/finished/garpple/onboarding.webp',
+                alt: 'Surgent Onboarding'
             },
             {
                 type: 'image',
@@ -57,32 +90,6 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
             }
         ]
     },
-    {
-        id: 'construction-industry-agent',
-        title: 'Construction Industry Agent',
-        subtitle: 'Partnering with a Chicago-based fiber optics construction company to build an AI agent to automate the submittal package workflow (and beyond)',
-        visuals: [
-            {
-                type: 'image',
-                src: '/finished/elite-ai/elite-dashboard.webp',
-                alt: 'Elite dashboard'
-            },
-            {
-                type: 'image',
-                src: '/finished/elite-ai/Submittal-Requirements-Gathering.png',
-                alt: 'Submittal Requirements Gathering'
-            },
-            {
-                type: 'image',
-                src: '/finished/elite-ai/upload-specs.png',
-                alt: 'Upload Specs'
-            }
-        ]
-    }
-
-];
-
-export const finishedProjects: FinishedProject[] = [
     {
         id: 'local-jarvis',
         title: 'Local Jarvis',
