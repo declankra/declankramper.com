@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight, FileText, ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FinishedProject, CurrentlyBuildingProject, Testimonial } from '@/types/finished';
 import { finishedProjects, currentlyBuildingProjects, testimonials } from './FinishedProjectsData';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -12,6 +13,9 @@ import { useMobileDetection } from '@/hooks/useMobileDetection';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import ReadingProgress from '@/components/blog/ReadingProgress';
 import './scrollbar.css';
+
+// Snappy ease-out for collapsible animations (per Emil Kowalski)
+const snappyEaseOut = [0.22, 1, 0.36, 1] as const;
 
 export function FinishedProjectsList() {
     const [isCurrentlyBuildingExpanded, setIsCurrentlyBuildingExpanded] = useState(true);
@@ -229,7 +233,7 @@ export function FinishedProjectsList() {
                                     aria-label={isCurrentlyBuildingExpanded ? "Collapse section" : "Expand section"}
                                 >
                                     <ChevronDown 
-                                        className={`w-2.5 h-2.5 text-red-600 transition-transform ${
+                                        className={`w-2.5 h-2.5 text-red-600 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                             isCurrentlyBuildingExpanded ? '' : '-rotate-90'
                                         }`}
                                     />
@@ -245,48 +249,56 @@ export function FinishedProjectsList() {
                             </div>
                         </div>
 
-                        {/* Collapsible content */}
-                        {isCurrentlyBuildingExpanded && (
-                            <>
-                                {currentlyBuildingProjects.map((project, index) => (
-                                    <div key={project.id} className="flex gap-3 sm:gap-8 mb-6">
-                                        {/* Empty column for alignment (no dot for individual items) */}
-                                        <div className="w-8 sm:w-11 flex-shrink-0">
-                                        </div>
-
-                                        {/* Project content */}
-                                        <div className="flex-1 max-w-xl">
-                                            {/* Title with optional link */}
-                                            <div className="flex items-center gap-1.5 mb-0.5">
-                                                {project.link ? (
-                                                    <a
-                                                        href={project.link}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
-                                                    >
-                                                        {project.title}
-                                                        <ArrowUpRight className="w-3 h-3" />
-                                                    </a>
-                                                ) : (
-                                                    <h3 className="text-sm sm:text-base font-normal text-black">
-                                                        {project.title}
-                                                    </h3>
-                                                )}
+                        {/* Collapsible content with animation */}
+                        <AnimatePresence initial={false}>
+                            {isCurrentlyBuildingExpanded && (
+                                <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: snappyEaseOut }}
+                                    style={{ overflow: 'hidden' }}
+                                >
+                                    {currentlyBuildingProjects.map((project) => (
+                                        <div key={project.id} className="flex gap-3 sm:gap-8 mb-6">
+                                            {/* Empty column for alignment (no dot for individual items) */}
+                                            <div className="w-8 sm:w-11 flex-shrink-0">
                                             </div>
 
-                                            {/* Subtitle */}
-                                            <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
-                                                {project.subtitle}
-                                            </p>
+                                            {/* Project content */}
+                                            <div className="flex-1 max-w-xl">
+                                                {/* Title with optional link */}
+                                                <div className="flex items-center gap-1.5 mb-0.5">
+                                                    {project.link ? (
+                                                        <a
+                                                            href={project.link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
+                                                        >
+                                                            {project.title}
+                                                            <ArrowUpRight className="w-3 h-3" />
+                                                        </a>
+                                                    ) : (
+                                                        <h3 className="text-sm sm:text-base font-normal text-black">
+                                                            {project.title}
+                                                        </h3>
+                                                    )}
+                                                </div>
 
-                                            {/* Visuals */}
-                                            {renderVisuals(project.visuals)}
+                                                {/* Subtitle */}
+                                                <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
+                                                    {project.subtitle}
+                                                </p>
+
+                                                {/* Visuals */}
+                                                {renderVisuals(project.visuals)}
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </>
-                        )}
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                         
                         {/* Divider line */}
                         <div className="ml-1 md:ml-20 mt-8 mb-8 border-t border-gray-200"></div>
@@ -311,7 +323,7 @@ export function FinishedProjectsList() {
                                 aria-label={isShippedExpanded ? "Collapse section" : "Expand section"}
                             >
                                 <ChevronDown 
-                                    className={`w-2.5 h-2.5 text-green-600 transition-transform ${
+                                    className={`w-2.5 h-2.5 text-green-600 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                         isShippedExpanded ? '' : '-rotate-90'
                                     }`}
                                 />
@@ -328,86 +340,94 @@ export function FinishedProjectsList() {
                     </div>
 
                     {/* Collapsible content - Projects and testimonials by year */}
-                    {isShippedExpanded && (
-                        <>
-                            {Object.entries(itemsByYear)
-                                .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-                                .map(([year, items]) => (
-                                    <div key={year} className="mb-8">
-                                        {items.map((item, index) => (
-                                            <div key={item.id} className="flex gap-3 sm:gap-8 mb-6">
-                                                {/* Year column (only show for first item of the year) */}
-                                                <div className="w-8 sm:w-11 flex-shrink-0 text-right">
-                                                    {index === 0 && (
-                                                        <span className="text-sm sm:text-base font-normal text-gray-400">
-                                                            {year}
-                                                        </span>
-                                                    )}
-                                                </div>
-
-                                                {/* Content - different rendering for projects vs testimonials */}
-                                                {item.type === 'testimonial' ? (
-                                                    /* Testimonial content */
-                                                    <div className="flex-1 max-w-xl">
-                                                        <div className="border-l-2 border-gray-200 pl-3 py-1">
-                                                            <p className="text-xs sm:text-sm font-light text-gray-600 italic">
-                                                                "{item.text}"
-                                                            </p>
-                                                            <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
-                                                                — {item.title}
-                                                            </p>
-                                                        </div>
+                    <AnimatePresence initial={false}>
+                        {isShippedExpanded && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25, ease: snappyEaseOut }}
+                                style={{ overflow: 'hidden' }}
+                            >
+                                {Object.entries(itemsByYear)
+                                    .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
+                                    .map(([year, items]) => (
+                                        <div key={year} className="mb-8">
+                                            {items.map((item, index) => (
+                                                <div key={item.id} className="flex gap-3 sm:gap-8 mb-6">
+                                                    {/* Year column (only show for first item of the year) */}
+                                                    <div className="w-8 sm:w-11 flex-shrink-0 text-right">
+                                                        {index === 0 && (
+                                                            <span className="text-sm sm:text-base font-normal text-gray-400">
+                                                                {year}
+                                                            </span>
+                                                        )}
                                                     </div>
-                                                ) : (
-                                                    /* Project content */
-                                                    <div className="flex-1 max-w-xl">
-                                                        {/* Title with optional link */}
-                                                        <div className="flex items-center gap-1.5 mb-0.5">
-                                                            {item.link ? (
-                                                                <a
-                                                                    href={item.link}
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                    className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
-                                                                >
-                                                                    {item.title}
-                                                                    <ArrowUpRight className="w-3 h-3" />
-                                                                </a>
-                                                            ) : (
-                                                                <h3 className="text-sm sm:text-base font-normal text-black">
-                                                                    {item.title}
-                                                                </h3>
-                                                            )}
-                                                        </div>
 
-                                                        {/* Subtitle */}
-                                                        <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
-                                                            {item.subtitle}
-                                                            {item.learnMoreUrl && (
-                                                                <>
-                                                                    {' '}
+                                                    {/* Content - different rendering for projects vs testimonials */}
+                                                    {item.type === 'testimonial' ? (
+                                                        /* Testimonial content */
+                                                        <div className="flex-1 max-w-xl">
+                                                            <div className="border-l-2 border-gray-200 pl-3 py-1">
+                                                                <p className="text-xs sm:text-sm font-light text-gray-600 italic">
+                                                                    "{item.text}"
+                                                                </p>
+                                                                <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
+                                                                    — {item.title}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        /* Project content */
+                                                        <div className="flex-1 max-w-xl">
+                                                            {/* Title with optional link */}
+                                                            <div className="flex items-center gap-1.5 mb-0.5">
+                                                                {item.link ? (
                                                                     <a
-                                                                        href={item.learnMoreUrl}
+                                                                        href={item.link}
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
-                                                                        className="hover:underline hover:text-gray-700 transition-colors"
+                                                                        className="text-sm sm:text-base font-normal text-black hover:text-gray-600 transition-colors flex items-center gap-0.5"
                                                                     >
-                                                                        (learn more)
+                                                                        {item.title}
+                                                                        <ArrowUpRight className="w-3 h-3" />
                                                                     </a>
-                                                                </>
-                                                            )}
-                                                        </p>
+                                                                ) : (
+                                                                    <h3 className="text-sm sm:text-base font-normal text-black">
+                                                                        {item.title}
+                                                                    </h3>
+                                                                )}
+                                                            </div>
 
-                                                        {/* Visuals */}
-                                                        {renderVisuals(item.visuals)}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                        </>
-                    )}
+                                                            {/* Subtitle */}
+                                                            <p className="text-xs sm:text-sm font-light text-gray-600 mb-1.5">
+                                                                {item.subtitle}
+                                                                {item.learnMoreUrl && (
+                                                                    <>
+                                                                        {' '}
+                                                                        <a
+                                                                            href={item.learnMoreUrl}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="hover:underline hover:text-gray-700 transition-colors"
+                                                                        >
+                                                                            (learn more)
+                                                                        </a>
+                                                                    </>
+                                                                )}
+                                                            </p>
+
+                                                            {/* Visuals */}
+                                                            {renderVisuals(item.visuals)}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
             

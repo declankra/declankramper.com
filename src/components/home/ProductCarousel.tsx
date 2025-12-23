@@ -262,6 +262,15 @@ const ProofCarousel = memo(
     damping: 24,
     mass: 0.3
   })
+
+  // Visual haptics: pulse scale when detent fires (pairs with audio feedback)
+  // Per Emil Kowalski: spring-based interactions feel more natural
+  const hapticScale = useMotionValue(1)
+  const hapticScaleSpring = useSpring(hapticScale, {
+    stiffness: 600,  // High stiffness = snappy response
+    damping: 15,     // Lower damping = slight overshoot for "bounce" feel
+    mass: 0.1        // Low mass = quick movement
+  })
   const fallbackAspect = 4 / 5
   const [aspectRatios, setAspectRatios] = useState<Record<string, number>>({})
   const aspectValues = Object.values(aspectRatios)
@@ -305,10 +314,37 @@ const ProofCarousel = memo(
   const detentAccumulatorRef = useRef(0)
   const { playDetent, playSwoosh, prime } = useCarouselSound(isAudioMuted)
   const hasPrimedRef = useRef(false)
+  const hapticTimeoutRef = useRef<number | null>(null)
+
+  // Trigger visual haptic pulse - subtle scale bump that springs back
+  const triggerHapticPulse = useCallback(
+    (intensity: number) => {
+      // Scale pulse intensity based on drag velocity (subtle: 1.01 to 1.025)
+      const pulseAmount = 1 + clamp(intensity, 0.01, 0.025)
+      hapticScale.set(pulseAmount)
+      if (hapticTimeoutRef.current) {
+        window.clearTimeout(hapticTimeoutRef.current)
+      }
+      // Hold the pulse briefly, then let the spring return to 1.
+      hapticTimeoutRef.current = window.setTimeout(() => {
+        hapticScale.set(1)
+        hapticTimeoutRef.current = null
+      }, 90)
+    },
+    [hapticScale]
+  )
 
   useEffect(() => {
     detentAccumulatorRef.current = 0
   }, [detentSpacingPx])
+
+  useEffect(() => {
+    return () => {
+      if (hapticTimeoutRef.current) {
+        window.clearTimeout(hapticTimeoutRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -348,9 +384,12 @@ const ProofCarousel = memo(
       while (Math.abs(detentAccumulatorRef.current) >= step) {
         detentAccumulatorRef.current -= Math.sign(detentAccumulatorRef.current) * step
         playDetent(info.velocity.x)
+        // Visual haptic: pulse scale in sync with audio detent
+        const velocityIntensity = clamp(Math.abs(info.velocity.x) / 800, 0.01, 0.025)
+        triggerHapticPulse(velocityIntensity)
       }
     },
-    [detentSpacingPx, playDetent, rotation]
+    [detentSpacingPx, playDetent, rotation, triggerHapticPulse]
   )
 
   const handleDragEnd = useCallback(
@@ -396,33 +435,39 @@ const ProofCarousel = memo(
           return (
             <div
               key={`${product.name}-${i}`}
-              className="pointer-events-none absolute flex items-center justify-center overflow-hidden rounded-2xl bg-white/70 shadow-sm backdrop-blur-sm"
+              className="pointer-events-none absolute flex items-center justify-center"
               style={{
                 width: `${faceWidth}px`,
                 transform: `rotateY(${i * faceAngle}deg) translateZ(${radius}px)`,
                 zIndex: 1
               }}
             >
-              <div className="relative w-full">
-                <div
-                  className="relative w-full"
-                  style={{ aspectRatio: aspectRatios[product.image] ?? fallbackAspect }}
-                >
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    sizes="(max-width: 640px) 180px, (max-width: 1024px) 220px, 280px"
-                    className="pointer-events-none select-none object-contain"
-                    draggable={false}
-                    style={{ WebkitUserDrag: 'none' } as React.CSSProperties}
-                    priority={i < 2}
-                    onLoadingComplete={(img) =>
-                      registerAspectRatio(product.image, img.naturalWidth, img.naturalHeight)
-                    }
-                  />
+              {/* Nested motion.div for haptic scale - keeps 3D transform separate */}
+              <motion.div
+                className="w-full overflow-hidden rounded-2xl bg-white/70 shadow-sm backdrop-blur-sm"
+                style={{ scale: hapticScaleSpring }}
+              >
+                <div className="relative w-full">
+                  <div
+                    className="relative w-full"
+                    style={{ aspectRatio: aspectRatios[product.image] ?? fallbackAspect }}
+                  >
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 640px) 180px, (max-width: 1024px) 220px, 280px"
+                      className="pointer-events-none select-none object-contain"
+                      draggable={false}
+                      style={{ WebkitUserDrag: 'none' } as React.CSSProperties}
+                      priority={i < 2}
+                      onLoadingComplete={(img) =>
+                        registerAspectRatio(product.image, img.naturalWidth, img.naturalHeight)
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           )
         })}
