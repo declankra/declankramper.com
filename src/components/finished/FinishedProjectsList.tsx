@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, FileText, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, FileText, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FinishedProject, CurrentlyBuildingProject, Testimonial } from '@/types/finished';
+import { FinishedProject, CurrentlyBuildingProject, Testimonial, FinishedProjectVisual } from '@/types/finished';
 import { finishedProjects, currentlyBuildingProjects, testimonials } from './FinishedProjectsData';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { VideoModal } from '@/components/ui/video-modal';
+import { Dialog, DialogOverlay, DialogPortal } from '@/components/ui/dialog';
 import { MobileWarningModal } from '@/components/ui/mobile-warning-modal';
 import { useMobileDetection } from '@/hooks/useMobileDetection';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
@@ -20,9 +19,10 @@ const snappyEaseOut = [0.22, 1, 0.36, 1] as const;
 export function FinishedProjectsList() {
     const [isCurrentlyBuildingExpanded, setIsCurrentlyBuildingExpanded] = useState(true);
     const [isShippedExpanded, setIsShippedExpanded] = useState(true);
-    const [modalVideo, setModalVideo] = useState<string | null>(null);
     const { isMobile, isLoaded } = useMobileDetection();
     const [showMobileWarning, setShowMobileWarning] = useState(false);
+    const [activeVisuals, setActiveVisuals] = useState<FinishedProjectVisual[] | null>(null);
+    const [activeVisualIndex, setActiveVisualIndex] = useState(0);
 
     // Show mobile warning modal when mobile is detected
     // React.useEffect(() => {
@@ -59,6 +59,84 @@ export function FinishedProjectsList() {
         return acc;
     }, {} as Record<number, TimelineItem[]>);
 
+    const activeVisual = activeVisuals?.[activeVisualIndex] ?? activeVisuals?.[0] ?? null;
+
+    const hasMultipleVisuals = (activeVisuals?.length ?? 0) > 1;
+
+    const openVisualModal = (visuals: FinishedProjectVisual[], index: number) => {
+        setActiveVisuals(visuals);
+        setActiveVisualIndex(index);
+    };
+
+    const closeVisualModal = () => {
+        setActiveVisuals(null);
+    };
+
+    const goToPreviousVisual = () => {
+        setActiveVisualIndex((current) => Math.max(current - 1, 0));
+    };
+
+    const goToNextVisual = () => {
+        if (!activeVisuals) return;
+        setActiveVisualIndex((current) => Math.min(current + 1, activeVisuals.length - 1));
+    };
+
+    useEffect(() => {
+        if (!activeVisuals) return;
+
+        const handleKeydown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setActiveVisuals(null);
+                return;
+            }
+
+            if (event.key === 'ArrowLeft') {
+                setActiveVisualIndex((current) => Math.max(current - 1, 0));
+                return;
+            }
+
+            if (event.key === 'ArrowRight') {
+                setActiveVisualIndex((current) => Math.min(current + 1, activeVisuals.length - 1));
+            }
+        };
+
+        document.addEventListener('keydown', handleKeydown);
+        return () => document.removeEventListener('keydown', handleKeydown);
+    }, [activeVisuals]);
+
+    // Touch/swipe handling for mobile
+    const touchStartX = useRef<number | null>(null);
+    const touchStartY = useRef<number | null>(null);
+    const SWIPE_THRESHOLD = 50;
+
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+        touchStartY.current = e.touches[0].clientY;
+    }, []);
+
+    const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+        if (touchStartX.current === null || touchStartY.current === null || !activeVisuals) return;
+
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const deltaX = touchEndX - touchStartX.current;
+        const deltaY = touchEndY - touchStartY.current;
+
+        // Only trigger swipe if horizontal movement is greater than vertical (prevents scroll interference)
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > SWIPE_THRESHOLD) {
+            if (deltaX > 0) {
+                // Swipe right -> previous
+                setActiveVisualIndex((current) => Math.max(current - 1, 0));
+            } else {
+                // Swipe left -> next
+                setActiveVisualIndex((current) => Math.min(current + 1, activeVisuals.length - 1));
+            }
+        }
+
+        touchStartX.current = null;
+        touchStartY.current = null;
+    }, [activeVisuals]);
+
     const renderVisuals = (visuals: FinishedProject['visuals'] | CurrentlyBuildingProject['visuals']) => {
         if (!visuals || visuals.length === 0) return null;
 
@@ -72,7 +150,7 @@ export function FinishedProjectsList() {
                         {visual.type === 'video' ? (
                             <div 
                                 className="relative group cursor-pointer"
-                                onClick={() => setModalVideo(visual.src)}
+                                onClick={() => openVisualModal(visuals, index)}
                             >
                                 <video
                                     src={visual.src}
@@ -91,93 +169,53 @@ export function FinishedProjectsList() {
                         ) : visual.type === 'pdf' ? (
                             <div
                                 className="w-24 h-16 sm:w-32 sm:h-20 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
-                                onClick={() => window.open(visual.src, '_blank')}
+                                onClick={() => openVisualModal(visuals, index)}
                             >
                                 <FileText className="w-6 h-6 text-gray-600 mb-1" />
                                 <span className="text-xs text-gray-500">PDF</span>
                             </div>
                         ) : visual.type === 'gif' ? (
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <div className="cursor-pointer">
-                                        <Image
-                                            src={visual.src}
-                                            alt={visual.alt || `Visual ${index + 1}`}
-                                            width={128}
-                                            height={80}
-                                            className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
-                                            loading="lazy"
-                                            unoptimized
-                                        />
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-4xl max-h-[90vh] p-2">
-                                    <Image
-                                        src={visual.src}
-                                        alt={visual.alt || 'GIF'}
-                                        width={800}
-                                        height={600}
-                                        className="w-full h-auto max-h-[80vh] object-contain"
-                                        unoptimized
-                                    />
-                                </DialogContent>
-                            </Dialog>
+                            <div className="cursor-pointer" onClick={() => openVisualModal(visuals, index)}>
+                                <Image
+                                    src={visual.src}
+                                    alt={visual.alt || `Visual ${index + 1}`}
+                                    width={128}
+                                    height={80}
+                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                    loading="lazy"
+                                    unoptimized
+                                />
+                            </div>
                         ) : visual.pdfSrc ? (
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <div className="relative cursor-pointer">
-                                        <Image
-                                            src={visual.src}
-                                            alt={visual.alt || `Visual ${index + 1}`}
-                                            width={128}
-                                            height={80}
-                                            className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
-                                            loading="lazy"
-                                            placeholder="blur"
-                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                                        />
-                                        {/* PDF indicator overlay */}
-                                        <div className="absolute top-1 right-1 bg-white/90 rounded-full p-1">
-                                            <FileText className="w-3 h-3 text-gray-600" />
-                                        </div>
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-4xl max-h-[90vh] p-0">
-                                    <iframe
-                                        src={visual.pdfSrc}
-                                        className="w-full h-[80vh] border-0"
-                                        title={visual.alt || 'PDF Document'}
-                                    />
-                                </DialogContent>
-                            </Dialog>
+                            <div className="relative cursor-pointer" onClick={() => openVisualModal(visuals, index)}>
+                                <Image
+                                    src={visual.src}
+                                    alt={visual.alt || `Visual ${index + 1}`}
+                                    width={128}
+                                    height={80}
+                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                    loading="lazy"
+                                    placeholder="blur"
+                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                />
+                                {/* PDF indicator overlay */}
+                                <div className="absolute top-1 right-1 bg-white/90 rounded-full p-1">
+                                    <FileText className="w-3 h-3 text-gray-600" />
+                                </div>
+                            </div>
                         ) : (
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <div className="cursor-pointer">
-                                        <Image
-                                            src={visual.src}
-                                            alt={visual.alt || `Visual ${index + 1}`}
-                                            width={128}
-                                            height={80}
-                                            className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
-                                            loading="lazy"
-                                            placeholder="blur"
-                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                                        />
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent className="max-w-4xl max-h-[90vh] p-2">
-                                    <Image
-                                        src={visual.src}
-                                        alt={visual.alt || 'Image'}
-                                        width={800}
-                                        height={600}
-                                        className="w-full h-auto max-h-[80vh] object-contain"
-                                        placeholder="blur"
-                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                                    />
-                                </DialogContent>
-                            </Dialog>
+                            <div className="cursor-pointer" onClick={() => openVisualModal(visuals, index)}>
+                                <Image
+                                    src={visual.src}
+                                    alt={visual.alt || `Visual ${index + 1}`}
+                                    width={128}
+                                    height={80}
+                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                    loading="lazy"
+                                    placeholder="blur"
+                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                />
+                            </div>
                         )}
                     </div>
                 ))}
@@ -233,7 +271,7 @@ export function FinishedProjectsList() {
                                     aria-label={isCurrentlyBuildingExpanded ? "Collapse section" : "Expand section"}
                                 >
                                     <ChevronDown 
-                                        className={`w-2.5 h-2.5 text-red-600 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                        className={`w-2.5 h-2.5 text-red-600 transition-transform duration-200 ease-snappy ${
                                             isCurrentlyBuildingExpanded ? '' : '-rotate-90'
                                         }`}
                                     />
@@ -322,11 +360,11 @@ export function FinishedProjectsList() {
                                 className="p-0.5 hover:bg-green-50 rounded transition-colors"
                                 aria-label={isShippedExpanded ? "Collapse section" : "Expand section"}
                             >
-                                <ChevronDown 
-                                    className={`w-2.5 h-2.5 text-green-600 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                        isShippedExpanded ? '' : '-rotate-90'
-                                    }`}
-                                />
+                                    <ChevronDown 
+                                        className={`w-2.5 h-2.5 text-green-600 transition-transform duration-200 ease-snappy ${
+                                            isShippedExpanded ? '' : '-rotate-90'
+                                        }`}
+                                    />
                             </button>
                             
                             {/* Shipped label */}
@@ -431,14 +469,127 @@ export function FinishedProjectsList() {
                 </div>
             </div>
             
-            {/* Video Modal */}
-            <VideoModal 
-                isOpen={!!modalVideo}
-                onClose={() => setModalVideo(null)}
-                videoSrc={modalVideo || ''}
-                autoPlay={true}
-                muted={false}
-            />
+            {/* Visual Modal */}
+            <Dialog open={!!activeVisuals} onOpenChange={(open) => !open && closeVisualModal()}>
+                <DialogPortal>
+                    <DialogOverlay />
+                    {/* Clickable backdrop layer */}
+                    <div 
+                        className="fixed inset-0 z-50 flex items-center justify-center"
+                        onClick={closeVisualModal}
+                    >
+                        {/* Close button */}
+                        <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); closeVisualModal(); }}
+                            aria-label="Close"
+                            className="absolute top-4 right-4 rounded-full bg-white/90 p-2 shadow hover:bg-white transition-colors z-10"
+                        >
+                            <svg className="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        {/* Left navigation button - hidden on mobile, outside content */}
+                        {hasMultipleVisuals && (
+                            <button
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); goToPreviousVisual(); }}
+                                disabled={activeVisualIndex === 0}
+                                aria-label="Previous visual"
+                                className={`hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 shadow transition-opacity ${
+                                    activeVisualIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-white'
+                                }`}
+                            >
+                                <ChevronLeft className="h-6 w-6 text-gray-700" />
+                            </button>
+                        )}
+
+                        {/* Content + dots wrapper */}
+                        <div className="flex flex-col items-center">
+                            {/* Content area with swipe support */}
+                            <div 
+                                className="max-w-[92vw] max-h-[85vh] sm:max-h-[90vh] sm:max-w-5xl p-2 sm:p-3 bg-white rounded-lg shadow-lg cursor-default"
+                                onClick={(e) => e.stopPropagation()}
+                                onTouchStart={handleTouchStart}
+                                onTouchEnd={handleTouchEnd}
+                            >
+                                <div className="flex items-center justify-center">
+                                    {activeVisual && (
+                                        activeVisual.type === 'video' ? (
+                                            <video
+                                                key={activeVisual.src}
+                                                src={activeVisual.src}
+                                                className="max-w-full max-h-[75vh] sm:max-h-[80vh] rounded-lg"
+                                                controls
+                                                autoPlay
+                                            >
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        ) : activeVisual.type === 'pdf' || activeVisual.pdfSrc ? (
+                                            <iframe
+                                                key={activeVisual.pdfSrc || activeVisual.src}
+                                                src={activeVisual.pdfSrc || activeVisual.src}
+                                                className="w-[88vw] sm:w-[90vw] h-[75vh] sm:h-[80vh] border-0 rounded-lg"
+                                                title={activeVisual.alt || 'PDF Document'}
+                                            />
+                                        ) : (
+                                            <Image
+                                                key={activeVisual.src}
+                                                src={activeVisual.src}
+                                                alt={activeVisual.alt || 'Image'}
+                                                width={1200}
+                                                height={800}
+                                                className="max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain rounded-lg"
+                                                placeholder="blur"
+                                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                                unoptimized={activeVisual.type === 'gif'}
+                                            />
+                                        )
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Dot indicators for mobile - outside content */}
+                            {hasMultipleVisuals && (
+                                <div 
+                                    className="flex sm:hidden justify-center gap-2 mt-4"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    {activeVisuals?.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            type="button"
+                                            onClick={() => setActiveVisualIndex(index)}
+                                            aria-label={`Go to visual ${index + 1}`}
+                                            className={`w-2 h-2 rounded-full transition-colors ${
+                                                index === activeVisualIndex ? 'bg-white' : 'bg-white/40'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Right navigation button - hidden on mobile, outside content */}
+                        {hasMultipleVisuals && (
+                            <button
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); goToNextVisual(); }}
+                                disabled={activeVisuals ? activeVisualIndex === activeVisuals.length - 1 : true}
+                                aria-label="Next visual"
+                                className={`hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 shadow transition-opacity ${
+                                    activeVisuals && activeVisualIndex === activeVisuals.length - 1
+                                        ? 'opacity-40 cursor-not-allowed'
+                                        : 'hover:bg-white'
+                                }`}
+                            >
+                                <ChevronRight className="h-6 w-6 text-gray-700" />
+                            </button>
+                        )}
+                    </div>
+                </DialogPortal>
+            </Dialog>
 
             {/* Mobile Warning Modal */}
             <MobileWarningModal 
