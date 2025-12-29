@@ -3,6 +3,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { toast } from 'sonner'
 import SparkBackground from '@/components/home/SparkBackground'
 import DualitySection from '@/components/home/ProductCarousel'
 import BottomNavigation from '@/components/home/BottomNavigation'
@@ -43,6 +44,62 @@ function HomeContent() {
 
   const handleMusicClick = useCallback(() => {
     audioControlsRef.current?.togglePlayback()
+
+    // Show iOS-style notification
+    toast(
+      <div className="flex items-center gap-3 w-full">
+        <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 5V15"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <path
+              d="M15 3V13"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <circle cx="6" cy="16.5" r="2.5" fill="white" />
+            <circle cx="13" cy="14.5" r="2.5" fill="white" />
+            <path
+              d="M8 6L15 4"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-gray-900 truncate">
+            This is Lane 8, I once was a DJ.
+          </p>
+        </div>
+      </div>,
+      {
+        duration: 4000,
+        position: 'top-center',
+        className: 'ios-notification-toast',
+        style: {
+          background: 'rgba(255, 255, 255, 0.95)',
+          backdropFilter: 'blur(20px)',
+          border: '1px solid rgba(0, 0, 0, 0.05)',
+          borderRadius: '18px',
+          padding: '12px 16px',
+          boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1)',
+          minWidth: '320px',
+          maxWidth: '400px',
+        },
+      }
+    )
   }, [])
 
   const handleReadmeClick = useCallback((e?: React.MouseEvent) => {
