@@ -333,12 +333,14 @@
     }
   }
 
-  .ios-notification-toast {
+  .ios-notification-toast[data-mounted='true'] {
     animation: ios-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    will-change: transform, opacity;
   }
 
-  .ios-notification-toast[data-state="closed"] {
-    animation: ios-slide-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+  .ios-notification-toast[data-removed='true'] {
+    animation: ios-slide-out 0.32s cubic-bezier(0.4, 0, 1, 1) forwards;
+    will-change: transform, opacity;
   }
 
   /* Position toaster at the top with proper spacing */

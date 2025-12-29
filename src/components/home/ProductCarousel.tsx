@@ -461,9 +461,10 @@ const ProofCarousel = memo(
                       draggable={false}
                       style={{ WebkitUserDrag: 'none' } as React.CSSProperties}
                       priority={i < 2}
-                      onLoadingComplete={(img) =>
-                        registerAspectRatio(product.image, img.naturalWidth, img.naturalHeight)
-                      }
+                      onLoad={(event) => {
+                        const { naturalWidth, naturalHeight } = event.currentTarget
+                        registerAspectRatio(product.image, naturalWidth, naturalHeight)
+                      }}
                     />
                   </div>
                 </div>
