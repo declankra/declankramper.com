@@ -309,4 +309,46 @@
     padding-left: 0;
     padding-right: 0;
   }
+
+  /* iOS-style notification toast animations */
+  @keyframes ios-slide-in {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes ios-slide-out {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  }
+
+  .ios-notification-toast {
+    animation: ios-slide-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .ios-notification-toast[data-state="closed"] {
+    animation: ios-slide-out 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  /* Position toaster at the top with proper spacing */
+  [data-sonner-toaster][data-theme] {
+    --normal-bg: transparent;
+    --normal-border: transparent;
+    --normal-text: transparent;
+  }
+
+  [data-sonner-toaster] {
+    top: 12px !important;
+  }
 }
