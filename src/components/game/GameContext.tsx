@@ -4,6 +4,7 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useOpenPanel } from '@openpanel/nextjs';
+import { usePostHog } from 'posthog-js/react';
 
 // Types
 export type GameState = 'inactive' | 'instructions' | 'active' | 'gameOver';
@@ -58,6 +59,7 @@ const PLAYER_TRAIL_SHRINK_INTERVAL = 35; // ms
 
 export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const op = useOpenPanel();
+  const posthog = usePostHog();
   const [gameState, setGameState] = useState<GameState>('inactive');
   const [playerCursor, setPlayerCursor] = useState<Cursor | null>(null);
   const [computerCursors, setComputerCursors] = useState<Cursor[]>([]);
@@ -322,6 +324,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const startGame = () => {
     console.log('Starting game...');
     op.track('game_started');
+    posthog.capture('game_started');
     setGameState('active');
     setSurvivalTime(0);
     // Reset timer reference to prevent negative deltaTime calculations

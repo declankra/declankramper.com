@@ -5,10 +5,12 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FileCode } from "lucide-react";
 import { useOpenPanel } from "@openpanel/nextjs";
+import { usePostHog } from "posthog-js/react";
 import { ReadmeDialog } from "./ReadmeDialog";
 
 export function ReadmeLink() {
   const op = useOpenPanel();
+  const posthog = usePostHog();
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const linkRef = useRef<HTMLDivElement>(null);
@@ -25,10 +27,12 @@ export function ReadmeLink() {
 
   const handleClick = () => {
     // Track the readme button click
-    op.track('readme_button_clicked', {
+    const eventProps = {
       location: 'top_left_corner',
       component: 'ReadmeLink'
-    });
+    };
+    op.track('readme_button_clicked', eventProps);
+    posthog.capture('readme_button_clicked', eventProps);
 
     if (linkRef.current) {
       const rect = linkRef.current.getBoundingClientRect();

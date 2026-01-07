@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { OpenPanelProvider } from "@/lib/analytics/openpanel/OpenPanelProvider";
 import { Toaster } from "sonner";
+import { PostHogProvider } from "@/lib/analytics/posthog/PostHogProvider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -64,11 +65,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${plusJakartaSans.variable} font-sans antialiased`} suppressHydrationWarning>
-        <OpenPanelProvider />
-        <Header />  
-        <main>{children}</main>
-        <Footer />
-        <Toaster />
+        <PostHogProvider>
+          <OpenPanelProvider />
+          <Header />  
+          <main>{children}</main>
+          <Footer />
+          <Toaster />
+        </PostHogProvider>
       </body>
     </html>
   );
