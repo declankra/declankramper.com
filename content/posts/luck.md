@@ -7,7 +7,7 @@ preview: is luck real?
 
 what about the most generic symbol of luck: four-leaf clovers?
 
-![Four-leaf_Clover.jpeg](/images/blog/luck/Four-leaf_Clover.jpeg)
+![Four-leaf_Clover.webp](/images/blog/luck/Four-leaf_Clover.webp)
 
 when i was younger, i had a nascent idea about the former and wasn't sure about the latter until i found one myself. i still remember looking for four-leaf clovers in backgrounds and big fields. the logic then was that if i looked long enough, i would have better chances of finding one - a better chance at getting lucky.
 
@@ -44,7 +44,7 @@ now let's discuss what luck is and how to increase your chances of getting lucky
 
 envision the coin pusher arcade game where there's a pile of coins. 
 
-![coinPusher.jpeg](/images/blog/luck/coinPusher.jpeg)
+![coinPusher.webp](/images/blog/luck/coinPusher.webp)
 
 you work to build up coins because you know the more coins the better chance you have at winning. that game is so frustrating because you see a huge pile of coins that *surely* has to be enough, but it isn't. so you keep adding to the pile.
 
@@ -54,7 +54,7 @@ in this metaphorical world, add the magic ball arcade game where the balls fall 
 
 ![Magic_Ball_Arcade.png](/images/blog/luck/Magic_Ball_Arcade.png)
 
-![fallingBallsDesk.jpeg](/images/blog/luck/fallingBallsDesk.jpeg)
+![fallingBallsDesk.webp](/images/blog/luck/fallingBallsDesk.webp)
 
 but in the game of life and luck, those balls are always falling and bouncing around, looking for a slot that fits. so it's like the coin pusher is constantly pushing these coins as you collect them and they're all bouncing around looking for the right slot. now you can see how increasing both the number of coins/balls and the number of slots for those coins/balls to fall into can increase your chances of winning, where winning = getting lucky.
 

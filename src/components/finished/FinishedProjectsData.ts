@@ -75,12 +75,12 @@ export const finishedProjects: FinishedProject[] = [
             },
             {
                 type: 'image',
-                src: '/finished/garpple/homeview1.jpeg',
+                src: '/finished/garpple/homeview1.webp',
                 alt: 'Garpple Home View 1'
             },
             {
                 type: 'image',
-                src: '/finished/garpple/homeview2.jpeg',
+                src: '/finished/garpple/homeview2.webp',
                 alt: 'Garpple Home View 2'
             },
             {
@@ -443,7 +443,7 @@ export const finishedProjects: FinishedProject[] = [
             },
             {
                 type: 'image',
-                src: '/finished/meet-or-not/results.jpeg',
+                src: '/finished/meet-or-not/results.webp',
                 alt: 'Meet or Not Meeting Summary'
             }
         ]
