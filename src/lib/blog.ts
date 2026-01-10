@@ -49,6 +49,30 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     .sort((a, b) => (new Date(b.date) > new Date(a.date) ? 1 : -1));
 }
 
+// Get adjacent posts (previous and next) for navigation
+// Posts are sorted newest first, so "next" = older post, "previous" = newer post
+export async function getAdjacentPosts(currentSlug: string): Promise<{
+  previous: Pick<BlogPost, 'slug' | 'title'> | null;
+  next: Pick<BlogPost, 'slug' | 'title'> | null;
+}> {
+  const posts = await getAllPosts();
+  const currentIndex = posts.findIndex(post => post.slug === currentSlug);
+
+  if (currentIndex === -1) {
+    return { previous: null, next: null };
+  }
+
+  // Previous = newer post (lower index), Next = older post (higher index)
+  const previous = currentIndex > 0
+    ? { slug: posts[currentIndex - 1].slug, title: posts[currentIndex - 1].title }
+    : null;
+  const next = currentIndex < posts.length - 1
+    ? { slug: posts[currentIndex + 1].slug, title: posts[currentIndex + 1].title }
+    : null;
+
+  return { previous, next };
+}
+
 // Get a single post by its slug (used for individual blog post pages)
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {

@@ -1,11 +1,12 @@
 // src/app/writes/[slug]/page.tsx
-import { getPostBySlug, getAllPosts } from '@/lib/blog';
+import { getPostBySlug, getAllPosts, getAdjacentPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { Badge } from "@/components/ui/badge";
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import ScrollbarsActivator from '@/components/layout/ScrollbarsActivator';
 import ReadingProgress from "@/components/blog/ReadingProgress";
+import PostNavigation from "@/components/blog/PostNavigation";
 
 // Generate all possible paths at build time
 export async function generateStaticParams() {
@@ -38,7 +39,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function BlogPost({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+  const [post, adjacentPosts] = await Promise.all([
+    getPostBySlug(params.slug),
+    getAdjacentPosts(params.slug),
+  ]);
 
   if (!post) {
     notFound();
@@ -110,8 +114,10 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           [&_li]:text-foreground/95
           [&_li>ol]:mt-2
           [&_p+ol]:mt-2"
-        dangerouslySetInnerHTML={{ __html: post.content }} 
+        dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      <PostNavigation previous={adjacentPosts.previous} next={adjacentPosts.next} />
     </article>
   );
 }
