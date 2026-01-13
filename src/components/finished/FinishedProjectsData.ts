@@ -273,7 +273,7 @@ export const finishedProjects: FinishedProject[] = [
         subtitle: 'Prototype for our firm\'s missing internal AI tool for product management (internal tool v2)',
         month: 2,
         year: 2025,
-        link: 'https://www.testing-new.site/',
+        link: 'https://psprd-preview.vercel.app/',
         visuals: [
             {
                 type: 'image',
