@@ -17,7 +17,7 @@ const SHRINK_INTERVAL = 35; // ms between removing points (adjust for shrink spe
 const CursorTrail: React.FC = () => {
   const [points, setPoints] = useState<Point[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameId = useRef<number>();
+  const animationFrameId = useRef<number | null>(null);
   const shrinkIntervalRef = useRef<NodeJS.Timeout | null>(null); // Ref for the continuous shrink interval
 
   // Mouse move handler - Adds points to the end
@@ -120,7 +120,7 @@ const CursorTrail: React.FC = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
-        animationFrameId.current = undefined; // Reset ref
+        animationFrameId.current = null; // Reset ref
       }
     };
   }, [draw, handleMouseMove]); // Dependencies remain draw and handleMouseMove

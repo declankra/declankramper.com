@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
-import footnotes from 'remark-footnotes';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
@@ -103,10 +102,6 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 async function markdownToHtml(markdown: string): Promise<string> {
   const result = await remark()
     .use(remarkGfm) // Enable GitHub-flavored markdown (tables, strikethrough, etc.)
-    .use(footnotes, {
-      inlineNotes: true, // Enable inline footnotes
-      footnoteLinkBack: true // Add back-links from footnotes to references
-    })
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeEnhanceMedia)

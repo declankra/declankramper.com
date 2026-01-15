@@ -17,8 +17,13 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each blog post
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   
   if (!post) {
     return {
@@ -38,10 +43,15 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const [post, adjacentPosts] = await Promise.all([
-    getPostBySlug(params.slug),
-    getAdjacentPosts(params.slug),
+    getPostBySlug(slug),
+    getAdjacentPosts(slug),
   ]);
 
   if (!post) {

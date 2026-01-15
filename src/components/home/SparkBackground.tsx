@@ -71,7 +71,7 @@ export default function SparkBackground({
   isActive = false
 }: SparkBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | null>(null)
   const sparksRef = useRef<Spark[]>([])
   const flashesRef = useRef<Flash[]>([])
   const sizeRef = useRef({ width: 0, height: 0, dpr: 1 })
@@ -605,6 +605,7 @@ export default function SparkBackground({
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
+        animationRef.current = null
       }
     }
   }, [drawFrame])
