@@ -168,7 +168,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                         className="text-primary underline-offset-4 hover:underline text-sm inline-block"
                                                         onClick={handleOpenContactPopover}
                                                     >
-                                                        message me
+                                                        happy to talk
                                                     </a>
                                                 </motion.div>
                                             )}
