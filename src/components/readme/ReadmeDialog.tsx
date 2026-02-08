@@ -1,10 +1,9 @@
 // src/components/readme/ReadmeDialog.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TypingAnimation } from "@/components/ui/typing-animation";
-import { ContactPopover } from "./ContactPopover";
 
 interface ReadmeDialogProps {
     open: boolean;
@@ -15,21 +14,17 @@ interface ReadmeDialogProps {
 export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) {
     const [contentVisible, setContentVisible] = useState(false);
     const [headerTypingComplete, setHeaderTypingComplete] = useState(false);
-    const [contactPopoverOpen, setContactPopoverOpen] = useState(false);
-    const contactLinkRef = useRef<HTMLAnchorElement>(null);
-    const [contactLinkPosition, setContactLinkPosition] = useState({ x: 0, y: 0 });
 
     // Reset states when dialog closes
     useEffect(() => {
         if (!open) {
             setContentVisible(false);
             setHeaderTypingComplete(false);
-            setContactPopoverOpen(false);
         }
     }, [open]);
 
     // Calculate when header typing should be complete
-    const headerText = "I'm figuring it out.";
+    const headerText = "i understand everyday products to be testaments of passion and curiosity built by people who truly cared. i believe in their power to improve lives and bring joy, and i want to give that back.";
     const headerTypingDuration = headerText.length * 30 + 500; // 30ms per character + buffer
 
     // Set header typing complete after estimated duration
@@ -42,26 +37,6 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
             return () => clearTimeout(timer);
         }
     }, [contentVisible, headerTypingDuration]);
-
-    // Handle opening the contact popover
-    const handleOpenContactPopover = (e: React.MouseEvent) => {
-        e.preventDefault();
-
-        if (contactLinkRef.current) {
-            const rect = contactLinkRef.current.getBoundingClientRect();
-            
-            // Calculate a position that works better for both mobile and desktop
-            // For mobile, we want to position it higher up from the link to ensure visibility
-            const isMobile = window.innerWidth < 768;
-            
-            setContactLinkPosition({
-                x: isMobile ? window.innerWidth / 9 : rect.right,
-                y: rect.top - 300,
-            });
-        }
-
-        setContactPopoverOpen(true);
-    };
 
     return (
         <AnimatePresence>
@@ -125,7 +100,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                             <div className="flex space-x-2">
                                 <button
                                     onClick={() => onOpenChange(false)}
-                                    className="w-3 h-3 rounded-full bg-destructive hover:bg-destructive/100 opacity-70 hover:opacity-100 transition-opacity"
+                                    className="w-3 h-3 rounded-full bg-destructive hover:bg-destructive opacity-70 hover:opacity-100 transition-opacity"
                                     aria-label="Close dialog"
                                 ></button>
                                 <div className="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></div>
@@ -163,12 +138,10 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                     className="mt-6 font-sans"
                                                 >
                                                     <a
-                                                        ref={contactLinkRef}
-                                                        href="#"
+                                                        href="mailto:declan@dkbuilds.co?subject=Hello%20from%20the%20internet!"
                                                         className="text-primary underline-offset-4 hover:underline text-sm inline-block"
-                                                        onClick={handleOpenContactPopover}
                                                     >
-                                                        happy to talk
+                                                        would love to talk if you think the same :)
                                                     </a>
                                                 </motion.div>
                                             )}
@@ -178,13 +151,6 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                             </AnimatePresence>
                         </div>
                     </motion.div>
-
-                    {/* Contact Popover */}
-                    <ContactPopover
-                        isOpen={contactPopoverOpen}
-                        onClose={() => setContactPopoverOpen(false)}
-                        origin={contactLinkPosition}
-                    />
                 </>
             )}
         </AnimatePresence>
