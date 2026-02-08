@@ -16,6 +16,28 @@ import './scrollbar.css';
 // Snappy ease-out for collapsible animations (per Emil Kowalski)
 const snappyEaseOut = [0.22, 1, 0.36, 1] as const;
 
+type TimelineItem =
+  | (FinishedProject & { type: 'project' })
+  | (Testimonial & { type: 'testimonial' });
+
+const sortedTimelineItems: TimelineItem[] = [
+  ...finishedProjects.map((project) => ({ ...project, type: 'project' as const })),
+  ...testimonials.map((testimonial) => ({ ...testimonial, type: 'testimonial' as const })),
+].sort((a, b) => {
+  if (a.year !== b.year) {
+    return b.year - a.year;
+  }
+  return b.month - a.month;
+});
+
+const timelineItemsByYear = sortedTimelineItems.reduce((acc, item) => {
+  if (!acc[item.year]) {
+    acc[item.year] = [];
+  }
+  acc[item.year].push(item);
+  return acc;
+}, {} as Record<number, TimelineItem[]>);
+
 export function FinishedProjectsList() {
     const [isCurrentlyBuildingExpanded, setIsCurrentlyBuildingExpanded] = useState(true);
     const [isShippedExpanded, setIsShippedExpanded] = useState(true);
@@ -31,34 +53,6 @@ export function FinishedProjectsList() {
     //     }
     // }, [isLoaded, isMobile]);
     
-    // Create a union type for timeline items
-    type TimelineItem = 
-        | (FinishedProject & { type: 'project' })
-        | (Testimonial & { type: 'testimonial' });
-
-    // Combine projects and testimonials with type discriminator
-    const allTimelineItems: TimelineItem[] = [
-        ...finishedProjects.map(p => ({ ...p, type: 'project' as const })),
-        ...testimonials.map(t => ({ ...t, type: 'testimonial' as const }))
-    ];
-
-    // Sort all items by date (newest first)
-    const sortedItems = allTimelineItems.sort((a, b) => {
-        if (a.year !== b.year) {
-            return b.year - a.year;
-        }
-        return b.month - a.month;
-    });
-
-    // Group items by year
-    const itemsByYear = sortedItems.reduce((acc, item) => {
-        if (!acc[item.year]) {
-            acc[item.year] = [];
-        }
-        acc[item.year].push(item);
-        return acc;
-    }, {} as Record<number, TimelineItem[]>);
-
     const activeVisual = activeVisuals?.[activeVisualIndex] ?? activeVisuals?.[0] ?? null;
 
     const hasMultipleVisuals = (activeVisuals?.length ?? 0) > 1;
@@ -387,7 +381,7 @@ export function FinishedProjectsList() {
                                 transition={{ duration: 0.25, ease: snappyEaseOut }}
                                 style={{ overflow: 'hidden' }}
                             >
-                                {Object.entries(itemsByYear)
+                                {Object.entries(timelineItemsByYear)
                                     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
                                     .map(([year, items]) => (
                                         <div key={year} className="mb-8">

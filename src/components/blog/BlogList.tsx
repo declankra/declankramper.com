@@ -2,14 +2,14 @@
 'use client'
 
 import { useState } from 'react';
-import { BlogPost, BlogCategory } from '@/types/blog';
+import type { BlogCategory, BlogPostSummary } from '@/types/blog';
 import CategoryFilter from '@/components/blog/CategoryFilter';
 import PostList from '@/components/blog/PostList';
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
 interface BlogListProps {
-  initialPosts: BlogPost[];
+  initialPosts: BlogPostSummary[];
 }
 
 export default function BlogList({ initialPosts }: BlogListProps) {
@@ -22,9 +22,9 @@ export default function BlogList({ initialPosts }: BlogListProps) {
   ) as BlogCategory[];
 
   const filteredPosts = initialPosts.filter(post => {
-    // Filter by search query across title, preview, and content
+    // Filter by search query across title and preview
     const searchTerms = searchQuery.toLowerCase().split(' ');
-    const postText = `${post.title} ${post.preview} ${post.content}`.toLowerCase();
+    const postText = `${post.title} ${post.preview}`.toLowerCase();
     
     const matchesSearch = searchQuery === '' || 
       searchTerms.every(term => postText.includes(term));

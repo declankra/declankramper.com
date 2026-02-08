@@ -1,13 +1,14 @@
 // src/lib/blog.ts
 import fs from 'fs';
 import path from 'path';
+import { cache } from 'react';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
-import { BlogPost } from '@/types/blog';
+import type { BlogCategory, BlogPost, BlogPostSummary } from '@/types/blog';
 import { normalizeDateString } from '@/lib/date';
 
 type HastNode = {
@@ -20,40 +21,67 @@ type HastNode = {
 // Define the directory where blog posts are stored
 const postsDirectory = path.join(process.cwd(), 'content/posts');
 
-// Get all posts (used for the blog listing page)
-export async function getAllPosts(): Promise<BlogPost[]> {
-  // Get file names under /content/posts
+const getAllMarkdownSlugs = cache(async (): Promise<string[]> => {
   const fileNames = fs.readdirSync(postsDirectory);
-  
-  // Filter out non-markdown files and system files
-  const markdownFiles = fileNames.filter(fileName => {
-    // Only process .md files
-    const isMarkdown = fileName.endsWith('.md');
-    // Exclude system files (like .DS_Store)
-    const isNotSystemFile = !fileName.startsWith('.');
-    return isMarkdown && isNotSystemFile;
-  });
-  
-  // Get the data from each file
-  const allPosts = await Promise.all(
-    markdownFiles.map(async (fileName) => {
-      const slug = fileName.replace(/\.md$/, '');
-      const post = await getPostBySlug(slug);
-      return post;
-    })
-  );
+  return fileNames
+    .filter((fileName) => fileName.endsWith('.md') && !fileName.startsWith('.'))
+    .map((fileName) => fileName.replace(/\.md$/, ''));
+});
 
-  // Sort posts by date and filter out any null posts
-  return allPosts
-    .filter((post): post is BlogPost => post !== null)
-    .sort((a, b) => (new Date(b.date) > new Date(a.date) ? 1 : -1));
+function toBlogPostSummary(slug: string, data: Record<string, unknown>): BlogPostSummary {
+  const title = typeof data.title === 'string' ? data.title : slug;
+  const preview = typeof data.preview === 'string' ? data.preview : '';
+  const dateValue = typeof data.date === 'string' ? data.date : '';
+  const rawCategories = Array.isArray(data.categories) ? data.categories : [];
+
+  const categories = rawCategories
+    .filter((category): category is string => typeof category === 'string')
+    .map((category) => category.trim())
+    .filter(Boolean) as BlogCategory[];
+
+  return {
+    slug,
+    title,
+    preview,
+    categories,
+    date: normalizeDateString(dateValue),
+  };
+}
+
+const getPostSummaryBySlugCached = cache(async (slug: string): Promise<BlogPostSummary | null> => {
+  try {
+    const fullPath = path.join(postsDirectory, `${slug}.md`);
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    const { data } = matter(fileContents);
+    return toBlogPostSummary(slug, data as Record<string, unknown>);
+  } catch (error) {
+    console.error(`Error loading post metadata ${slug}:`, error);
+    return null;
+  }
+});
+
+function sortByDateDesc(posts: BlogPostSummary[]): BlogPostSummary[] {
+  return posts.sort((a, b) => (new Date(b.date) > new Date(a.date) ? 1 : -1));
+}
+
+// Get all post summaries (used for listing/search/navigation).
+export async function getAllPosts(): Promise<BlogPostSummary[]> {
+  const slugs = await getAllMarkdownSlugs();
+  const allPosts = await Promise.all(slugs.map((slug) => getPostSummaryBySlugCached(slug)));
+
+  return sortByDateDesc(allPosts.filter((post): post is BlogPostSummary => post !== null));
+}
+
+export async function getRecentPosts(limit = 3): Promise<Pick<BlogPostSummary, 'slug' | 'title' | 'date'>[]> {
+  const posts = await getAllPosts();
+  return posts.slice(0, limit).map(({ slug, title, date }) => ({ slug, title, date }));
 }
 
 // Get adjacent posts (previous and next) for navigation
 // Posts are sorted newest first, so "next" = older post, "previous" = newer post
 export async function getAdjacentPosts(currentSlug: string): Promise<{
-  previous: Pick<BlogPost, 'slug' | 'title'> | null;
-  next: Pick<BlogPost, 'slug' | 'title'> | null;
+  previous: Pick<BlogPostSummary, 'slug' | 'title'> | null;
+  next: Pick<BlogPostSummary, 'slug' | 'title'> | null;
 }> {
   const posts = await getAllPosts();
   const currentIndex = posts.findIndex(post => post.slug === currentSlug);
@@ -73,30 +101,28 @@ export async function getAdjacentPosts(currentSlug: string): Promise<{
   return { previous, next };
 }
 
-// Get a single post by its slug (used for individual blog post pages)
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+const getPostBySlugCached = cache(async (slug: string): Promise<BlogPost | null> => {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-    // Use gray-matter to parse the post metadata section
     const { data, content } = matter(fileContents);
-
-    // Convert markdown to HTML string
     const processedContent = await markdownToHtml(content);
+    const summary = toBlogPostSummary(slug, data as Record<string, unknown>);
 
     return {
-      slug,
-      title: data.title,
-      date: normalizeDateString(data.date),
-      categories: data.categories,
-      preview: data.preview,
+      ...summary,
       content: processedContent,
     };
   } catch (error) {
     console.error(`Error loading post ${slug}:`, error);
     return null;
   }
+});
+
+// Get a single post by its slug (used for individual blog post pages)
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  return getPostBySlugCached(slug);
 }
 
 // Helper function to convert markdown to HTML with enhanced features

@@ -2,11 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
-import { BlogPost } from '@/types/blog';
+import type { BlogPostSummary } from '@/types/blog';
 import { formatDateUTC } from '@/lib/date';
 
 interface PostListProps {
-  posts: BlogPost[];
+  posts: BlogPostSummary[];
 }
 
 export default function PostList({ posts }: PostListProps) {

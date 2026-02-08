@@ -213,7 +213,7 @@ export default function BottomNavigation({
             </Link>
           ))
         ) : (
-          <div className="text-sm text-[#999] tracking-wide">Loading...</div>
+          <div className="text-sm text-[#999] tracking-wide">No posts yet</div>
         )}
       </div>
     </motion.nav>
