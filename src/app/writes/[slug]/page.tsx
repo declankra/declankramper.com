@@ -7,6 +7,7 @@ import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import ScrollbarsActivator from '@/components/layout/ScrollbarsActivator';
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import PostNavigation from "@/components/blog/PostNavigation";
+import { formatDateUTC } from '@/lib/date';
 
 // Generate all possible paths at build time
 export async function generateStaticParams() {
@@ -83,7 +84,7 @@ export default async function BlogPost({
             dateTime={post.date}
             className="shrink-0 text-[10px] text-foreground/70 leading-6 tracking-tight"
           >
-            {new Date(post.date).toLocaleDateString('en-US', {
+            {formatDateUTC(post.date, {
               year: 'numeric',
               month: 'long',
               day: 'numeric'

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import { BlogPost } from '@/types/blog';
+import { formatDateUTC } from '@/lib/date';
 
 interface PostListProps {
   posts: BlogPost[];
@@ -41,7 +42,7 @@ export default function PostList({ posts }: PostListProps) {
                 ))}
               </div>
               <time className="shrink-0 text-xs text-foreground/70 leading-6 tracking-tight">
-                {new Date(post.date).toLocaleDateString('en-US', {
+                {formatDateUTC(post.date, {
                   year: 'numeric',
                   month: 'short',
                   day: 'numeric'

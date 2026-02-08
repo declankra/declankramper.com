@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { formatDateUTC } from "@/lib/date";
 import { cn } from "@/lib/utils";
 
 const gapClasses: Record<string, string> = {
@@ -171,14 +172,11 @@ function formatValue(value: unknown, format?: string | null): string {
     return new Intl.NumberFormat("en-US").format(value);
   }
   if (format === "date") {
-    const date = new Date(String(value));
-    if (!Number.isNaN(date.getTime())) {
-      return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
-    }
+    return formatDateUTC(String(value), {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   }
   return String(value);
 }

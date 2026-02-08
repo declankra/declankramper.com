@@ -8,6 +8,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import { BlogPost } from '@/types/blog';
+import { normalizeDateString } from '@/lib/date';
 
 type HastNode = {
   type?: string;
@@ -87,7 +88,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     return {
       slug,
       title: data.title,
-      date: data.date,
+      date: normalizeDateString(data.date),
       categories: data.categories,
       preview: data.preview,
       content: processedContent,
