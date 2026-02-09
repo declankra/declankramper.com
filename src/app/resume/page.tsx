@@ -1,17 +1,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Mail, Download, Share } from 'lucide-react';
+import { Mail, Download, Share, ArrowRight } from 'lucide-react';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import { toast } from 'sonner';
+
+const RESUME_PDF_PATH = '/resume.pdf';
 
 export default function ResumePage() {
   const [pdfExists, setPdfExists] = useState<boolean | null>(null);
 
   useEffect(() => {
     // Check if the PDF exists
-    fetch('/DeclanKramper_ResumeGeneric.pdf')
+    fetch(RESUME_PDF_PATH)
       .then(response => {
         setPdfExists(response.ok);
       })
@@ -26,7 +29,7 @@ export default function ResumePage() {
   const handleDownload = () => {
     if (pdfExists) {
       const link = document.createElement('a');
-      link.href = '/resume.pdf';
+      link.href = RESUME_PDF_PATH;
       link.download = 'DeclanKramper_Resume.pdf';
       link.click();
       toast.success('Resume download started!');
@@ -91,7 +94,7 @@ export default function ResumePage() {
           <div className="flex flex-wrap justify-center gap-6 mb-8">
             <button
               onClick={handleDownload}
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm"
             >
               <Download className="w-3.5 h-3.5" />
               download resume
@@ -99,19 +102,27 @@ export default function ResumePage() {
 
             <button
               onClick={handleEmailClick}
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm"
             >
               <Mail className="w-3.5 h-3.5" />
               email me
             </button>
-            
+
             <button
               onClick={handleShare}
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm"
             >
               <Share className="w-3.5 h-3.5" />
               share this page
             </button>
+
+            <Link
+              href="/builds"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-sm"
+            >
+              <ArrowRight className="w-3.5 h-3.5" />
+              all builds
+            </Link>
           </div>
         </motion.div>
 
@@ -123,15 +134,14 @@ export default function ResumePage() {
           className="w-full"
         >
           {/* PDF Preview Container */}
-          <div className="w-full rounded-lg overflow-hidden shadow-sm">
-            <div className="aspect-[8.5/11] w-full">
+          <div className="w-full overflow-hidden bg-white">
+            <div className="w-full aspect-[8.5/11]">
                   {pdfExists === true ? (
                     // Show actual PDF with zoom and navigation controls
                     <iframe
-                      src="/DeclanKramper_ResumeGeneric.pdf#navpanes=0&zoom=page-width"
-                      className="w-full h-full border-0"
+                      src={`${RESUME_PDF_PATH}#navpanes=0&zoom=page-width`}
+                      className="block w-full h-full border-0"
                       title="Resume Preview"
-                      style={{ minHeight: '1000px' }}
                     />
                   ) : (
                     // Show placeholder
@@ -159,7 +169,7 @@ export default function ResumePage() {
                         {pdfExists === false && (
                           <button 
                             onClick={handleDownload}
-                            className="text-muted-foreground hover:text-foreground transition-colors text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+                            className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                           >
                             download pdf
                           </button>
@@ -183,7 +193,7 @@ export default function ResumePage() {
           </p>
           <button 
             onClick={handleEmailClick}
-            className="text-muted-foreground hover:text-foreground transition-colors text-sm underline underline-offset-4 decoration-muted-foreground hover:decoration-foreground"
+            className="text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
             contact@dkbuilds.co
           </button>
