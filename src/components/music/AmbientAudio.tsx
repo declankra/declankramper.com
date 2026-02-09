@@ -140,7 +140,7 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ delay: 0.5, duration: 0.3 }}
         onClick={toggleMute}
-        className="fixed top-6 right-6 z-50 p-2 rounded-full bg-white border border-[#E5E5E5] text-[#888] hover:text-[#0A0A0B] hover:border-[#CCC] transition-all shadow-sm"
+        className="fixed top-6 right-6 z-50 p-2 rounded-full bg-white border border-[#E5E5E5] text-[#888] hover:text-[#0A0A0B] hover:border-[#CCC] transition-[color,border-color,box-shadow] shadow-sm"
         aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
       >
         {isMuted ? (

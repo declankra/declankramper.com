@@ -14,7 +14,6 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
 };
 
 export const metadata: Metadata = {
@@ -65,10 +64,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${plusJakartaSans.variable} font-sans antialiased`} suppressHydrationWarning>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <PostHogProvider>
           <OpenPanelProvider />
           <Header />  
-          <main>{children}</main>
+          <main id="main-content">{children}</main>
           <Footer />
           <Toaster />
         </PostHogProvider>

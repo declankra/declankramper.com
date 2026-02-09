@@ -63,7 +63,7 @@ export default function ShareButton({ score, websiteUrl }: ShareButtonProps) {
     <button
       onClick={handleShare}
       disabled={isSharing} // Disable button while sharing/copying
-      className="w-full px-4 py-2 border-2 border-black text-sm rounded-md font-medium hover:bg-accent hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100"
+      className="w-full px-4 py-2 border-2 border-black text-sm rounded-md font-medium hover:bg-accent motion-safe:hover:scale-105 transition-[transform,background-color,color,border-color,box-shadow] duration-200 flex items-center justify-center gap-2 disabled:opacity-70 disabled:hover:scale-100"
     >
       {copied ? (
         <>

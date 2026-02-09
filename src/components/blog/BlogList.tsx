@@ -55,10 +55,10 @@ export default function BlogList({ initialPosts }: BlogListProps) {
         </div>
         <Input
           type="text"
-          placeholder="Search posts..."
+          placeholder="Search posts…"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 text-sm border-0 bg-secondary/50 focus-visible:ring-0"
+          className="pl-10 text-sm border-0 bg-secondary/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         />
       </div>
 

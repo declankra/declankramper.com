@@ -116,7 +116,7 @@ export function ContactPopover({ isOpen, onClose, origin }: ContactPopoverProps)
           >
             <div className="p-4">
               {isSuccess ? (
-                <div className="text-center py-6 space-y-4">
+                <div className="text-center py-6 space-y-4" aria-live="polite">
                   <h3 className="text-sm font-medium">Message Sent</h3>
                   <p className="text-xs text-muted-foreground">
                     Thanks for reaching out! I can't wait to read what you had to say :)
@@ -140,6 +140,7 @@ export function ContactPopover({ isOpen, onClose, origin }: ContactPopoverProps)
                       <input
                         id="name"
                         placeholder="Name or email so I can reach you back!"
+                        autoComplete="name"
                         className={`w-full p-2 text-xs border rounded-md ${
                           errors.name ? "border-destructive" : "border-input"
                         } bg-background focus:outline-none focus:ring-1 focus:ring-primary`}
@@ -158,6 +159,7 @@ export function ContactPopover({ isOpen, onClose, origin }: ContactPopoverProps)
                         id="message"
                         placeholder="Your message"
                         rows={3}
+                        autoComplete="off"
                         className={`w-full p-2 text-xs border rounded-md ${
                           errors.message ? "border-destructive" : "border-input"
                         } bg-background focus:outline-none focus:ring-1 focus:ring-primary`}
@@ -181,7 +183,7 @@ export function ContactPopover({ isOpen, onClose, origin }: ContactPopoverProps)
                         disabled={isSubmitting}
                         className="px-3 py-1.5 text-xs bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        {isSubmitting ? "Sending..." : "Send"}
+                        {isSubmitting ? "Sending…" : "Send"}
                       </button>
                     </div>
                   </form>

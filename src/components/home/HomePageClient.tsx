@@ -64,7 +64,7 @@ function HomeContent({ recentWrites }: HomePageClientProps) {
         onAudioStateChange={setAudioState}
       />
 
-      <main className="relative z-10 flex h-auto flex-col justify-start overflow-visible px-8 pt-20 md:h-[100svh] md:overflow-hidden md:px-16 md:pt-24 lg:px-24 lg:pt-28">
+      <section className="relative z-10 flex h-auto flex-col justify-start overflow-visible px-8 pt-20 md:h-[100svh] md:overflow-hidden md:px-16 md:pt-24 lg:px-24 lg:pt-28">
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="flex min-h-0 flex-1 flex-col max-w-7xl">
             <motion.h1
@@ -95,7 +95,7 @@ function HomeContent({ recentWrites }: HomePageClientProps) {
             />
           </div>
         </div>
-      </main>
+      </section>
 
       <ReadmeDialog
         open={isReadmeOpen}

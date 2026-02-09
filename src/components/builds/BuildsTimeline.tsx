@@ -83,9 +83,11 @@ export function BuildsTimeline() {
                             `}</style>
                             <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto">
                                 {/* Backdrop */}
-                                <div
-                                    className="fixed inset-0 bg-background/80 backdrop-blur-sm"
+                                <button
+                                    type="button"
+                                    className="fixed inset-0 border-0 bg-background/80 p-0 backdrop-blur-sm"
                                     onClick={() => setSelectedWork(null)}
+                                    aria-label="Close work details"
                                 />
                                 {/* Modal content */}
                                 <motion.div
@@ -100,6 +102,8 @@ export function BuildsTimeline() {
                                         <img
                                             src={selectedWork.media}
                                             alt={selectedWork.title}
+                                            width={1280}
+                                            height={720}
                                             className="w-full h-full object-cover"
                                         />
                                     </div>
@@ -107,7 +111,9 @@ export function BuildsTimeline() {
                                     {/* Content section */}
                                     <div className="p-6">
                                         <button
+                                            type="button"
                                             onClick={() => setSelectedWork(null)}
+                                            aria-label="Close work details"
                                             className="absolute top-4 right-4 p-2 rounded-full bg-background/20 hover:bg-background/30 transition-colors"
                                         >
                                             <span className="text-foreground text-lg">×</span>
@@ -204,7 +210,7 @@ function TimelineItem({
                         </p>
                     )}
                     {item.image && (
-                        <img src={item.image} alt="" className="w-full h-auto rounded" />
+                        <img src={item.image} alt="" width={1200} height={800} className="w-full h-auto rounded" loading="lazy" />
                     )}
                 </div>
             </motion.div>
@@ -219,9 +225,11 @@ function TimelineItem({
             whileHover={{ scale: 1.02, rotate: isEven ? -1 : 1 }}
             className={`flex items-center mb-16 ${isEven ? 'justify-end pr-1/2' : 'justify-start pl-1/2'}`}
         >
-            <motion.div
+            <motion.button
+                type="button"
                 onClick={() => onSelect?.(item)}
-                className="relative max-w-md cursor-pointer group"
+                className="relative max-w-md cursor-pointer group rounded-md text-left appearance-none border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label={`Open details for ${item.title}`}
             >
                 {/* Content */}
                 <div className="bg-card rounded-lg shadow-sm overflow-hidden">
@@ -230,6 +238,8 @@ function TimelineItem({
                         <img
                             src={item.media}
                             alt={item.title}
+                            width={1280}
+                            height={720}
                             className="w-full h-full object-cover"
                         />
                     </div>
@@ -252,7 +262,7 @@ function TimelineItem({
                 >
                     <div className="w-2 h-2 rounded-full bg-muted" />
                 </div>
-            </motion.div>
+            </motion.button>
         </motion.div>
     );
 }

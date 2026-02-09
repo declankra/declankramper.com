@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ArrowUpRight, FileText, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FinishedProject, CurrentlyBuildingProject, Testimonial, FinishedProjectVisual } from '@/types/finished';
@@ -139,80 +140,103 @@ export function FinishedProjectsList() {
         return (
             <div 
                 className={`flex gap-1.5 sm:gap-3 mt-2 ${needsScroll ? 'overflow-x-auto pb-0.5 thin-scrollbar' : ''}`}>
-                {visuals.map((visual, index) => (
-                    <div key={index} className="flex-shrink-0">
-                        {visual.type === 'video' ? (
-                            <div 
-                                className="relative group cursor-pointer"
-                                onClick={() => openVisualModal(visuals, index)}
-                            >
-                                <video
-                                    src={visual.src}
-                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200"
-                                    preload="metadata"
-                                    muted
-                                />
-                                <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity rounded flex items-center justify-center">
-                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
-                                        </svg>
+                {visuals.map((visual, index) => {
+                    const visualAlt = visual.alt || `Visual ${index + 1}`;
+
+                    return (
+                        <div key={index} className="flex-shrink-0">
+                            {visual.type === 'video' ? (
+                                <button
+                                    type="button"
+                                    className="relative group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+                                    onClick={() => openVisualModal(visuals, index)}
+                                    aria-label={`Open video preview ${index + 1}`}
+                                >
+                                    <video
+                                        src={visual.src}
+                                        className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200"
+                                        preload="metadata"
+                                        muted
+                                    />
+                                    <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity rounded flex items-center justify-center">
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                                <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                                            </svg>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        ) : visual.type === 'pdf' ? (
-                            <div
-                                className="w-24 h-16 sm:w-32 sm:h-20 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors"
-                                onClick={() => openVisualModal(visuals, index)}
-                            >
-                                <FileText className="w-6 h-6 text-gray-600 mb-1" />
-                                <span className="text-xs text-gray-500">PDF</span>
-                            </div>
-                        ) : visual.type === 'gif' ? (
-                            <div className="cursor-pointer" onClick={() => openVisualModal(visuals, index)}>
-                                <Image
-                                    src={visual.src}
-                                    alt={visual.alt || `Visual ${index + 1}`}
-                                    width={128}
-                                    height={80}
-                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
-                                    loading="lazy"
-                                    unoptimized
-                                />
-                            </div>
-                        ) : visual.pdfSrc ? (
-                            <div className="relative cursor-pointer" onClick={() => openVisualModal(visuals, index)}>
-                                <Image
-                                    src={visual.src}
-                                    alt={visual.alt || `Visual ${index + 1}`}
-                                    width={128}
-                                    height={80}
-                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
-                                    loading="lazy"
-                                    placeholder="blur"
-                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                                />
-                                {/* PDF indicator overlay */}
-                                <div className="absolute top-1 right-1 bg-white/90 rounded-full p-1">
-                                    <FileText className="w-3 h-3 text-gray-600" />
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="cursor-pointer" onClick={() => openVisualModal(visuals, index)}>
-                                <Image
-                                    src={visual.src}
-                                    alt={visual.alt || `Visual ${index + 1}`}
-                                    width={128}
-                                    height={80}
-                                    className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
-                                    loading="lazy"
-                                    placeholder="blur"
-                                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                                />
-                            </div>
-                        )}
-                    </div>
-                ))}
+                                </button>
+                            ) : visual.type === 'pdf' ? (
+                                <button
+                                    type="button"
+                                    className="w-24 h-16 sm:w-32 sm:h-20 bg-gray-50 border border-gray-200 rounded flex flex-col items-center justify-center hover:bg-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+                                    onClick={() => openVisualModal(visuals, index)}
+                                    aria-label={`Open PDF preview ${index + 1}`}
+                                >
+                                    <FileText className="w-6 h-6 text-gray-600 mb-1" aria-hidden="true" />
+                                    <span className="text-xs text-gray-500">PDF</span>
+                                </button>
+                            ) : visual.type === 'gif' ? (
+                                <button
+                                    type="button"
+                                    className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+                                    onClick={() => openVisualModal(visuals, index)}
+                                    aria-label={`Open image preview: ${visualAlt}`}
+                                >
+                                    <Image
+                                        src={visual.src}
+                                        alt={visualAlt}
+                                        width={128}
+                                        height={80}
+                                        className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                        loading="lazy"
+                                        unoptimized
+                                    />
+                                </button>
+                            ) : visual.pdfSrc ? (
+                                <button
+                                    type="button"
+                                    className="relative rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+                                    onClick={() => openVisualModal(visuals, index)}
+                                    aria-label={`Open image and PDF preview: ${visualAlt}`}
+                                >
+                                    <Image
+                                        src={visual.src}
+                                        alt={visualAlt}
+                                        width={128}
+                                        height={80}
+                                        className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                        loading="lazy"
+                                        placeholder="blur"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                    />
+                                    {/* PDF indicator overlay */}
+                                    <div className="absolute top-1 right-1 bg-white/90 rounded-full p-1">
+                                        <FileText className="w-3 h-3 text-gray-600" aria-hidden="true" />
+                                    </div>
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+                                    onClick={() => openVisualModal(visuals, index)}
+                                    aria-label={`Open image preview: ${visualAlt}`}
+                                >
+                                    <Image
+                                        src={visual.src}
+                                        alt={visualAlt}
+                                        width={128}
+                                        height={80}
+                                        className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200 hover:opacity-90 transition-opacity"
+                                        loading="lazy"
+                                        placeholder="blur"
+                                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                                    />
+                                </button>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         );
     };
@@ -468,14 +492,17 @@ export function FinishedProjectsList() {
                 <DialogPortal>
                     <DialogOverlay />
                     {/* Clickable backdrop layer */}
-                    <div 
-                        className="fixed inset-0 z-50 flex items-center justify-center"
-                        onClick={closeVisualModal}
-                    >
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <button
+                            type="button"
+                            className="absolute inset-0 border-0 bg-transparent p-0 cursor-pointer"
+                            onClick={closeVisualModal}
+                            aria-label="Close visual preview"
+                        />
                         {/* Close button */}
                         <button
                             type="button"
-                            onClick={(e) => { e.stopPropagation(); closeVisualModal(); }}
+                            onClick={closeVisualModal}
                             aria-label="Close"
                             className="absolute top-4 right-4 rounded-full bg-white/90 p-2 shadow hover:bg-white transition-colors z-10"
                         >
@@ -488,7 +515,7 @@ export function FinishedProjectsList() {
                         {hasMultipleVisuals && (
                             <button
                                 type="button"
-                                onClick={(e) => { e.stopPropagation(); goToPreviousVisual(); }}
+                                onClick={goToPreviousVisual}
                                 disabled={activeVisualIndex === 0}
                                 aria-label="Previous visual"
                                 className={`hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 shadow transition-opacity ${
@@ -504,7 +531,6 @@ export function FinishedProjectsList() {
                             {/* Content area with swipe support */}
                             <div 
                                 className="max-w-[92vw] max-h-[85vh] sm:max-h-[90vh] sm:max-w-5xl p-2 sm:p-3 bg-white rounded-lg shadow-lg cursor-default"
-                                onClick={(e) => e.stopPropagation()}
                                 onTouchStart={handleTouchStart}
                                 onTouchEnd={handleTouchEnd}
                             >
@@ -546,10 +572,7 @@ export function FinishedProjectsList() {
 
                             {/* Dot indicators for mobile - outside content */}
                             {hasMultipleVisuals && (
-                                <div 
-                                    className="flex sm:hidden justify-center gap-2 mt-4"
-                                    onClick={(e) => e.stopPropagation()}
-                                >
+                                <div className="flex sm:hidden justify-center gap-2 mt-4">
                                     {activeVisuals?.map((_, index) => (
                                         <button
                                             key={index}
@@ -569,7 +592,7 @@ export function FinishedProjectsList() {
                         {hasMultipleVisuals && (
                             <button
                                 type="button"
-                                onClick={(e) => { e.stopPropagation(); goToNextVisual(); }}
+                                onClick={goToNextVisual}
                                 disabled={activeVisuals ? activeVisualIndex === activeVisuals.length - 1 : true}
                                 aria-label="Next visual"
                                 className={`hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-3 shadow transition-opacity ${
@@ -595,10 +618,10 @@ export function FinishedProjectsList() {
             <div className="text-center py-6 px-3">
                 <p className="text-xs text-gray-500">
                     i{' '}
-                    <a href="/writes" className="underline hover:text-gray-700 transition-colors">
+                    <Link href="/writes" className="underline hover:text-gray-700 transition-colors">
                         write
-                    </a>
-                    {' '}too...
+                    </Link>
+                    {' '}too…
                 </p>
             </div>
         </div>

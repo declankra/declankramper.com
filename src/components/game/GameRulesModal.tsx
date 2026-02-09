@@ -112,7 +112,7 @@ export default function GameRulesModal() {
                     >
                       <button
                         onClick={startGame}
-                        className="px-8 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 hover:scale-105 transition-all duration-200 shadow-md"
+                        className="px-8 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 motion-safe:hover:scale-105 transition-[transform,background-color,color,border-color,box-shadow] duration-200 shadow-md"
                       >
                         Start Game
                       </button>
@@ -140,7 +140,7 @@ export default function GameRulesModal() {
                     >
                       <button
                         onClick={() => setShowLeaderboard(false)}
-                        className="px-6 py-2 bg-secondary text-secondary-foreground rounded-md font-medium hover:bg-secondary/90 transition-all duration-200"
+                        className="px-6 py-2 bg-secondary text-secondary-foreground rounded-md font-medium hover:bg-secondary/90 transition-[background-color,color,border-color,box-shadow] duration-200"
                       >
                         Back to Rules
                       </button>

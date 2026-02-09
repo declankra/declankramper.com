@@ -141,16 +141,16 @@ export default function GameOverModal() {
                     <div className="flex justify-between gap-4 pt-2">
                       <button
                         onClick={handlePlayAgain}
-                        className="px-4 py-2 border border-input text-sm rounded-md font-medium hover:bg-accent hover:scale-105 transition-all duration-200"
+                        className="px-4 py-2 border border-input text-sm rounded-md font-medium hover:bg-accent motion-safe:hover:scale-105 transition-[transform,background-color,color,border-color,box-shadow] duration-200"
                       >
                         Play Again
                       </button>
                       <button
                         onClick={handleSaveScore}
                         disabled={isSaving || !playerName.trim()}
-                        className="px-4 py-2 bg-primary text-primary-foreground text-sm rounded-md font-medium hover:bg-primary/90 hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:hover:scale-100"
+                        className="px-4 py-2 bg-primary text-primary-foreground text-sm rounded-md font-medium hover:bg-primary/90 motion-safe:hover:scale-105 transition-[transform,background-color,color,border-color,box-shadow] duration-200 disabled:opacity-50 disabled:hover:scale-100"
                       >
-                        {isSaving ? 'Saving...' : 'Save Score'}
+                        {isSaving ? 'Saving…' : 'Save Score'}
                       </button>
                     </div>
                   </div>
@@ -167,7 +167,7 @@ export default function GameOverModal() {
                     
                     <button
                       onClick={handlePlayAgain}
-                      className="w-full px-4 py-2 bg-primary text-primary-foreground text-sm rounded-md font-medium hover:bg-primary/90 hover:scale-105 transition-all duration-200 flex items-center justify-center"
+                      className="w-full px-4 py-2 bg-primary text-primary-foreground text-sm rounded-md font-medium hover:bg-primary/90 motion-safe:hover:scale-105 transition-[transform,background-color,color,border-color,box-shadow] duration-200 flex items-center justify-center"
                     >
                       Play Again
                     </button>
