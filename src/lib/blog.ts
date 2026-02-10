@@ -31,7 +31,7 @@ const getAllMarkdownSlugs = cache(async (): Promise<string[]> => {
 function toBlogPostSummary(slug: string, data: Record<string, unknown>): BlogPostSummary {
   const title = typeof data.title === 'string' ? data.title : slug;
   const preview = typeof data.preview === 'string' ? data.preview : '';
-  const dateValue = typeof data.date === 'string' ? data.date : '';
+  const dateValue = data.date;
   const rawCategories = Array.isArray(data.categories) ? data.categories : [];
 
   const categories = rawCategories
@@ -61,7 +61,26 @@ const getPostSummaryBySlugCached = cache(async (slug: string): Promise<BlogPostS
 });
 
 function sortByDateDesc(posts: BlogPostSummary[]): BlogPostSummary[] {
-  return posts.sort((a, b) => (new Date(b.date) > new Date(a.date) ? 1 : -1));
+  return posts.sort((a, b) => {
+    const aTime = Date.parse(a.date);
+    const bTime = Date.parse(b.date);
+    const aHasValidDate = Number.isFinite(aTime);
+    const bHasValidDate = Number.isFinite(bTime);
+
+    if (aHasValidDate && bHasValidDate && aTime !== bTime) {
+      return bTime - aTime;
+    }
+
+    if (aHasValidDate && !bHasValidDate) {
+      return -1;
+    }
+
+    if (!aHasValidDate && bHasValidDate) {
+      return 1;
+    }
+
+    return a.slug.localeCompare(b.slug);
+  });
 }
 
 // Get all post summaries (used for listing/search/navigation).
