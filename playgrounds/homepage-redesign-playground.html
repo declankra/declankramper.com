@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homepage Redesign — Variation A — declankramper.com</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0B;
+    --gray: #666666;
+    --light-gray: #e8e8e8;
+    --hover-bg: #f0f0f0;
+    --white: #ffffff;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    font-family: var(--font);
+    background: #111;
+    color: #ccc;
+    overflow-x: hidden;
+  }
+
+  /* ── Top Bar ── */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #111;
+    border-bottom: 1px solid #222;
+  }
+  .top-bar .title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .top-bar .subtitle {
+    font-size: 12px;
+    color: #444;
+  }
+
+  /* ── Controls Panel (left strip) ── */
+  .controls-strip {
+    position: fixed;
+    left: 0;
+    top: 42px;
+    bottom: 0;
+    width: 260px;
+    padding: 20px 16px;
+    background: #111;
+    border-right: 1px solid #222;
+    overflow-y: auto;
+    z-index: 90;
+  }
+  .controls-strip h3 {
+    font-size: 11px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 20px 0 8px;
+  }
+  .controls-strip h3:first-child { margin-top: 0; }
+  .control-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .control-row label {
+    font-size: 12px;
+    color: #999;
+  }
+  .control-row input[type="range"] {
+    width: 100px;
+    accent-color: #666;
+  }
+  .control-row .value {
+    font-size: 11px;
+    color: #555;
+    min-width: 32px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .toggle-row label {
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+  }
+  .toggle-row input[type="checkbox"] {
+    accent-color: #666;
+  }
+
+  /* ── Preview Area ── */
+  .preview-area {
+    margin-left: 260px;
+    min-height: calc(100vh - 42px);
+    background: var(--white);
+  }
+
+  /* ── Prompt Output ── */
+  .prompt-section {
+    margin-left: 260px;
+    padding: 16px 24px;
+    background: #0a0a0a;
+    border-top: 1px solid #222;
+  }
+  .prompt-section h4 {
+    font-size: 11px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .prompt-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #aaa;
+    white-space: pre-wrap;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background: #151515;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #222;
+    position: relative;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    background: #222;
+    border: 1px solid #333;
+    color: #888;
+    font-size: 11px;
+    font-family: var(--font);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .copy-btn:hover { background: #333; color: #ccc; }
+
+  /* ═══════════════════════════════════════════
+     PAGE LAYOUT
+     ═══════════════════════════════════════════ */
+  .page-frame {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 48px 40px;
+    position: relative;
+  }
+
+  .headline {
+    font-size: clamp(1.5rem, 5vw, 4rem);
+    font-weight: 500;
+    color: var(--black);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  /* ── Main Grid: taglines left, media right ── */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 32px;
+    align-items: start;
+  }
+  .main-right {
+    position: sticky;
+    top: 80px;
+  }
+
+  /* ── Tagline Interactive List ── */
+  .tagline-interactive {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 16px;
+  }
+
+  .hover-blob {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 0;
+    background: var(--hover-bg);
+    border-radius: 14px;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 0;
+  }
+
+  .tagline-item {
+    position: relative;
+    z-index: 1;
+    padding: 12px 16px;
+    cursor: pointer;
+    border-radius: 14px;
+  }
+  .tagline-item .tl-main {
+    font-size: clamp(0.95rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1.6;
+  }
+  .tagline-item .tl-main .muted { color: var(--gray); }
+  .tagline-item .tl-reveal {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+  }
+  .tagline-item.hovered .tl-reveal {
+    max-height: 120px;
+    opacity: 1;
+  }
+  .tl-reveal-inner {
+    padding-top: 8px;
+  }
+  .tl-reveal-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--black);
+  }
+  .tl-reveal-notes {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.5;
+    margin-top: 3px;
+  }
+
+  /* ── Media Preview ── */
+  .media-preview {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    min-height: 380px;
+  }
+  .media-preview .media-placeholder {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: #aaa;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .media-preview .media-placeholder.visible {
+    opacity: 1;
+  }
+  .media-placeholder.surgent-media {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+  }
+  .media-placeholder.surgent-media .media-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 45%;
+    height: 75%;
+    border-radius: 28px;
+    background: #fff;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+  }
+  .media-placeholder.surgent-media .media-label {
+    font-weight: 600;
+    color: #2e7d32;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .media-placeholder.surgent-media .media-sub {
+    font-size: 11px;
+    color: #66bb6a;
+    text-align: center;
+  }
+  .media-placeholder.consulting-media {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 50%, #90caf9 100%);
+  }
+  .media-placeholder.consulting-media .media-inner {
+    position: absolute;
+    top: 12%;
+    left: 8%;
+    right: 8%;
+    bottom: 12%;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px;
+  }
+  .media-placeholder.consulting-media .media-label {
+    font-weight: 600;
+    color: #1565c0;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .media-placeholder.consulting-media .media-sub {
+    font-size: 11px;
+    color: #64b5f6;
+    text-align: center;
+  }
+
+  /* ═══════════════════════════════════════════
+     3D CAROUSEL SECTION
+     ═══════════════════════════════════════════ */
+  .carousel-section {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid #eee;
+  }
+  .carousel-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+  .carousel-3d-wrapper {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    perspective: 1000px;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+  }
+  .carousel-3d-wrapper:active { cursor: grabbing; }
+  .carousel-3d-track {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .carousel-3d-face {
+    position: absolute;
+    width: 140px;
+    backface-visibility: hidden;
+  }
+  .carousel-3d-face .face-card {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 12px;
+    background: #f5f5f5;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 8px;
+    font-size: 10px;
+    color: #aaa;
+    overflow: hidden;
+  }
+  .carousel-3d-face:nth-child(odd) .face-card { background: #f0f0f0; }
+  .carousel-3d-face:nth-child(3n) .face-card { background: #eaeaea; }
+
+  /* ═══════════════════════════════════════════
+     BOTTOM NAVIGATION
+     ═══════════════════════════════════════════ */
+  .bottom-nav {
+    margin-top: 40px;
+    padding-top: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 720px;
+  }
+  .nav-column-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #777;
+    margin-bottom: 12px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 0;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .nav-item .nav-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: #ddd;
+    flex-shrink: 0;
+  }
+  .nav-item .nav-label {
+    font-size: 13px;
+    color: var(--gray);
+    transition: color 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .nav-item:hover .nav-label {
+    color: var(--black);
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Top Bar ── -->
+<div class="top-bar">
+  <span class="title">Variation A — Integrated Tagline</span>
+  <span class="subtitle">declankramper.com homepage redesign</span>
+</div>
+
+<!-- ── Controls ── -->
+<div class="controls-strip">
+  <h3>Spring Physics</h3>
+  <div class="control-row">
+    <label>Stiffness</label>
+    <input type="range" id="ctrl-stiffness" min="80" max="400" value="180">
+    <span class="value" id="val-stiffness">180</span>
+  </div>
+  <div class="control-row">
+    <label>Damping</label>
+    <input type="range" id="ctrl-damping" min="10" max="40" value="22">
+    <span class="value" id="val-damping">22</span>
+  </div>
+
+  <h3>Hover Blob</h3>
+  <div class="control-row">
+    <label>Radius</label>
+    <input type="range" id="ctrl-radius" min="6" max="24" value="14">
+    <span class="value" id="val-radius">14</span>
+  </div>
+  <div class="control-row">
+    <label>Padding X</label>
+    <input type="range" id="ctrl-padx" min="8" max="28" value="18">
+    <span class="value" id="val-padx">18</span>
+  </div>
+  <div class="control-row">
+    <label>Padding Y</label>
+    <input type="range" id="ctrl-pady" min="8" max="24" value="14">
+    <span class="value" id="val-pady">14</span>
+  </div>
+  <div class="control-row">
+    <label>BG Color</label>
+    <input type="range" id="ctrl-bglight" min="200" max="250" value="240">
+    <span class="value" id="val-bglight">f0</span>
+  </div>
+
+  <h3>Media Preview</h3>
+  <div class="control-row">
+    <label>Fade Duration</label>
+    <input type="range" id="ctrl-fade" min="100" max="600" value="350">
+    <span class="value" id="val-fade">350ms</span>
+  </div>
+  <div class="toggle-row">
+    <input type="checkbox" id="ctrl-scale" checked>
+    <label for="ctrl-scale">Scale-in effect</label>
+  </div>
+
+  <h3>Notes Reveal</h3>
+  <div class="control-row">
+    <label>Slide Speed</label>
+    <input type="range" id="ctrl-notes-speed" min="200" max="600" value="400">
+    <span class="value" id="val-notes-speed">400ms</span>
+  </div>
+
+  <h3>3D Carousel</h3>
+  <div class="control-row">
+    <label>Face Width</label>
+    <input type="range" id="ctrl-face-width" min="80" max="200" value="140">
+    <span class="value" id="val-face-width">140</span>
+  </div>
+  <div class="control-row">
+    <label>Height</label>
+    <input type="range" id="ctrl-carousel-height" min="180" max="400" value="280">
+    <span class="value" id="val-carousel-height">280</span>
+  </div>
+  <div class="toggle-row">
+    <input type="checkbox" id="ctrl-carousel-visible" checked>
+    <label for="ctrl-carousel-visible">Show carousel</label>
+  </div>
+</div>
+
+<!-- ── Preview Area ── -->
+<div class="preview-area">
+  <div class="page-frame">
+    <!-- HEADLINE -->
+    <h1 class="headline">Declan builds products.</h1>
+
+    <!-- MAIN GRID -->
+    <div class="main-layout">
+      <div class="main-left">
+        <div class="tagline-interactive" id="tagline-list">
+          <div class="hover-blob" id="blob"></div>
+
+          <div class="tagline-item" data-item="consulting">
+            <div class="tl-main">that move numbers <span class="muted">for businesses</span></div>
+            <div class="tl-reveal">
+              <div class="tl-reveal-inner">
+                <div class="tl-reveal-title">Applied AI Consulting &middot; gravelbox.xyz</div>
+                <div class="tl-reveal-notes">Closing the gap between feedback and value. Working closely with entrepreneurs and SMBs to apply cutting-edge AI for tangible, measurable impact.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tagline-item" data-item="surgent">
+            <div class="tl-main">and people share <span class="muted">with their friends</span></div>
+            <div class="tl-reveal">
+              <div class="tl-reveal-inner">
+                <div class="tl-reveal-title">Surgent &middot; iOS Health App</div>
+                <div class="tl-reveal-notes">Turning health data into daily confidence. An iOS app for understanding your body through progress over time — compounding, gradually then all at once.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-right">
+        <div class="media-preview" id="media-preview">
+          <div class="media-placeholder consulting-media" id="media-consulting">
+            <div class="media-inner">
+              <div class="media-label">Gravelbox</div>
+              <div class="media-sub">Applied AI Consulting for SMBs</div>
+            </div>
+          </div>
+          <div class="media-placeholder surgent-media" id="media-surgent">
+            <div class="media-inner">
+              <div class="media-label">Surgent</div>
+              <div class="media-sub">Progress over time.<br>Gradually, then all at once.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D CAROUSEL -->
+    <div class="carousel-section" id="carousel-section">
+      <div class="carousel-label">More work</div>
+      <div class="carousel-3d-wrapper" id="carousel-wrapper">
+        <div class="carousel-3d-track" id="carousel-track">
+          <!-- faces injected by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <div class="bottom-nav">
+      <div class="nav-column">
+        <div class="nav-column-label">Core</div>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">writes</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">builds</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">runs</span></a>
+      </div>
+      <div class="nav-column">
+        <div class="nav-column-label">Fun</div>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">music</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">game</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">random</span></a>
+      </div>
+      <div class="nav-column">
+        <div class="nav-column-label">About</div>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">contact</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">readme.md</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">biz</span></a>
+      </div>
+      <div class="nav-column">
+        <div class="nav-column-label">Recent Writes</div>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">Post Title 1</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">Post Title 2</span></a>
+        <a class="nav-item" href="#"><span class="nav-icon"></span><span class="nav-label">Post Title 3</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Prompt Output ── -->
+<div class="prompt-section">
+  <h4>Implementation Prompt</h4>
+  <div class="prompt-text" id="prompt-output">
+    <button class="copy-btn" id="copy-btn">Copy</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const DEFAULTS = {
+  stiffness: 180, damping: 22,
+  radius: 14, padX: 18, padY: 14, bgLight: 240,
+  fadeDuration: 350, scaleIn: true, notesSpeed: 400,
+  faceWidth: 140, carouselHeight: 280, carouselVisible: true
+};
+const state = { ...DEFAULTS };
+
+// ═══════════════════════════════════════════
+// SPRING PHYSICS ENGINE
+// ═══════════════════════════════════════════
+class Spring {
+  constructor(stiffness = 180, damping = 22) {
+    this.stiffness = stiffness;
+    this.damping = damping;
+    this.mass = 1;
+    this.position = { x: 0, y: 0, w: 0, h: 0, opacity: 0 };
+    this.velocity = { x: 0, y: 0, w: 0, h: 0, opacity: 0 };
+    this.target = { x: 0, y: 0, w: 0, h: 0, opacity: 0 };
+    this.running = false;
+    this.onUpdate = null;
+  }
+  setTarget(target) {
+    this.target = { ...this.target, ...target };
+    if (!this.running) this.start();
+  }
+  snapTo(pos) {
+    this.position = { ...this.position, ...pos };
+    this.target = { ...this.target, ...pos };
+    this.velocity = { x: 0, y: 0, w: 0, h: 0, opacity: 0 };
+  }
+  start() {
+    this.running = true;
+    this.lastTime = performance.now();
+    this.tick();
+  }
+  tick() {
+    if (!this.running) return;
+    const now = performance.now();
+    const dt = Math.min((now - this.lastTime) / 1000, 0.064);
+    this.lastTime = now;
+    let settled = true;
+    for (const key of ['x', 'y', 'w', 'h', 'opacity']) {
+      const d = this.position[key] - this.target[key];
+      const sf = -this.stiffness * d;
+      const df = -this.damping * this.velocity[key];
+      this.velocity[key] += (sf + df) / this.mass * dt;
+      this.position[key] += this.velocity[key] * dt;
+      if (Math.abs(d) > 0.1 || Math.abs(this.velocity[key]) > 0.1) settled = false;
+    }
+    if (this.onUpdate) this.onUpdate(this.position);
+    if (settled) {
+      this.position = { ...this.target };
+      if (this.onUpdate) this.onUpdate(this.position);
+      this.running = false;
+    } else {
+      requestAnimationFrame(() => this.tick());
+    }
+  }
+}
+
+// ═══════════════════════════════════════════
+// HOVER BLOB
+// ═══════════════════════════════════════════
+const spring = new Spring(state.stiffness, state.damping);
+const blob = document.getElementById('blob');
+
+spring.onUpdate = (pos) => {
+  blob.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+  blob.style.width = `${pos.w}px`;
+  blob.style.height = `${pos.h}px`;
+  blob.style.opacity = pos.opacity;
+};
+
+let activeItem = null;
+
+document.querySelectorAll('.tagline-item').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    const itemType = el.getAttribute('data-item');
+    const list = el.parentElement;
+    const listRect = list.getBoundingClientRect();
+    const itemRect = el.getBoundingClientRect();
+
+    spring.stiffness = state.stiffness;
+    spring.damping = state.damping;
+
+    const target = {
+      x: itemRect.left - listRect.left,
+      y: itemRect.top - listRect.top,
+      w: itemRect.width,
+      h: itemRect.height,
+      opacity: 1
+    };
+
+    if (activeItem === null) spring.snapTo(target);
+    spring.setTarget(target);
+
+    list.querySelectorAll('.tagline-item').forEach(i => i.classList.toggle('hovered', i === el));
+    activeItem = itemType;
+    showMedia(itemType);
+  });
+
+  el.addEventListener('mouseleave', () => {
+    const list = el.parentElement;
+    setTimeout(() => {
+      if (!list.querySelector('.tagline-item:hover')) {
+        spring.setTarget({ opacity: 0 });
+        list.querySelectorAll('.tagline-item').forEach(i => i.classList.remove('hovered'));
+        activeItem = null;
+        hideMedia();
+      }
+    }, 10);
+  });
+});
+
+function showMedia(type) {
+  document.getElementById('media-consulting').classList.toggle('visible', type === 'consulting');
+  document.getElementById('media-surgent').classList.toggle('visible', type === 'surgent');
+}
+function hideMedia() {
+  document.getElementById('media-consulting').classList.remove('visible');
+  document.getElementById('media-surgent').classList.remove('visible');
+}
+
+// ═══════════════════════════════════════════
+// 3D CAROUSEL (draggable)
+// ═══════════════════════════════════════════
+const products = [
+  'Surgent Landing', 'Surgent App Store', 'Shared with Friends',
+  'RTC Preview', 'Race Time Calc', 'ChiTrack',
+  'Aspire Hackathon', 'Divvy', 'Athlete Test',
+  'Strava Personality', 'Elite Dashboard', 'Ontology'
+];
+
+const track = document.getElementById('carousel-track');
+const wrapper = document.getElementById('carousel-wrapper');
+let carouselRotation = 0;
+let carouselVelocity = 0;
+let isDragging = false;
+let lastX = 0;
+let animFrame = null;
+
+function buildCarousel() {
+  const faceWidth = state.faceWidth;
+  const faceCount = products.length;
+  const faceAngle = 360 / faceCount;
+  const circumference = faceWidth * faceCount;
+  const radius = Math.round(circumference / (2 * Math.PI)) + 40;
+
+  track.innerHTML = '';
+  products.forEach((name, i) => {
+    const face = document.createElement('div');
+    face.className = 'carousel-3d-face';
+    face.style.width = faceWidth + 'px';
+    face.style.transform = `rotateY(${i * faceAngle}deg) translateZ(${radius}px)`;
+    face.innerHTML = `<div class="face-card">${name}</div>`;
+    track.appendChild(face);
+  });
+
+  wrapper.style.height = state.carouselHeight + 'px';
+  renderCarouselFrame();
+}
+
+function renderCarouselFrame() {
+  track.style.transform = `rotateY(${carouselRotation}deg)`;
+}
+
+// Drag handling
+wrapper.addEventListener('pointerdown', (e) => {
+  isDragging = true;
+  lastX = e.clientX;
+  carouselVelocity = 0;
+  wrapper.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
+
+wrapper.addEventListener('pointermove', (e) => {
+  if (!isDragging) return;
+  const dx = e.clientX - lastX;
+  carouselRotation += dx * 0.3;
+  carouselVelocity = dx * 0.3;
+  lastX = e.clientX;
+  renderCarouselFrame();
+});
+
+wrapper.addEventListener('pointerup', (e) => {
+  isDragging = false;
+  wrapper.releasePointerCapture(e.pointerId);
+  // Inertia
+  const decay = () => {
+    if (isDragging) return;
+    carouselVelocity *= 0.96;
+    carouselRotation += carouselVelocity;
+    renderCarouselFrame();
+    if (Math.abs(carouselVelocity) > 0.05) {
+      animFrame = requestAnimationFrame(decay);
+    }
+  };
+  if (animFrame) cancelAnimationFrame(animFrame);
+  animFrame = requestAnimationFrame(decay);
+});
+
+buildCarousel();
+
+// ═══════════════════════════════════════════
+// CONTROLS
+// ═══════════════════════════════════════════
+function bindSlider(id, stateKey, formatter) {
+  const input = document.getElementById(`ctrl-${id}`);
+  const display = document.getElementById(`val-${id}`);
+  input.addEventListener('input', () => {
+    state[stateKey] = Number(input.value);
+    display.textContent = formatter ? formatter(state[stateKey]) : state[stateKey];
+    applyState();
+  });
+}
+function bindToggle(id, stateKey) {
+  const input = document.getElementById(`ctrl-${id}`);
+  input.addEventListener('change', () => {
+    state[stateKey] = input.checked;
+    applyState();
+  });
+}
+
+bindSlider('stiffness', 'stiffness');
+bindSlider('damping', 'damping');
+bindSlider('radius', 'radius');
+bindSlider('padx', 'padX');
+bindSlider('pady', 'padY');
+bindSlider('bglight', 'bgLight', v => v.toString(16));
+bindSlider('fade', 'fadeDuration', v => v + 'ms');
+bindSlider('notes-speed', 'notesSpeed', v => v + 'ms');
+bindSlider('face-width', 'faceWidth');
+bindSlider('carousel-height', 'carouselHeight');
+bindToggle('scale', 'scaleIn');
+bindToggle('carousel-visible', 'carouselVisible');
+
+function applyState() {
+  spring.stiffness = state.stiffness;
+  spring.damping = state.damping;
+
+  blob.style.borderRadius = state.radius + 'px';
+  const hex = state.bgLight.toString(16).padStart(2, '0');
+  blob.style.background = `#${hex}${hex}${hex}`;
+
+  document.querySelectorAll('.tagline-item').forEach(el => {
+    el.style.padding = `${state.padY}px ${state.padX}px`;
+    el.style.borderRadius = state.radius + 'px';
+  });
+
+  const fadeDur = state.fadeDuration + 'ms';
+  document.querySelectorAll('.media-placeholder').forEach(el => {
+    el.style.transitionDuration = fadeDur;
+    if (state.scaleIn) {
+      el.style.transform = el.classList.contains('visible') ? 'scale(1)' : 'scale(0.97)';
+      el.style.transitionProperty = 'opacity, transform';
+    } else {
+      el.style.transform = '';
+      el.style.transitionProperty = 'opacity';
+    }
+  });
+
+  document.querySelectorAll('.tl-reveal').forEach(el => {
+    el.style.transitionDuration = state.notesSpeed + 'ms';
+  });
+
+  // Carousel
+  document.getElementById('carousel-section').style.display = state.carouselVisible ? '' : 'none';
+  buildCarousel();
+
+  updatePrompt();
+}
+
+// ═══════════════════════════════════════════
+// PROMPT OUTPUT
+// ═══════════════════════════════════════════
+function updatePrompt() {
+  const parts = [
+    'Redesign the homepage using the "Integrated Tagline" layout (Variation A).',
+    '',
+    'STRUCTURE:',
+    '1. Keep the headline "Declan builds products."',
+    '2. The two subtitle lines become interactive hover targets in a two-column grid:',
+    '   LEFT: "that move numbers for businesses" and "and people share with their friends"',
+    '   RIGHT: Media preview area (shows content only on hover)',
+    '3. Hovering each tagline line reveals:',
+    '   - A product name + brief notes that slide out below the line',
+    '   - A media preview (image/video) on the right',
+    '   - "that move numbers" → Applied AI Consulting / gravelbox.xyz',
+    '   - "people share" → Surgent iOS health app',
+    '4. Below the grid: 3D draggable carousel labeled "More work" with a border-top separator',
+    '5. Below the carousel: bottom navigation grid (Core, Fun, About, Recent Writes)',
+    '',
+    'HOVER INTERACTION:',
+    `- Spring-animated gray blob morphs between items (stiffness: ${state.stiffness}, damping: ${state.damping})`,
+    `- Blob: ${state.radius}px border-radius, #${state.bgLight.toString(16).padStart(2,'0').repeat(3)} background`,
+    `- Notes slide out in ${state.notesSpeed}ms`,
+    `- Media fades in over ${state.fadeDuration}ms${state.scaleIn ? ' with subtle scale(0.97→1) transition' : ''}`,
+    '',
+    'The blob should feel liquidy/gluey — continuous and morphing, not jumping.',
+    'Use Framer Motion useSpring for the blob animation.',
+    'Media preview should only be visible while hovering; empty/hidden otherwise.',
+    'The 3D carousel uses the existing ProofCarousel component (rotateY cylinder with drag).'
+  ];
+
+  const el = document.getElementById('prompt-output');
+  el.innerHTML = parts.join('\n') + '\n<button class="copy-btn" id="copy-btn">Copy</button>';
+  document.getElementById('copy-btn').addEventListener('click', copyPrompt);
+}
+
+function copyPrompt() {
+  const el = document.getElementById('prompt-output');
+  const text = el.textContent.replace('Copy', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+  });
+}
+
+// ═══════════════════════════════════════════
+// RESIZE HANDLING
+// ═══════════════════════════════════════════
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (activeItem) {
+      const el = document.querySelector(`.tagline-item[data-item="${activeItem}"]`);
+      if (el) {
+        const list = el.parentElement;
+        const listRect = list.getBoundingClientRect();
+        const itemRect = el.getBoundingClientRect();
+        spring.setTarget({
+          x: itemRect.left - listRect.left,
+          y: itemRect.top - listRect.top,
+          w: itemRect.width,
+          h: itemRect.height,
+          opacity: 1
+        });
+      }
+    }
+  }, 50);
+});
+
+// Init
+applyState();
+</script>
+</body>
+</html>

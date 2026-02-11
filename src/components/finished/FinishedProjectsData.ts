@@ -8,6 +8,20 @@ import { FinishedProject, CurrentlyBuildingProject, Testimonial } from '@/types/
 // - 1kby2025
 
 export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
+    {
+        id: 'ontology-xtract',
+        title: 'Ontology-Xtract',
+        subtitle: 'An AI agent that interviews you about your business, extracts your domain knowledge, and identifies the highest-ROI opportunities for AI.',
+        link: 'https://ontology-xtract.vercel.app/',
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/ontology-xtract/ontology-xtract-preview.web-hq.mp4',
+                alt: 'Ontology-Xtract preview video',
+                autoplay: true
+            }
+        ]
+    },
 
     {
         id: 'construction-industry-agent',
@@ -26,8 +40,8 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
             },
             {
                 type: 'image',
-                src: '/finished/elite-ai/upload-specs.png',
-                alt: 'Upload Specs'
+                src: '/finished/elite-ai/gravelbox_with_background.png',
+                alt: 'Gravelbox with background'
             }
         ]
     }

@@ -119,11 +119,16 @@ export default function BottomNavigation({
     }
   ]
 
+  const columnLabelClassName = 'mb-1.5 text-[11px] uppercase tracking-[0.24em] text-[#777]'
+  const itemClassName = 'flex min-h-[1.375rem] items-center gap-1.5 text-[13px] leading-tight'
+  const itemTextClassName =
+    'text-[#666666] group-hover:text-[#0A0A0B] transition-colors'
+
   const renderItem = (item: NavItem) => {
     const content = (
-      <div className="flex items-center gap-2 text-[13px] md:text-sm">
-        <span className="text-[#444] scale-[0.9]">{item.icon}</span>
-        <span className="text-[#666666] group-hover:text-[#0A0A0B] transition-colors tracking-wide">
+      <div className={itemClassName}>
+        <span className="text-[#444] shrink-0 scale-[0.82] [&_.inline-block]:mr-0!">{item.icon}</span>
+        <span className={itemTextClassName}>
           {item.label}
         </span>
       </div>
@@ -165,36 +170,28 @@ export default function BottomNavigation({
 
   return (
     <motion.nav
-      className="grid w-full max-w-3xl grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 lg:gap-6 justify-items-start"
+      className="grid w-full max-w-3xl grid-cols-2 gap-x-6 gap-y-4 justify-items-start md:grid-cols-4 md:gap-x-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 2.1, duration: 0.6, ease: fadeInEase }}
     >
-      <div className="flex flex-col gap-3">
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#777]">
-          Core
-        </div>
+      <div className="flex flex-col">
+        <div className={columnLabelClassName}>Core</div>
         {firstColumn.map(renderItem)}
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#777]">
-          Fun
-        </div>
+      <div className="flex flex-col">
+        <div className={columnLabelClassName}>Fun</div>
         {secondColumn.map(renderItem)}
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#777]">
-          ABOUT
-        </div>
+      <div className="flex flex-col">
+        <div className={columnLabelClassName}>ABOUT</div>
         {fourthColumn.map(renderItem)}
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#777]">
-          Recent Writes
-        </div>
+      <div className="flex flex-col">
+        <div className={columnLabelClassName}>Recent Writes</div>
         {recentWrites.length > 0 ? (
           recentWrites.slice(0, 3).map((post) => (
             <Link
@@ -202,11 +199,11 @@ export default function BottomNavigation({
               href={`/writes/${post.slug}`}
               className="write-link group transition-opacity hover:opacity-80"
             >
-              <div className="flex items-center gap-2 text-[13px] md:text-sm">
-                <span className="text-[#444] scale-[0.9]">
+              <div className={itemClassName}>
+                <span className="text-[#444] shrink-0 scale-[0.82] [&_.inline-block]:mr-0!">
                   <WriteIcon />
                 </span>
-                <span className="text-[#666666] group-hover:text-[#0A0A0B] transition-colors tracking-wide">
+                <span className={`${itemTextClassName} truncate`}>
                   {post.title}
                 </span>
               </div>

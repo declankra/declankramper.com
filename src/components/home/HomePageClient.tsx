@@ -4,8 +4,9 @@ import dynamic from 'next/dynamic'
 import { useCallback, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import SparkBackground from '@/components/home/SparkBackground'
-import DualitySection from '@/components/home/ProductCarousel'
+import HomeProductHighlight from '@/components/home/HomeProductHighlight'
 import BottomNavigation, { type RecentWrite } from '@/components/home/BottomNavigation'
+import ProductCarousel from '@/components/home/ProductCarousel'
 import AmbientAudio, { type AmbientAudioControls } from '@/components/music/AmbientAudio'
 import { GameProvider, useGame } from '@/components/game/GameContext'
 import { showIosMusicToast } from '@/components/music/IosMusicToast'
@@ -28,6 +29,7 @@ function HomeContent({ recentWrites }: HomePageClientProps) {
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null)
   const [audioState, setAudioState] = useState({ isPlaying: false, isMuted: false })
   const audioControlsRef = useRef<AmbientAudioControls | null>(null)
+  const fadeInEase = [0.25, 0.46, 0.45, 0.94] as const
 
   const handleGameClick = useCallback(() => {
     setGameState('instructions')
@@ -64,8 +66,9 @@ function HomeContent({ recentWrites }: HomePageClientProps) {
         onAudioStateChange={setAudioState}
       />
 
-      <section className="relative z-10 flex h-auto flex-col justify-start overflow-visible px-8 pt-20 md:h-[100svh] md:overflow-hidden md:px-16 md:pt-24 lg:px-24 lg:pt-28">
-        <div className="flex min-h-0 flex-1 flex-col">
+      <section className="relative z-10 px-8 md:px-16 lg:px-24">
+        {/* Above the fold: fills viewport, links pinned to bottom */}
+        <div className="flex min-h-svh flex-col pt-20 md:pt-24 lg:pt-28">
           <div className="flex min-h-0 flex-1 flex-col max-w-7xl">
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
@@ -82,7 +85,7 @@ function HomeContent({ recentWrites }: HomePageClientProps) {
             </motion.h1>
 
             <div className="mt-6 md:mt-10 flex min-h-0 flex-1 flex-col">
-              <DualitySection isAudioMuted={audioState.isMuted} />
+              <HomeProductHighlight />
             </div>
           </div>
 
@@ -94,6 +97,25 @@ function HomeContent({ recentWrites }: HomePageClientProps) {
               recentWrites={recentWrites}
             />
           </div>
+        </div>
+
+        {/* Below the fold: scroll to reveal */}
+        <div className="mt-6 md:mt-8 pt-5 md:pt-6 border-t border-[#eee] pb-12 md:pb-16">
+          <motion.p
+            className="text-xs font-medium text-[#666] uppercase tracking-[0.06em] mb-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.3, duration: 0.6, ease: fadeInEase }}
+          >
+            More work
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.5, duration: 0.6, ease: fadeInEase }}
+          >
+            <ProductCarousel isAudioMuted={audioState.isMuted} />
+          </motion.div>
         </div>
       </section>
 

@@ -3,6 +3,7 @@ export interface FinishedProjectVisual {
     src: string;
     alt?: string;
     pdfSrc?: string; // For images that should open PDFs in popup
+    autoplay?: boolean; // For inline video previews that should autoplay and loop
 }
 
 export interface FinishedProject {

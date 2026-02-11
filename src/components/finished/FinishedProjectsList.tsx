@@ -144,7 +144,7 @@ export function FinishedProjectsList() {
                     const visualAlt = visual.alt || `Visual ${index + 1}`;
 
                     return (
-                        <div key={index} className="flex-shrink-0">
+                        <div key={index} className="shrink-0">
                             {visual.type === 'video' ? (
                                 <button
                                     type="button"
@@ -155,10 +155,13 @@ export function FinishedProjectsList() {
                                     <video
                                         src={visual.src}
                                         className="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded border border-gray-200"
-                                        preload="metadata"
+                                        preload="auto"
                                         muted
+                                        autoPlay
+                                        loop
+                                        playsInline
                                     />
-                                    <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-opacity rounded flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors rounded flex items-center justify-center">
                                         <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                                             <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                                                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
@@ -273,7 +276,7 @@ export function FinishedProjectsList() {
                         {/* Section header with toggle */}
                         <div className="flex gap-3 sm:gap-8 mb-4">
                             {/* Blinking red dot column */}
-                            <div className="w-8 sm:w-11 flex-shrink-0 flex justify-end items-start pt-0.5">
+                            <div className="w-8 sm:w-11 shrink-0 flex justify-end items-start pt-0.5">
                                 <div className="relative">
                                     <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
                                     <div className="absolute inset-0 w-2 h-2 bg-red-600 rounded-full animate-ping"></div>
@@ -318,7 +321,7 @@ export function FinishedProjectsList() {
                                     {currentlyBuildingProjects.map((project) => (
                                         <div key={project.id} className="flex gap-3 sm:gap-8 mb-6">
                                             {/* Empty column for alignment (no dot for individual items) */}
-                                            <div className="w-8 sm:w-11 flex-shrink-0">
+                                            <div className="w-8 sm:w-11 shrink-0">
                                             </div>
 
                                             {/* Project content */}
@@ -366,7 +369,7 @@ export function FinishedProjectsList() {
                     {/* Section header with toggle */}
                     <div className="flex gap-3 sm:gap-8 mb-4">
                         {/* Green dot column */}
-                        <div className="w-8 sm:w-11 flex-shrink-0 flex justify-end items-start pt-0.5">
+                        <div className="w-8 sm:w-11 shrink-0 flex justify-end items-start pt-0.5">
                             <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                         </div>
 
@@ -412,7 +415,7 @@ export function FinishedProjectsList() {
                                             {items.map((item, index) => (
                                                 <div key={item.id} className="flex gap-3 sm:gap-8 mb-6">
                                                     {/* Year column (only show for first item of the year) */}
-                                                    <div className="w-8 sm:w-11 flex-shrink-0 text-right">
+                                                    <div className="w-8 sm:w-11 shrink-0 text-right">
                                                         {index === 0 && (
                                                             <span className="text-sm sm:text-base font-normal text-gray-400">
                                                                 {year}

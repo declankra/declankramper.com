@@ -68,17 +68,18 @@
     left: 1rem;
     top: 1rem;
     z-index: 1000;
-    transform: translateY(-140%);
+    transform: translateY(calc(-100% - 1rem));
     border-radius: 0.5rem;
     background: hsl(var(--background));
     color: hsl(var(--foreground));
     padding: 0.5rem 0.75rem;
-    box-shadow: 0 0 0 2px hsl(var(--ring));
+    box-shadow: none;
     transition: transform 150ms ease-out;
   }
 
   .skip-link:focus-visible {
     transform: translateY(0);
+    box-shadow: 0 0 0 2px hsl(var(--ring));
     outline: none;
   }
 }
