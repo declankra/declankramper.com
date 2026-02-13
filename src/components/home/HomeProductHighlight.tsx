@@ -182,7 +182,16 @@ export default function HomeProductHighlight() {
                   </a>
                 </p>
                 <p className="text-xs md:text-[13px] text-[#888] leading-snug mt-1">
-                  Working closely with SMBs to apply the latest AI for tangible, measurable impact. First project is for a construction firm. More to come.
+                  Working closely with SMBs to apply the latest AI for tangible, measurable impact. First project is for a construction firm{' '}
+                  <a
+                    href="https://gravelbox.xyz/case-study"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-transparent underline-offset-2 transition-colors hover:decoration-current"
+                  >
+                    (read case study)
+                  </a>
+                  . More to come.
                 </p>
               </div>
             </div>
