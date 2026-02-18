@@ -1,15 +1,16 @@
 // src/lib/markdown.ts
 import { remark } from 'remark';
-import html from 'remark-html';
-import remarkGfm from 'remark-gfm'; // For GitHub-flavored markdown (tables, etc)
+import remarkGfm from 'remark-gfm';
+import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
+import rehypeStringify from 'rehype-stringify';
 
 export async function markdownToHtml(markdown: string): Promise<string> {
     const result = await remark()
         .use(remarkGfm)
-        .use(html, {
-            sanitize: false, // Allow raw HTML if needed
-            allowDangerousHtml: true
-        })
+        .use(remarkRehype, { allowDangerousHtml: true })
+        .use(rehypeRaw)
+        .use(rehypeStringify)
         .process(markdown);
     return result.toString();
 }

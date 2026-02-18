@@ -1,5 +1,5 @@
 // src/types/blog.ts
-export type BlogCategory = 'Life' | 'Career' | 'Tech' | 'Business' | 'Product' | 'Case Studies' | 'POVs' | 'AI';
+export type BlogCategory = 'Life' | 'Career' | 'Tech' | 'Business' | 'Product' | 'AI';
 
 export interface BlogPostSummary {
   title: string;
