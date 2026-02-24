@@ -10,6 +10,12 @@ export default function GameRulesModal() {
   const { gameState, startGame, topScores, setGameState } = useGame();
   const isOpen = gameState === 'instructions';
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowLeaderboard(false);
+    }
+  }, [isOpen]);
   
   // Format time to minutes:seconds.milliseconds
   const formatTime = (timeInSeconds: number) => {
