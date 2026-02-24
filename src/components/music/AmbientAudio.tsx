@@ -122,12 +122,12 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
 
   useImperativeHandle(ref, () => ({ togglePlayback }), [togglePlayback])
 
-  // Apply mute state when audio starts
+  // Apply mute state whenever it changes (including before first play)
   useEffect(() => {
-    if (audioRef.current && isInitialized) {
+    if (audioRef.current) {
       audioRef.current.muted = isMuted
     }
-  }, [isInitialized, isMuted])
+  }, [isMuted])
 
   // Only show toggle after audio has started
   if (!isInitialized) return null
