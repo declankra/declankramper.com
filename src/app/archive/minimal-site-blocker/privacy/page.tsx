@@ -75,7 +75,7 @@ export default function PrivacyPolicyPage() {
 
       <footer style={{ textAlign: 'center', paddingTop: '20px', borderTop: '1px solid #eee', fontSize: '0.9em', color: '#777' }}>
         <p>
-          <a href="/minimal-site-blocker" style={{ color: '#007aff', textDecoration: 'none' }}>Back to Minimal Site Blocker Home</a>
+          <a href="/archive/minimal-site-blocker" style={{ color: '#007aff', textDecoration: 'none' }}>Back to Minimal Site Blocker Home</a>
         </p>
         <p>Last Updated: {new Date().toLocaleDateString()}</p>
       </footer>
