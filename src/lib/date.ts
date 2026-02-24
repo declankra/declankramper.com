@@ -11,7 +11,15 @@ function parseDateInput(value: string | Date): Date | null {
     const year = Number(dateOnlyMatch[1]);
     const month = Number(dateOnlyMatch[2]);
     const day = Number(dateOnlyMatch[3]);
-    return new Date(Date.UTC(year, month - 1, day));
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (
+      date.getUTCFullYear() !== year ||
+      date.getUTCMonth() !== month - 1 ||
+      date.getUTCDate() !== day
+    ) {
+      return null;
+    }
+    return date;
   }
 
   const parsed = new Date(raw);
