@@ -1,5 +1,10 @@
 import posthog from "posthog-js"
 
+const nonEmpty = (value: string | undefined) => {
+  const trimmed = value?.trim()
+  return trimmed ? trimmed : undefined
+}
+
 // Only initialize PostHog in production.
 // Guard against double init when multiple entrypoints import this module.
 if (process.env.NODE_ENV === "production" && !(posthog as any).__loaded) {
@@ -8,8 +13,9 @@ if (process.env.NODE_ENV === "production" && !(posthog as any).__loaded) {
     console.warn("PostHog key missing: set NEXT_PUBLIC_POSTHOG_KEY")
   } else {
     posthog.init(posthogKey, {
-      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "/ph",
-      ui_host: process.env.NEXT_PUBLIC_POSTHOG_UI_HOST ?? "https://us.posthog.com",
+      api_host: nonEmpty(process.env.NEXT_PUBLIC_POSTHOG_HOST) ?? "/ph",
+      ui_host:
+        nonEmpty(process.env.NEXT_PUBLIC_POSTHOG_UI_HOST) ?? "https://us.posthog.com",
       defaults: "2025-11-30",
       capture_exceptions: true,
     })
