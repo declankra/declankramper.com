@@ -22,7 +22,7 @@ So that is exactly what I’ll be doing. I’ll be:
 2. consciously deciding if i like it: Y/N
 3. explaining why
 
-I’ve already been consistently doing (1) and (2), but not the last part - explaining it. This is where I believe I’ll close a lot of the gaps I have in understanding my own intuition and product sense as well as be able to articulate my thoughts better to others. I’m already constantly taken aback by things in life: the silky texture of the sour cream on my hashbrowns this morning or the newfound aura from wired headphones or the beautiful navbar on [flighty.com](http://flighty.com) (that inspired [garpple.com](https://www.garpple.com)).
+I’ve already been consistently doing (1) and (2), but not the last part - explaining it. This is where I believe I’ll close a lot of the gaps I have in understanding my own intuition and product sense as well as be able to articulate my thoughts better to others. I’m already constantly taken aback by things in life: the silky texture of the sour cream on my hashbrowns this morning or the newfound aura from wired headphones or the beautiful navbar on [flighty.com](http://flighty.com) (that inspired the original Garpple landing page).
 
 And where will I be documenting this? in the easiest place possible: apple notes. I’ve got my phone and computer on me at most times and apple notes doesn’t encourage you to waste time making the note look pretty (no ‘work around the work’).
 
