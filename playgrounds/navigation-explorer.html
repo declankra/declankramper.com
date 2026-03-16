@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navigation Explorer — declankramper.com redesign</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --text: #0A0A0B;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --border: #e5e5e5;
+    --surface: #f5f5f5;
+    --accent-red: #dc2626;
+    --accent-green: #16a34a;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background: #f0f0f0;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── Mode selector (top-level toggle) ─── */
+  .mode-selector {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: var(--text);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .mode-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-right: 4px;
+  }
+  .mode-btn {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid #444;
+    background: transparent;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .mode-btn:hover {
+    border-color: #777;
+    color: #ccc;
+  }
+  .mode-btn.active {
+    background: #fff;
+    color: var(--text);
+    border-color: #fff;
+  }
+
+  /* ─── Device frame ─── */
+  .device-frame {
+    margin: 72px auto 40px;
+    width: 100%;
+    max-width: 900px;
+    background: var(--bg);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ─── Shell header ─── */
+  .shell {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .shell-inner {
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .shell-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    cursor: pointer;
+    position: relative;
+  }
+  .shell-name-icons {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    gap: 6px;
+  }
+  .shell-name:hover .shell-name-icons {
+    display: flex;
+  }
+  .shell-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+  }
+  .shell-name:hover .shell-icon:nth-child(1) { animation: iconPop 0.3s 0.0s both; }
+  .shell-name:hover .shell-icon:nth-child(2) { animation: iconPop 0.3s 0.05s both; }
+  .shell-name:hover .shell-icon:nth-child(3) { animation: iconPop 0.3s 0.1s both; }
+  .shell-name:hover .shell-icon:nth-child(4) { animation: iconPop 0.3s 0.15s both; }
+  .shell-name:hover .shell-icon:nth-child(5) { animation: iconPop 0.3s 0.2s both; }
+  @keyframes iconPop {
+    from { opacity: 0; transform: scale(0.6) translateY(-4px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .shell-icon:hover {
+    background: var(--border);
+  }
+
+  /* ─── Tabs (used in swipe mode) ─── */
+  .shell-tabs {
+    display: flex;
+    gap: 24px;
+  }
+  .shell-tab {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px 0;
+    border: none;
+    background: none;
+    position: relative;
+    transition: color 0.15s ease;
+  }
+  .shell-tab:hover {
+    color: var(--text-secondary);
+  }
+  .shell-tab.active {
+    color: var(--text);
+  }
+  /* Animated underline */
+  .tabs-underline {
+    position: absolute;
+    bottom: -1px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+    transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1), width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ─── Scroll indicators (scroll mode) ─── */
+  .scroll-nav {
+    display: flex;
+    gap: 24px;
+  }
+  .scroll-nav-item {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px 0;
+    border: none;
+    background: none;
+    transition: color 0.15s ease;
+    position: relative;
+  }
+  .scroll-nav-item:hover {
+    color: var(--text-secondary);
+  }
+  .scroll-nav-item.in-view {
+    color: var(--text);
+  }
+  .scroll-nav-item.in-view::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+  }
+
+  /* ─── Content viewport ─── */
+  .viewport {
+    position: relative;
+    min-height: 600px;
+  }
+
+  /* SCROLL MODE: sections stacked */
+  .scroll-content {
+    display: none;
+  }
+  .scroll-content.active {
+    display: block;
+  }
+  .scroll-section {
+    padding: 40px 32px 48px;
+    min-height: 500px;
+    border-bottom: 1px solid var(--border);
+  }
+  .scroll-section:last-child {
+    border-bottom: none;
+  }
+  .scroll-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+
+  /* SWIPE MODE: horizontal sliding */
+  .swipe-content {
+    display: none;
+  }
+  .swipe-content.active {
+    display: block;
+  }
+  .swipe-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .swipe-panel {
+    flex: 0 0 100%;
+    min-height: 500px;
+    padding: 40px 32px 48px;
+    overflow-y: auto;
+  }
+
+  /* ─── Shared content styles ─── */
+  .section-heading {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .pull-quote {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  .pull-quote .muted { color: var(--text-secondary); }
+
+  .belief-list {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+  .belief-item {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 6px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+  .belief-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 14px;
+    width: 4px;
+    height: 4px;
+    background: var(--text-muted);
+    border-radius: 50%;
+  }
+  .belief-item strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .featured-project {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-top: 24px;
+  }
+  .featured-project .fp-img {
+    flex: 0 0 200px;
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .featured-project .fp-body { flex: 1; }
+  .featured-project .fp-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-red);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .featured-project .fp-label .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-red);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .featured-project .fp-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .featured-project .fp-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Writes list */
+  .writes-list { list-style: none; }
+  .write-entry {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s ease;
+  }
+  .write-entry:last-child { border-bottom: none; }
+  .write-entry:hover { background: var(--surface); margin: 0 -8px; padding: 14px 8px; border-radius: var(--radius-sm); }
+  .write-entry .we-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .write-entry .we-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .write-entry:hover .we-tag { background: var(--border); }
+  .write-entry .we-date {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .write-entry .we-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .write-entry .we-preview {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Builds mini (for this nav explorer, just enough to show the pattern) */
+  .builds-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .build-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .build-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+  }
+  .build-card .bc-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .build-card .bc-body { padding: 12px; }
+  .build-card .bc-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .build-card .bc-sub {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .build-card .bc-year {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* Status badges */
+  .status-building {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-red);
+  }
+  .metric {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--surface);
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+
+  /* ─── Footer ─── */
+  .frame-footer {
+    padding: 12px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .frame-footer-icons {
+    display: flex;
+    gap: 10px;
+  }
+  .frame-footer-icon {
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .frame-footer-icon:hover { color: var(--text-secondary); }
+
+  /* ─── Swipe hint ─── */
+  .swipe-hint {
+    text-align: center;
+    padding: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── Description callout ─── */
+  .mode-description {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    padding: 14px 20px;
+    background: var(--bg);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .mode-description strong { color: var(--text); }
+
+  /* Touch/drag styles */
+  .swipe-track.dragging {
+    transition: none;
+    cursor: grabbing;
+  }
+  .swipe-track { cursor: grab; }
+</style>
+</head>
+<body>
+
+<!-- Top-level mode toggle -->
+<div class="mode-selector">
+  <span class="mode-label">Compare:</span>
+  <button class="mode-btn active" data-mode="scroll">1 — Long Scroll</button>
+  <button class="mode-btn" data-mode="swipe">2 — Swipe Pages</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODE 1: LONG SCROLL
+     ═══════════════════════════════════════ -->
+<div id="mode-scroll" class="mode-container">
+  <div class="mode-description">
+    <strong>Option 1 — Long Scroll.</strong> All three sections stacked vertically on one page. Scroll to move between now → writes → builds. The nav highlights which section you're currently in. Clicking a nav item smooth-scrolls to that section. Everything is always accessible — no hidden content.
+  </div>
+
+  <div class="device-frame" id="scroll-frame">
+    <div class="shell" id="scroll-shell">
+      <div class="shell-inner">
+        <span class="shell-name">
+          declan kramper
+          <div class="shell-name-icons">
+            <div class="shell-icon" title="GitHub">GH</div>
+            <div class="shell-icon" title="LinkedIn">in</div>
+            <div class="shell-icon" title="Resume">CV</div>
+            <div class="shell-icon" title="dkBuilds">dk</div>
+            <div class="shell-icon" title="Email">@</div>
+          </div>
+        </span>
+        <div class="scroll-nav">
+          <button class="scroll-nav-item in-view" data-section="scroll-now">now</button>
+          <button class="scroll-nav-item" data-section="scroll-writes">writes</button>
+          <button class="scroll-nav-item" data-section="scroll-builds">builds</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-content active">
+      <!-- NOW -->
+      <div class="scroll-section" id="scroll-now">
+        <div class="scroll-section-label">Now</div>
+        <p class="pull-quote">
+          "i enjoy thinking about products we use everyday. <span class="muted">and then building them.</span>"
+        </p>
+
+        <ul class="belief-list">
+          <li class="belief-item">
+            <strong>Figuring out what's worth building</strong> — shortening the loop from feedback to iteration to value. Spending time in that first area. Extracting intent.
+          </li>
+          <li class="belief-item">
+            <strong>Health and fitness, always.</strong> Foundation for an enjoyable great life.
+          </li>
+        </ul>
+
+        <p style="font-size:13px; color:var(--text-secondary); margin-bottom:20px; line-height:1.6;">
+          because i believe both of those things will appreciate in value post-ai world. the only thing left is your uniqueness.
+        </p>
+
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">some other things i believe:</p>
+        <ul class="belief-list" style="margin-bottom:0;">
+          <li class="belief-item">Technology is always great, but products can weaponize it</li>
+        </ul>
+
+        <div class="featured-project">
+          <div class="fp-img">Ontology-Xtract<br>video</div>
+          <div class="fp-body">
+            <div class="fp-label"><span class="dot"></span> Currently working on</div>
+            <div class="fp-title">Ontology-Xtract</div>
+            <div class="fp-sub">AI agent that interviews you about your business, extracts domain knowledge, and identifies highest-ROI AI opportunities.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WRITES -->
+      <div class="scroll-section" id="scroll-writes">
+        <div class="scroll-section-label">Writes</div>
+        <ul class="writes-list">
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">Business</span><span class="we-date">Mar 12, 2026</span></div>
+            <div class="we-title">How to start an Applied AI consulting business</div>
+            <div class="we-preview">if i started today, i would...</div>
+          </li>
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">AI</span><span class="we-date">Mar 5, 2026</span></div>
+            <div class="we-title">What I Learned Building AI for a Real Business</div>
+            <div class="we-preview">The gap between demos and production is where all the learning happens.</div>
+          </li>
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">Product</span><span class="we-date">Feb 28, 2026</span></div>
+            <div class="we-title">Which Scaffolding Are You Building?</div>
+            <div class="we-preview">Two types of builders: those who build the thing, and those who build the thing that builds the thing.</div>
+          </li>
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">Life</span><span class="we-date">Feb 20, 2026</span></div>
+            <div class="we-title">The Case for Building in Public</div>
+            <div class="we-preview">Why sharing your work-in-progress creates more opportunities than keeping it private.</div>
+          </li>
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">Running</span><span class="we-date">Feb 14, 2026</span></div>
+            <div class="we-title">What Running Taught Me About Shipping</div>
+            <div class="we-preview">Both require consistency over intensity.</div>
+          </li>
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">Product</span><span class="we-date">Feb 5, 2026</span></div>
+            <div class="we-title">Stop Building Features, Start Building Loops</div>
+            <div class="we-preview">The best products aren't feature-rich, they're loop-rich.</div>
+          </li>
+          <li class="write-entry">
+            <div class="we-meta"><span class="we-tag">AI</span><span class="we-date">Jan 24, 2026</span></div>
+            <div class="we-title">AI Agents Are the New Interns</div>
+            <div class="we-preview">Great at following instructions, terrible at knowing when to stop.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- BUILDS -->
+      <div class="scroll-section" id="scroll-builds">
+        <div class="scroll-section-label">Builds</div>
+        <div class="builds-grid">
+          <div class="build-card">
+            <div class="bc-img">Ontology-Xtract</div>
+            <div class="bc-body">
+              <div class="status-building"><span class="dot" style="width:5px;height:5px;background:var(--accent-red);border-radius:50%;animation:pulse 2s ease-in-out infinite;"></span> Building</div>
+              <div class="bc-title" style="margin-top:4px;">Ontology-Xtract</div>
+              <div class="bc-sub">AI agent for domain knowledge extraction</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">Elite dashboard</div>
+            <div class="bc-body">
+              <div class="status-building"><span class="dot" style="width:5px;height:5px;background:var(--accent-red);border-radius:50%;animation:pulse 2s ease-in-out infinite;"></span> Building</div>
+              <div class="bc-title" style="margin-top:4px;">Construction Agent</div>
+              <div class="bc-sub">Submittal automation for fiber optics</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">Surgent app</div>
+            <div class="bc-body">
+              <div class="bc-title">Surgent</div>
+              <div class="bc-sub">Runner analytics. 170+ signups.</div>
+              <span class="metric">170+ signups</span>
+              <div class="bc-year">2025</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">ChiTrack</div>
+            <div class="bc-body">
+              <div class="bc-title">Chitrack</div>
+              <div class="bc-sub">Chicago commute tracker</div>
+              <div class="bc-year">2025</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">PS Connect</div>
+            <div class="bc-body">
+              <div class="bc-title">PS Connect</div>
+              <div class="bc-sub">Won firm's global hackathon</div>
+              <div class="bc-year">2025</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">Locations map</div>
+            <div class="bc-body">
+              <div class="bc-title">Locations Redesign</div>
+              <div class="bc-sub">12-person team, 400k sessions/week</div>
+              <span class="metric">-30% support calls</span>
+              <div class="bc-year">2023</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">Race Time Calc</div>
+            <div class="bc-body">
+              <div class="bc-title">Race Time Calculator</div>
+              <div class="bc-sub">iOS race predictor from Health data</div>
+              <div class="bc-year">2024</div>
+            </div>
+          </div>
+          <div class="build-card">
+            <div class="bc-img">Lawn Care</div>
+            <div class="bc-body">
+              <div class="bc-title">Next Level Lawn Care</div>
+              <div class="bc-sub">First business at age 12. $30k.</div>
+              <div class="bc-year">2013</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="frame-footer">
+      <div class="frame-footer-icons">
+        <span class="frame-footer-icon">&#9834;</span>
+        <span class="frame-footer-icon">&#9678;</span>
+        <span class="frame-footer-icon">&#8644;</span>
+      </div>
+      <span>&copy; 2026 declan kramper</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MODE 2: SWIPE PAGES
+     ═══════════════════════════════════════ -->
+<div id="mode-swipe" class="mode-container" style="display:none;">
+  <div class="mode-description">
+    <strong>Option 2 — Swipe Pages.</strong> Three panels that slide horizontally. Click tabs or drag/swipe to move between them. Each section gets the full viewport — focused, no visual competition. The tab underline animates to follow your position. Content feels "contained" to its page.
+  </div>
+
+  <div class="device-frame" id="swipe-frame">
+    <div class="shell">
+      <div class="shell-inner">
+        <span class="shell-name">
+          declan kramper
+          <div class="shell-name-icons">
+            <div class="shell-icon" title="GitHub">GH</div>
+            <div class="shell-icon" title="LinkedIn">in</div>
+            <div class="shell-icon" title="Resume">CV</div>
+            <div class="shell-icon" title="dkBuilds">dk</div>
+            <div class="shell-icon" title="Email">@</div>
+          </div>
+        </span>
+        <div class="shell-tabs" id="swipe-tabs">
+          <button class="shell-tab active" data-panel="0">now</button>
+          <button class="shell-tab" data-panel="1">writes</button>
+          <button class="shell-tab" data-panel="2">builds</button>
+          <div class="tabs-underline" id="tabs-underline"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="swipe-content active">
+      <div class="swipe-track" id="swipe-track">
+        <!-- NOW panel -->
+        <div class="swipe-panel">
+          <p class="pull-quote">
+            "i enjoy thinking about products we use everyday. <span class="muted">and then building them.</span>"
+          </p>
+
+          <ul class="belief-list">
+            <li class="belief-item">
+              <strong>Figuring out what's worth building</strong> — shortening the loop from feedback to iteration to value. Spending time in that first area. Extracting intent.
+            </li>
+            <li class="belief-item">
+              <strong>Health and fitness, always.</strong> Foundation for an enjoyable great life.
+            </li>
+          </ul>
+
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:20px; line-height:1.6;">
+            because i believe both of those things will appreciate in value post-ai world. the only thing left is your uniqueness.
+          </p>
+
+          <p style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">some other things i believe:</p>
+          <ul class="belief-list" style="margin-bottom:0;">
+            <li class="belief-item">Technology is always great, but products can weaponize it</li>
+          </ul>
+
+          <div class="featured-project">
+            <div class="fp-img">Ontology-Xtract<br>video</div>
+            <div class="fp-body">
+              <div class="fp-label"><span class="dot"></span> Currently working on</div>
+              <div class="fp-title">Ontology-Xtract</div>
+              <div class="fp-sub">AI agent that interviews you about your business, extracts domain knowledge, and identifies highest-ROI AI opportunities.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WRITES panel -->
+        <div class="swipe-panel">
+          <ul class="writes-list">
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">Business</span><span class="we-date">Mar 12, 2026</span></div>
+              <div class="we-title">How to start an Applied AI consulting business</div>
+              <div class="we-preview">if i started today, i would...</div>
+            </li>
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">AI</span><span class="we-date">Mar 5, 2026</span></div>
+              <div class="we-title">What I Learned Building AI for a Real Business</div>
+              <div class="we-preview">The gap between demos and production is where all the learning happens.</div>
+            </li>
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">Product</span><span class="we-date">Feb 28, 2026</span></div>
+              <div class="we-title">Which Scaffolding Are You Building?</div>
+              <div class="we-preview">Two types of builders: those who build the thing, and those who build the thing that builds the thing.</div>
+            </li>
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">Life</span><span class="we-date">Feb 20, 2026</span></div>
+              <div class="we-title">The Case for Building in Public</div>
+              <div class="we-preview">Why sharing your work-in-progress creates more opportunities than keeping it private.</div>
+            </li>
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">Running</span><span class="we-date">Feb 14, 2026</span></div>
+              <div class="we-title">What Running Taught Me About Shipping</div>
+              <div class="we-preview">Both require consistency over intensity.</div>
+            </li>
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">Product</span><span class="we-date">Feb 5, 2026</span></div>
+              <div class="we-title">Stop Building Features, Start Building Loops</div>
+              <div class="we-preview">The best products aren't feature-rich, they're loop-rich.</div>
+            </li>
+            <li class="write-entry">
+              <div class="we-meta"><span class="we-tag">AI</span><span class="we-date">Jan 24, 2026</span></div>
+              <div class="we-title">AI Agents Are the New Interns</div>
+              <div class="we-preview">Great at following instructions, terrible at knowing when to stop.</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- BUILDS panel -->
+        <div class="swipe-panel">
+          <div class="builds-grid">
+            <div class="build-card">
+              <div class="bc-img">Ontology-Xtract</div>
+              <div class="bc-body">
+                <div class="status-building"><span class="dot" style="width:5px;height:5px;background:var(--accent-red);border-radius:50%;animation:pulse 2s ease-in-out infinite;"></span> Building</div>
+                <div class="bc-title" style="margin-top:4px;">Ontology-Xtract</div>
+                <div class="bc-sub">AI agent for domain knowledge extraction</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">Elite dashboard</div>
+              <div class="bc-body">
+                <div class="status-building"><span class="dot" style="width:5px;height:5px;background:var(--accent-red);border-radius:50%;animation:pulse 2s ease-in-out infinite;"></span> Building</div>
+                <div class="bc-title" style="margin-top:4px;">Construction Agent</div>
+                <div class="bc-sub">Submittal automation for fiber optics</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">Surgent app</div>
+              <div class="bc-body">
+                <div class="bc-title">Surgent</div>
+                <div class="bc-sub">Runner analytics. 170+ signups.</div>
+                <span class="metric">170+ signups</span>
+                <div class="bc-year">2025</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">ChiTrack</div>
+              <div class="bc-body">
+                <div class="bc-title">Chitrack</div>
+                <div class="bc-sub">Chicago commute tracker</div>
+                <div class="bc-year">2025</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">PS Connect</div>
+              <div class="bc-body">
+                <div class="bc-title">PS Connect</div>
+                <div class="bc-sub">Won firm's global hackathon</div>
+                <div class="bc-year">2025</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">Locations map</div>
+              <div class="bc-body">
+                <div class="bc-title">Locations Redesign</div>
+                <div class="bc-sub">12-person team, 400k sessions/week</div>
+                <span class="metric">-30% support calls</span>
+                <div class="bc-year">2023</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">Race Time Calc</div>
+              <div class="bc-body">
+                <div class="bc-title">Race Time Calculator</div>
+                <div class="bc-sub">iOS race predictor from Health data</div>
+                <div class="bc-year">2024</div>
+              </div>
+            </div>
+            <div class="build-card">
+              <div class="bc-img">Lawn Care</div>
+              <div class="bc-body">
+                <div class="bc-title">Next Level Lawn Care</div>
+                <div class="bc-sub">First business at age 12. $30k.</div>
+                <div class="bc-year">2013</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="swipe-hint">drag or use tabs to navigate between sections</div>
+
+    <div class="frame-footer">
+      <div class="frame-footer-icons">
+        <span class="frame-footer-icon">&#9834;</span>
+        <span class="frame-footer-icon">&#9678;</span>
+        <span class="frame-footer-icon">&#8644;</span>
+      </div>
+      <span>&copy; 2026 declan kramper</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── Mode switching ───
+  const modeBtns = document.querySelectorAll('.mode-btn');
+  modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const mode = btn.dataset.mode;
+      document.getElementById('mode-scroll').style.display = mode === 'scroll' ? 'block' : 'none';
+      document.getElementById('mode-swipe').style.display = mode === 'swipe' ? 'block' : 'none';
+      if (mode === 'swipe') updateUnderline();
+    });
+  });
+
+  // ─── SCROLL MODE: intersection observer for active nav ───
+  const scrollNavItems = document.querySelectorAll('.scroll-nav-item');
+  const scrollSections = document.querySelectorAll('.scroll-section');
+
+  // Click to smooth scroll
+  scrollNavItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = document.getElementById(item.dataset.section);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Observer to highlight active section
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        scrollNavItems.forEach(n => n.classList.remove('in-view'));
+        const id = entry.target.id;
+        const match = document.querySelector(`.scroll-nav-item[data-section="${id}"]`);
+        if (match) match.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.35 });
+
+  scrollSections.forEach(s => scrollObserver.observe(s));
+
+  // ─── SWIPE MODE ───
+  const track = document.getElementById('swipe-track');
+  const tabs = document.querySelectorAll('#swipe-tabs .shell-tab');
+  const underline = document.getElementById('tabs-underline');
+  let currentPanel = 0;
+
+  function goToPanel(index) {
+    currentPanel = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    tabs.forEach(t => t.classList.remove('active'));
+    tabs[index].classList.add('active');
+    updateUnderline();
+  }
+
+  function updateUnderline() {
+    const activeTab = document.querySelector('#swipe-tabs .shell-tab.active');
+    if (!activeTab || !underline) return;
+    const tabsContainer = document.getElementById('swipe-tabs');
+    const containerRect = tabsContainer.getBoundingClientRect();
+    const tabRect = activeTab.getBoundingClientRect();
+    underline.style.left = (tabRect.left - containerRect.left) + 'px';
+    underline.style.width = tabRect.width + 'px';
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      goToPanel(parseInt(tab.dataset.panel));
+    });
+  });
+
+  // Drag/swipe support
+  let dragStartX = 0;
+  let dragCurrentX = 0;
+  let isDragging = false;
+
+  track.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    dragStartX = e.clientX;
+    track.classList.add('dragging');
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    dragCurrentX = e.clientX;
+    const diff = dragCurrentX - dragStartX;
+    const offset = -(currentPanel * 100);
+    const pxToPercent = (diff / track.parentElement.offsetWidth) * 100;
+    track.style.transform = `translateX(${offset + pxToPercent}%)`;
+
+    // Move underline proportionally
+    const progress = -diff / track.parentElement.offsetWidth;
+    updateUnderlineInterpolated(currentPanel + progress);
+  });
+
+  track.addEventListener('mouseup', finishDrag);
+  track.addEventListener('mouseleave', finishDrag);
+
+  // Touch events
+  track.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    dragStartX = e.touches[0].clientX;
+    track.classList.add('dragging');
+  }, { passive: true });
+
+  track.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    dragCurrentX = e.touches[0].clientX;
+    const diff = dragCurrentX - dragStartX;
+    const offset = -(currentPanel * 100);
+    const pxToPercent = (diff / track.parentElement.offsetWidth) * 100;
+    track.style.transform = `translateX(${offset + pxToPercent}%)`;
+
+    const progress = -diff / track.parentElement.offsetWidth;
+    updateUnderlineInterpolated(currentPanel + progress);
+  }, { passive: true });
+
+  track.addEventListener('touchend', finishDrag);
+
+  function finishDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    track.classList.remove('dragging');
+    const diff = dragCurrentX - dragStartX;
+    const threshold = track.parentElement.offsetWidth * 0.15;
+
+    if (diff < -threshold && currentPanel < 2) {
+      goToPanel(currentPanel + 1);
+    } else if (diff > threshold && currentPanel > 0) {
+      goToPanel(currentPanel - 1);
+    } else {
+      goToPanel(currentPanel);
+    }
+  }
+
+  function updateUnderlineInterpolated(position) {
+    const tabsArr = Array.from(tabs);
+    const clamped = Math.max(0, Math.min(2, position));
+    const floor = Math.floor(clamped);
+    const ceil = Math.min(2, floor + 1);
+    const frac = clamped - floor;
+
+    const tabsContainer = document.getElementById('swipe-tabs');
+    const containerRect = tabsContainer.getBoundingClientRect();
+    const floorRect = tabsArr[floor].getBoundingClientRect();
+    const ceilRect = tabsArr[ceil].getBoundingClientRect();
+
+    const left = (floorRect.left - containerRect.left) + frac * ((ceilRect.left - containerRect.left) - (floorRect.left - containerRect.left));
+    const width = floorRect.width + frac * (ceilRect.width - floorRect.width);
+
+    underline.style.left = left + 'px';
+    underline.style.width = width + 'px';
+  }
+
+  // Keyboard support for swipe mode
+  document.addEventListener('keydown', (e) => {
+    if (document.getElementById('mode-swipe').style.display === 'none') return;
+    if (e.key === 'ArrowRight' && currentPanel < 2) goToPanel(currentPanel + 1);
+    if (e.key === 'ArrowLeft' && currentPanel > 0) goToPanel(currentPanel - 1);
+  });
+
+  // Init underline position
+  requestAnimationFrame(() => {
+    updateUnderline();
+  });
+  window.addEventListener('resize', updateUnderline);
+</script>
+</body>
+</html>

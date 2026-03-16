@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Builds Layout Explorer — declankramper.com redesign</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --text: #0A0A0B;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+    --border: #e5e5e5;
+    --surface: #f5f5f5;
+    --surface-hover: #ebebeb;
+    --accent-red: #dc2626;
+    --accent-green: #16a34a;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── Top bar (simulates the redesign shell) ─── */
+  .shell {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .shell-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .shell-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .shell-tabs {
+    display: flex;
+    gap: 24px;
+  }
+  .shell-tab {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px 0;
+    border: none;
+    background: none;
+    position: relative;
+  }
+  .shell-tab.active {
+    color: var(--text);
+  }
+  .shell-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--text);
+    border-radius: 1px;
+  }
+
+  /* ─── Layout selector ─── */
+  .selector {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    position: sticky;
+    top: 57px;
+    z-index: 99;
+  }
+  .selector-btn {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .selector-btn:hover {
+    border-color: var(--text-secondary);
+    color: var(--text);
+  }
+  .selector-btn.active {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+  .selector-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    align-self: center;
+    margin-right: 4px;
+  }
+
+  /* ─── Content area ─── */
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  .layout-description {
+    margin-bottom: 32px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .layout-description strong {
+    color: var(--text);
+  }
+
+  /* ─── Shared: currently building badge ─── */
+  .status-building {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-red);
+  }
+  .status-building .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-red);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .status-shipped {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-green);
+  }
+  .status-shipped .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-green);
+    border-radius: 50%;
+  }
+
+  /* ─── Metric pill ─── */
+  .metric {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: var(--surface);
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+  }
+
+  /* ─── Image placeholder (since we can't load real images from localhost) ─── */
+  .img-placeholder {
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 500;
+    overflow: hidden;
+    position: relative;
+  }
+  .img-placeholder .label {
+    text-align: center;
+    padding: 8px;
+    line-height: 1.3;
+  }
+  .img-placeholder.video::after {
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .img-placeholder.video::before {
+    content: '▶';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    z-index: 1;
+    margin-left: 2px;
+  }
+
+  /* ─── Testimonial shared ─── */
+  .testimonial-card {
+    border-left: 2px solid var(--border);
+    padding: 10px 16px;
+    margin: 8px 0;
+  }
+  .testimonial-card p {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .testimonial-card cite {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-style: normal;
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION A — Card Grid
+     ═══════════════════════════════════════════ */
+  .grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+  .grid-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .grid-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .grid-card .card-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+  }
+  .grid-card .card-body {
+    padding: 16px;
+  }
+  .grid-card .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .grid-card .card-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .grid-card .card-year {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* Filter bar for grid */
+  .filter-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--surface);
+    border-color: var(--text-secondary);
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION B — Bento Grid
+     ═══════════════════════════════════════════ */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px;
+    gap: 12px;
+  }
+  .bento-tile {
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .bento-tile:hover {
+    transform: scale(1.015);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .bento-tile .bento-img {
+    width: 100%;
+    height: 100%;
+  }
+  .bento-tile .bento-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    color: white;
+  }
+  .bento-tile .bento-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .bento-tile .bento-sub {
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .bento-hero { grid-column: span 2; grid-row: span 2; }
+  .bento-wide { grid-column: span 2; }
+  .bento-tall { grid-row: span 2; }
+
+  /* ═══════════════════════════════════════════
+     OPTION C — Horizontal Scroll Showcase
+     ═══════════════════════════════════════════ */
+  .showcase-section { margin-bottom: 40px; }
+  .showcase-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .showcase-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .showcase-scroll::-webkit-scrollbar {
+    height: 4px;
+  }
+  .showcase-scroll::-webkit-scrollbar-track {
+    background: var(--surface);
+    border-radius: 2px;
+  }
+  .showcase-scroll::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+  }
+  .showcase-card {
+    flex: 0 0 420px;
+    scroll-snap-align: start;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  }
+  .showcase-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .showcase-card .sc-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+  }
+  .showcase-card .sc-body {
+    padding: 16px;
+  }
+  .showcase-card .sc-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .showcase-card .sc-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  /* Compact list below showcase */
+  .compact-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+  .compact-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .compact-item:hover {
+    background: var(--surface);
+  }
+  .compact-item .ci-title {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .compact-item .ci-year {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION D — Timeline with Rich Media
+     ═══════════════════════════════════════════ */
+  .timeline { max-width: 720px; }
+  .timeline-year-group { margin-bottom: 40px; }
+  .timeline-year {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-entry {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+    border-radius: var(--radius);
+    transition: background 0.15s ease;
+    cursor: pointer;
+  }
+  .timeline-entry:hover {
+    background: var(--surface);
+  }
+  .timeline-entry .te-img {
+    flex: 0 0 200px;
+    aspect-ratio: 16/10;
+    border-radius: var(--radius-sm);
+  }
+  .timeline-entry .te-body {
+    flex: 1;
+    min-width: 0;
+  }
+  .timeline-entry .te-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .timeline-entry .te-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════════
+     OPTION E — Enhanced Current Layout
+     ═══════════════════════════════════════════ */
+  .enhanced { max-width: 720px; }
+  .enhanced-header {
+    margin-bottom: 32px;
+  }
+  .enhanced-header h2 {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .enhanced-header p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+  }
+  .enhanced-section { margin-bottom: 32px; }
+  .enhanced-section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .enhanced-entry {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  .enhanced-entry .ee-year {
+    flex: 0 0 40px;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: right;
+    padding-top: 2px;
+  }
+  .enhanced-entry .ee-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .enhanced-entry .ee-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+  .enhanced-entry .ee-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .enhanced-entry .ee-visuals {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .enhanced-entry .ee-thumb {
+    flex: 0 0 120px;
+    aspect-ratio: 16/10;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* Hide all layouts by default */
+  .layout { display: none; }
+  .layout.visible { display: block; }
+
+  /* ─── Footer ─── */
+  .footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .footer-icons {
+    display: flex;
+    gap: 12px;
+  }
+  .footer-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .footer-icon:hover { color: var(--text-secondary); }
+
+  @media (max-width: 768px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 140px;
+    }
+    .bento-hero { grid-column: span 2; grid-row: span 1; }
+    .bento-wide { grid-column: span 2; }
+    .bento-tall { grid-row: span 1; }
+    .showcase-card { flex: 0 0 300px; }
+    .timeline-entry { flex-direction: column; }
+    .timeline-entry .te-img { flex: none; width: 100%; }
+    .grid-layout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Shell (simulated redesign header) -->
+<div class="shell">
+  <div class="shell-inner">
+    <span class="shell-name">declan kramper</span>
+    <div class="shell-tabs">
+      <button class="shell-tab">now</button>
+      <button class="shell-tab active">builds</button>
+      <button class="shell-tab">writes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Layout selector -->
+<div class="selector">
+  <span class="selector-label">Layout:</span>
+  <button class="selector-btn active" data-layout="a">A — Card Grid</button>
+  <button class="selector-btn" data-layout="b">B — Bento Grid</button>
+  <button class="selector-btn" data-layout="c">C — Horizontal Scroll</button>
+  <button class="selector-btn" data-layout="d">D — Timeline + Media</button>
+  <button class="selector-btn" data-layout="e">E — Enhanced Current</button>
+</div>
+
+<div class="content">
+
+  <!-- ═══ OPTION A: Card Grid ═══ -->
+  <div class="layout visible" id="layout-a">
+    <div class="layout-description">
+      <strong>Option A — Card Grid.</strong> 3-column responsive grid of visual cards. Large thumbnails, project name + one-liner. Filterable by year/type. Clean, scannable, lets imagery do the talking.
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Building</button>
+      <button class="filter-btn">2025</button>
+      <button class="filter-btn">2024</button>
+      <button class="filter-btn">2023</button>
+      <button class="filter-btn">Earlier</button>
+    </div>
+
+    <div class="grid-layout">
+      <!-- Currently building -->
+      <div class="grid-card">
+        <div class="img-placeholder card-img video"><span class="label">Ontology-Xtract<br>preview video</span></div>
+        <div class="card-body">
+          <div class="status-building"><span class="dot"></span> Building</div>
+          <div class="card-title" style="margin-top:6px;">Ontology-Xtract</div>
+          <div class="card-sub">AI agent that interviews you about your business, extracts domain knowledge, and identifies highest-ROI AI opportunities.</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">Elite dashboard<br>screenshot</span></div>
+        <div class="card-body">
+          <div class="status-building"><span class="dot"></span> Building</div>
+          <div class="card-title" style="margin-top:6px;">Construction Industry Agent</div>
+          <div class="card-sub">AI agent to automate the submittal package workflow for a Chicago fiber optics company.</div>
+        </div>
+      </div>
+      <!-- Shipped -->
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">Surgent<br>landing page</span></div>
+        <div class="card-body">
+          <div class="card-title">Surgent</div>
+          <div class="card-sub">Objective-only performance analytics for runners. 170+ waitlist signups. Just went live.</div>
+          <span class="metric">170+ signups</span>
+          <div class="card-year">2025</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img video"><span class="label">Local Jarvis<br>demo gif</span></div>
+        <div class="card-body">
+          <div class="card-title">Local Jarvis</div>
+          <div class="card-sub">Privacy-first AI assistant running entirely on MacBook using Ollama + local RAG.</div>
+          <div class="card-year">2025</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">ChiTrack<br>screenshot</span></div>
+        <div class="card-body">
+          <div class="card-title">Chitrack</div>
+          <div class="card-sub">The most elegant way to track your Chicago morning commute.</div>
+          <div class="card-year">2025</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">PS Connect<br>hackathon</span></div>
+        <div class="card-body">
+          <div class="card-title">PS Connect</div>
+          <div class="card-sub">GenAI staffing tool that won the firm's global hackathon.</div>
+          <div class="card-year">2025</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">Strava Personality<br>Test</span></div>
+        <div class="card-body">
+          <div class="card-title">Strava Personality Test</div>
+          <div class="card-sub">What do your Strava posts say about you?</div>
+          <div class="card-year">2025</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">Race Time<br>Calculator</span></div>
+        <div class="card-body">
+          <div class="card-title">Race Time Calculator</div>
+          <div class="card-sub">The only iOS app that predicts your race time from Apple Health data.</div>
+          <div class="card-year">2024</div>
+        </div>
+      </div>
+      <div class="grid-card">
+        <div class="img-placeholder card-img"><span class="label">Sunbelt Rentals<br>locations map</span></div>
+        <div class="card-body">
+          <div class="card-title">Locations Map Redesign</div>
+          <div class="card-sub">Led 12-person team, 27 features in 15 months. #1 usability score, 400k weekly sessions.</div>
+          <span class="metric">-30% support calls</span>
+          <div class="card-year">2023</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ OPTION B: Bento Grid ═══ -->
+  <div class="layout" id="layout-b">
+    <div class="layout-description">
+      <strong>Option B — Bento Grid.</strong> Mixed-size tiles. Hero project gets a large tile, others fill in around it. Editorial/magazine feel. Draws the eye to the most important work. Feels curated, not exhaustive.
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento-tile bento-hero">
+        <div class="img-placeholder bento-img video"><span class="label">Ontology-Xtract<br>preview video</span></div>
+        <div class="bento-overlay">
+          <div class="status-building" style="color:white;margin-bottom:4px;"><span class="dot" style="background:white;"></span> Building</div>
+          <div class="bento-title">Ontology-Xtract</div>
+          <div class="bento-sub">AI agent that extracts domain knowledge and identifies highest-ROI AI opportunities</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Elite<br>dashboard</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Construction Agent</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Surgent<br>app</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Surgent</div>
+          <div class="bento-sub">170+ signups</div>
+        </div>
+      </div>
+      <div class="bento-tile bento-wide">
+        <div class="img-placeholder bento-img"><span class="label">Sunbelt Rentals — locations map redesign</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Locations Map Redesign</div>
+          <div class="bento-sub">12-person team, 400k weekly sessions, -30% support calls</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">ChiTrack</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Chitrack</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">PS Connect</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">PS Connect</div>
+        </div>
+      </div>
+      <div class="bento-tile bento-tall">
+        <div class="img-placeholder bento-img"><span class="label">Race Time<br>Calculator<br>(iOS)</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Race Time Calculator</div>
+          <div class="bento-sub">iOS app</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Local Jarvis</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Local Jarvis</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Strava<br>Personality</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Strava Personality Test</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Kalo website</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Website Redesign</div>
+          <div class="bento-sub">+88% traffic</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Record<br>Player</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Magic Record Player</div>
+        </div>
+      </div>
+      <div class="bento-tile">
+        <div class="img-placeholder bento-img"><span class="label">Lawn Care</span></div>
+        <div class="bento-overlay">
+          <div class="bento-title">Next Level Lawn Care</div>
+          <div class="bento-sub">Age 12 — $30k</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ OPTION C: Horizontal Scroll Showcase ═══ -->
+  <div class="layout" id="layout-c">
+    <div class="layout-description">
+      <strong>Option C — Horizontal Scroll Showcase.</strong> Featured projects in a snap-scrolling strip with large imagery. Immersive. Below: compact list of everything else. Best of both worlds — visual impact for top projects, easy scanning for the rest.
+    </div>
+
+    <div class="showcase-section">
+      <div class="showcase-label"><span class="status-building"><span class="dot"></span> Currently building</span></div>
+      <div class="showcase-scroll">
+        <div class="showcase-card">
+          <div class="img-placeholder sc-img video"><span class="label">Ontology-Xtract preview video</span></div>
+          <div class="sc-body">
+            <div class="sc-title">Ontology-Xtract</div>
+            <div class="sc-sub">AI agent that interviews you about your business, extracts domain knowledge, and identifies highest-ROI AI opportunities.</div>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="img-placeholder sc-img"><span class="label">Elite dashboard + submittal requirements</span></div>
+          <div class="sc-body">
+            <div class="sc-title">Construction Industry Agent</div>
+            <div class="sc-sub">Automating submittal package workflows for a Chicago fiber optics construction company.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="showcase-section">
+      <div class="showcase-label"><span class="status-shipped"><span class="dot"></span> Featured work</span></div>
+      <div class="showcase-scroll">
+        <div class="showcase-card">
+          <div class="img-placeholder sc-img"><span class="label">Surgent landing + App Store</span></div>
+          <div class="sc-body">
+            <div class="sc-title">Surgent</div>
+            <div class="sc-sub">Objective performance analytics for runners. 170+ waitlist signups. Just went live.</div>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="img-placeholder sc-img"><span class="label">ChiTrack screenshot</span></div>
+          <div class="sc-body">
+            <div class="sc-title">Chitrack</div>
+            <div class="sc-sub">The most elegant way to track your Chicago morning commute.</div>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="img-placeholder sc-img"><span class="label">Sunbelt Rentals locations map</span></div>
+          <div class="sc-body">
+            <div class="sc-title">Locations Map Redesign</div>
+            <div class="sc-sub">Led 12-person team. #1 usability score across 400k weekly sessions. -30% support calls.</div>
+          </div>
+        </div>
+        <div class="showcase-card">
+          <div class="img-placeholder sc-img"><span class="label">PS Connect hackathon</span></div>
+          <div class="sc-body">
+            <div class="sc-title">PS Connect</div>
+            <div class="sc-sub">GenAI staffing tool that won the firm's global hackathon.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="showcase-label" style="margin-bottom:12px;">Everything else</div>
+    <div class="compact-list">
+      <div class="compact-item"><span class="ci-title">Local Jarvis</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Claude Story Writer</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Interactive Letter</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Divvy Bike Case</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">ScreenCam Recorder</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Website Blocker</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Sunlit Sips Chicago</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">psPRD.ai</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Strava Personality Test</span><span class="ci-year">2025</span></div>
+      <div class="compact-item"><span class="ci-title">Race Time Calculator</span><span class="ci-year">2024</span></div>
+      <div class="compact-item"><span class="ci-title">Meet or Not</span><span class="ci-year">2024</span></div>
+      <div class="compact-item"><span class="ci-title">Validate Idea</span><span class="ci-year">2024</span></div>
+      <div class="compact-item"><span class="ci-title">Magic Record Player</span><span class="ci-year">2023</span></div>
+      <div class="compact-item"><span class="ci-title">Website Redesign (+88% traffic)</span><span class="ci-year">2022</span></div>
+      <div class="compact-item"><span class="ci-title">RC Tank</span><span class="ci-year">2022</span></div>
+      <div class="compact-item"><span class="ci-title">Next Level Lawn Care</span><span class="ci-year">2013</span></div>
+    </div>
+  </div>
+
+  <!-- ═══ OPTION D: Timeline with Rich Media ═══ -->
+  <div class="layout" id="layout-d">
+    <div class="layout-description">
+      <strong>Option D — Timeline with Rich Media.</strong> Chronological list like today, but each entry has a fixed-height card with prominent hero image/video + key metric. Consistent card heights = zero jitter. Year markers as dividers.
+    </div>
+
+    <div class="timeline">
+      <!-- Currently building -->
+      <div style="margin-bottom:32px;">
+        <div class="status-building" style="margin-bottom:16px;"><span class="dot"></span> Currently building</div>
+
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img video"><span class="label">Ontology-Xtract<br>preview</span></div>
+          <div class="te-body">
+            <div class="te-title">Ontology-Xtract</div>
+            <div class="te-sub">AI agent that interviews you about your business, extracts domain knowledge, and identifies highest-ROI AI opportunities.</div>
+          </div>
+        </div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Elite<br>dashboard</span></div>
+          <div class="te-body">
+            <div class="te-title">Construction Industry Agent</div>
+            <div class="te-sub">Automating submittal package workflows for a Chicago fiber optics construction company.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- 2025 -->
+      <div class="timeline-year-group">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Surgent<br>landing</span></div>
+          <div class="te-body">
+            <div class="te-title">Surgent</div>
+            <div class="te-sub">Objective performance analytics for runners. Just went live.</div>
+            <span class="metric">170+ signups</span>
+          </div>
+        </div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Local Jarvis<br>demo</span></div>
+          <div class="te-body">
+            <div class="te-title">Local Jarvis</div>
+            <div class="te-sub">Privacy-first AI assistant running on MacBook using Ollama + local RAG.</div>
+          </div>
+        </div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">ChiTrack</span></div>
+          <div class="te-body">
+            <div class="te-title">Chitrack</div>
+            <div class="te-sub">The most elegant way to track your Chicago morning commute.</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p>"During your presentation, you mentioned being young and naive, but let me tell you — that doesn't stop you from already being a rockstar."</p>
+          <cite>— Senior Product Manager</cite>
+        </div>
+
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">PS Connect</span></div>
+          <div class="te-body">
+            <div class="te-title">PS Connect</div>
+            <div class="te-sub">GenAI staffing tool that won the firm's global hackathon.</div>
+          </div>
+        </div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Strava<br>Personality</span></div>
+          <div class="te-body">
+            <div class="te-title">Strava Personality Test</div>
+            <div class="te-sub">What do your Strava posts say about you?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2024 -->
+      <div class="timeline-year-group">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Race Time<br>Calculator</span></div>
+          <div class="te-body">
+            <div class="te-title">Race Time Calculator</div>
+            <div class="te-sub">The only iOS app that predicts your race time from Apple Health running data.</div>
+          </div>
+        </div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Meet or Not</span></div>
+          <div class="te-body">
+            <div class="te-title">Meet or Not</div>
+            <div class="te-sub">Generative AI tool to ensure your next meeting is productive.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2023 -->
+      <div class="timeline-year-group">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-entry">
+          <div class="img-placeholder te-img"><span class="label">Sunbelt Rentals<br>map</span></div>
+          <div class="te-body">
+            <div class="te-title">Locations Map Redesign</div>
+            <div class="te-sub">Led 12-person team, 27 features in 15 months. #1 usability score, 400k weekly sessions.</div>
+            <span class="metric">-30% support calls</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p>"Declan was self-motivated to get to an outcome, which is perhaps the GREATEST skill a product person can have."</p>
+          <cite>— Director of Product Management, Client</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ OPTION E: Enhanced Current Layout ═══ -->
+  <div class="layout" id="layout-e">
+    <div class="layout-description">
+      <strong>Option E — Enhanced Current Layout.</strong> Keeps the existing /everything-i-built structure. Same chronological feel with year markers, dot indicators, and collapsible sections — but adds larger hero thumbnails for each project and consistent card heights. Least disruption, most visual.
+    </div>
+
+    <div class="enhanced">
+      <div class="enhanced-header">
+        <h2>Everything i've built</h2>
+        <p>because ideas are meant to be built and finishing matters</p>
+      </div>
+
+      <!-- Currently Building -->
+      <div class="enhanced-section">
+        <div class="enhanced-section-header">
+          <div class="status-building"><span class="dot"></span> Currently Building</div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year"></div>
+          <div class="ee-content">
+            <div class="ee-title">Ontology-Xtract</div>
+            <div class="ee-sub">An AI agent that interviews you about your business, extracts your domain knowledge, and identifies the highest-ROI opportunities for AI.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb video"><span class="label" style="font-size:9px;">Video</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year"></div>
+          <div class="ee-content">
+            <div class="ee-title">Construction Industry Agent</div>
+            <div class="ee-sub">Partnering with a Chicago-based fiber optics construction company to automate the submittal package workflow.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Dashboard</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Requirements</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Gravelbox</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Shipped -->
+      <div class="enhanced-section">
+        <div class="enhanced-section-header">
+          <div class="status-shipped"><span class="dot"></span> Shipped</div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year">2025</div>
+          <div class="ee-content">
+            <div class="ee-title">Surgent</div>
+            <div class="ee-sub">Objective-only performance analytics for runners (170+ waitlist signups). Just went live.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Landing</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">App Store</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Onboarding</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year"></div>
+          <div class="ee-content">
+            <div class="ee-title">Local Jarvis</div>
+            <div class="ee-sub">Personal AI assistant running locally on MacBook with Ollama + local vector DB for RAG.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Demo</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Log</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year"></div>
+          <div class="ee-content">
+            <div class="ee-title">Chitrack</div>
+            <div class="ee-sub">The most elegant way to track your Chicago morning commute.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">App</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Feedback</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial inline -->
+        <div style="margin-left:52px; margin-bottom:20px;">
+          <div class="testimonial-card">
+            <p>"During your presentation, you mentioned being young and naive, but let me tell you — that doesn't stop you from already being a rockstar."</p>
+            <cite>— Senior Product Manager</cite>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year"></div>
+          <div class="ee-content">
+            <div class="ee-title">PS Connect</div>
+            <div class="ee-sub">GenAI staffing tool that won the firm's global hackathon.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Hackathon</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year">2024</div>
+          <div class="ee-content">
+            <div class="ee-title">Race Time Calculator</div>
+            <div class="ee-sub">The only iOS app that predicts your race time from Apple Health running data.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Preview</span></div>
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Metrics</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year">2023</div>
+          <div class="ee-content">
+            <div class="ee-title">Locations Map Redesign</div>
+            <div class="ee-sub">Led 12-person team, 27 features, #1 usability score, 400k weekly sessions, -30% support calls.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Map UI</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-left:52px; margin-bottom:20px;">
+          <div class="testimonial-card">
+            <p>"Declan was self-motivated to get to an outcome, which is perhaps the GREATEST skill a product person can have."</p>
+            <cite>— Director of Product Management, Client</cite>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year">2022</div>
+          <div class="ee-content">
+            <div class="ee-title">Recruiting Company Website Redesign</div>
+            <div class="ee-sub">Increased traffic by 88% and converted 12% more visitors into leads.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Site</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="enhanced-entry">
+          <div class="ee-year">2013</div>
+          <div class="ee-content">
+            <div class="ee-title">Next Level Lawn Care</div>
+            <div class="ee-sub">Started my first business at 12. Made 60+ new friends and $30k.</div>
+            <div class="ee-visuals">
+              <div class="img-placeholder ee-thumb"><span class="label" style="font-size:9px;">Photo</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-icons">
+    <div class="footer-icon" title="Music">&#9834;</div>
+    <div class="footer-icon" title="Game">&#9678;</div>
+    <div class="footer-icon" title="Random">&#8644;</div>
+  </div>
+  <span>&copy; 2026 declan kramper</span>
+</div>
+
+<script>
+  // Layout switching
+  const buttons = document.querySelectorAll('.selector-btn');
+  const layouts = document.querySelectorAll('.layout');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.layout;
+
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      layouts.forEach(l => l.classList.remove('visible'));
+      document.getElementById('layout-' + target).classList.add('visible');
+    });
+  });
+
+  // Filter bar (Option A demo — visual only)
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
