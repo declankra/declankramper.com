@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cody's 2026 March Madness Bracket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Variables ── */
+    :root {
+      --bg: #f0ece4;
+      --paper: #faf8f5;
+      --ink: #1c1917;
+      --muted: #78716c;
+      --line: #d6d3d1;
+      --accent: #991b1b;
+      --navy: #1e3a5f;
+      --winner-bg: rgba(153,27,27,0.045);
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse at 25% 0%, rgba(120,100,80,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 75% 100%, rgba(120,100,80,0.04) 0%, transparent 60%);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    h1,h2,h3,h4,p,ul { margin: 0; }
+    a { color: var(--navy); }
+
+    /* ── Page ── */
+    .page { max-width: 1020px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Masthead ── */
+    .masthead {
+      text-align: center;
+      padding: 52px 16px 36px;
+      border-bottom: 2px solid var(--ink);
+      animation: fadeUp 0.5s ease both;
+    }
+    .masthead .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+    }
+    .masthead h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(30px, 4.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-top: 8px;
+    }
+    .masthead .tagline {
+      font-size: 15px;
+      color: var(--muted);
+      margin-top: 10px;
+      font-style: italic;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── Champion ── */
+    .champion {
+      text-align: center;
+      padding: 44px 16px 40px;
+      animation: fadeUp 0.5s ease both 0.12s;
+    }
+    .champion .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+    }
+    .champ-logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      margin: 8px auto 0;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(153,27,27,0.15));
+    }
+    .champion .team-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(52px, 10vw, 110px);
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.14em;
+      line-height: 1;
+      margin: 14px 0;
+      text-transform: uppercase;
+    }
+    .champion .why {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .champion .caveat {
+      display: inline-block;
+      font-size: 13px;
+      color: var(--ink);
+      max-width: 520px;
+      margin: 18px auto 0;
+      padding: 10px 16px;
+      background: #fef9c3;
+      border-radius: 6px;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 36px 0;
+      color: var(--line);
+      font-size: 7px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-top: 1px solid var(--line);
+    }
+
+    /* ── Strategy Grid ── */
+    .strategy {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .strategy-col {
+      background: var(--paper);
+      padding: 20px;
+    }
+    .strategy-col h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .strategy-col p, .strategy-col li {
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .strategy-col ul { padding: 0 0 0 16px; }
+    .strategy-col li + li { margin-top: 5px; }
+
+    /* ── Section Header ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .upset-swatch {
+      width: 3px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .click-hint { font-style: italic; opacity: 0.7; }
+
+    /* ── First Four Strip ── */
+    .ff-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .ff-strip .matchup { width: 155px; }
+    .ff-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      align-self: center;
+      margin-right: 4px;
+    }
+
+    /* ── Region ── */
+    .region {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .region-header { margin-bottom: 10px; }
+    .region-header h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .region-header p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ── Bracket Layout ── */
+    .bracket-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -4px;
+      padding: 0 4px 6px;
+    }
+    .bracket {
+      display: flex;
+      gap: 28px;
+      position: relative;
+      min-height: 480px;
+      padding-top: 22px;
+    }
+    .bracket-round {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      position: relative;
+      padding-top: 18px;
+      flex-shrink: 0;
+    }
+    .round-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* ── Matchup ── */
+    .matchup {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      cursor: pointer;
+      position: relative;
+      width: 158px;
+      transition: box-shadow 0.15s ease;
+    }
+    .matchup:hover {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.09);
+      z-index: 3;
+    }
+    .matchup.upset { border-left: 3px solid var(--accent); }
+    .team {
+      display: flex;
+      align-items: center;
+      padding: 4px 7px;
+      gap: 5px;
+      font-size: 12.5px;
+      line-height: 1;
+    }
+    .team + .team { border-top: 1px solid #eee; }
+    .team.winner {
+      font-weight: 700;
+      background: var(--winner-bg);
+    }
+    .seed {
+      font-size: 10px;
+      min-width: 16px;
+      text-align: right;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+    .name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .conf-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .conf-dot.high { background: #16a34a; }
+    .conf-dot.medium { background: #d97706; }
+    .conf-dot.low { background: #dc2626; }
+
+    /* ── Detail Popup ── */
+    .detail {
+      display: none;
+      position: absolute;
+      top: calc(100% + 3px);
+      left: -1px;
+      z-index: 30;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 10px;
+      font-size: 11.5px;
+      line-height: 1.5;
+      color: #57534e;
+      border-radius: 4px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 260px;
+    }
+    .matchup.expanded .detail,
+    .matchup:hover .detail { display: block; }
+    .detail .conf-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-bottom: 6px;
+    }
+    .conf-tag.high { background: #dcfce7; color: #166534; }
+    .conf-tag.medium { background: #fef3c7; color: #92400e; }
+    .conf-tag.low { background: #fee2e2; color: #991b1b; }
+
+    /* ── SVG Connectors ── */
+    svg.connectors {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* ── Final Four ── */
+    .final-four-section { margin-top: 8px; }
+    .final-four-section .bracket { min-height: 180px; }
+    .final-four-section .matchup { width: 180px; }
+    .final-four-section .bracket-round:last-child .matchup {
+      border: 2px solid var(--accent);
+      width: 190px;
+    }
+    .champ-banner {
+      text-align: center;
+      margin-top: 12px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Signals Grid ── */
+    .signals {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .signal-col {
+      background: var(--paper);
+      padding: 20px;
+    }
+    .signal-col h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .signal-col ul { padding: 0 0 0 16px; }
+    .signal-col li {
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    .signal-col li + li { margin-top: 8px; }
+    .signal-col p {
+      font-size: 12.5px;
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+
+    /* ── Quick Fill ── */
+    details.quick-fill { margin-top: 36px; }
+    details.quick-fill summary {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 8px 0;
+      list-style: none;
+    }
+    details.quick-fill summary::before {
+      content: '+ ';
+      color: var(--muted);
+    }
+    details.quick-fill[open] summary::before { content: '- '; }
+    details.quick-fill pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SFMono-Regular', Menlo, 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.55;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 8px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+
+    /* ── Sources ── */
+    .sources-section {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+    .sources-section h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .sources-section ul {
+      padding: 0;
+      list-style: none;
+      columns: 2;
+      column-gap: 28px;
+    }
+    .sources-section li {
+      font-size: 12px;
+      line-height: 1.4;
+      margin-bottom: 5px;
+      break-inside: avoid;
+    }
+    .sources-section a { text-decoration: none; }
+    .sources-section a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 48px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .strategy, .signals { grid-template-columns: 1fr; }
+      .sources-section ul { columns: 1; }
+    }
+    @media (max-width: 600px) {
+      .page { padding: 0 14px 40px; }
+      .masthead { padding: 36px 12px 28px; }
+      .champion { padding: 32px 12px; }
+      .champion .team-name { letter-spacing: 0.06em; }
+      .region { padding: 14px; }
+      .section-header { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Masthead -->
+    <header class="masthead">
+      <div class="eyebrow">2026 NCAA Men's Tournament</div>
+      <h1>Cody's March Madness Bracket</h1>
+      <p class="tagline">Crazy enough to win the pool, disciplined enough to not be stupid.</p>
+    </header>
+
+    <!-- Champion -->
+    <section class="champion">
+      <div class="label">National Champion</div>
+      <img src="https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png" alt="Gonzaga Bulldogs" class="champ-logo" />
+      <div class="team-name">Gonzaga</div>
+      <p class="why">Best efficiency margin in the field. No. 7 NET, 9.74 turnovers per game, 0.910 away win percentage. Real title skeleton, not a fake Cinderella dream.</p>
+      <p class="caveat"><strong>Live watch:</strong> If credible March 19 reporting says Braden Huff is out or clearly limited, the clean title pivot is <strong>Duke</strong>.</p>
+    </section>
+
+    <div class="divider">&#9670;</div>
+
+    <!-- Strategy -->
+    <div class="strategy">
+      <div class="strategy-col">
+        <h3>Strategy</h3>
+        <p>Lean on real title profiles up top, then spend bracket equity on underseeded or high-volatility teams in the 8/9, 10/7, 11/6 and 12/5 bands. Keep Duke alive deep, fade Florida with Houston, crack the Midwest open with Virginia, and use Gonzaga as the champion-sized leverage play.</p>
+      </div>
+      <div class="strategy-col">
+        <h3>Public Fades</h3>
+        <ul>
+          <li>Florida repeat-chalk through the South</li>
+          <li>Kansas as an automatic second-weekend team</li>
+          <li>Kentucky brand gravity over Santa Clara</li>
+          <li>Villanova public comfort over Utah State</li>
+        </ul>
+      </div>
+      <div class="strategy-col">
+        <h3>Weird Theories That Survived</h3>
+        <ul>
+          <li>Gonzaga seeded like a 3 but statistically behaves like a 1</li>
+          <li>Michigan's region is softer due to 1-seed injury noise</li>
+          <li>Miami (Ohio) is far stronger than a normal play-in team</li>
+          <li>High Point and Akron are offense-first mid-majors that can erase the seed line for one round</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider">&#9670;</div>
+
+    <!-- Bracket Section -->
+    <div class="section-header">
+      <h2>The Bracket</h2>
+      <div class="legend">
+        <span class="legend-item"><span class="conf-dot high"></span> High</span>
+        <span class="legend-item"><span class="conf-dot medium"></span> Med</span>
+        <span class="legend-item"><span class="conf-dot low"></span> Low</span>
+        <span class="legend-item"><span class="upset-swatch"></span> Upset</span>
+        <span class="legend-item click-hint">Click any game for reasoning</span>
+      </div>
+    </div>
+
+    <!-- First Four -->
+    <div class="ff-strip">
+      <span class="ff-label">First Four</span>
+      <div id="ff-games" style="display:flex;gap:10px;flex-wrap:wrap;"></div>
+    </div>
+
+    <!-- East -->
+    <div class="region">
+      <div class="region-header">
+        <h3>East</h3>
+        <p>Duke chalk, but St. John's and Louisville create leverage before the favorite reasserts control.</p>
+      </div>
+      <div class="bracket-scroll"><div class="bracket" id="bracket-east"></div></div>
+    </div>
+
+    <!-- South -->
+    <div class="region">
+      <div class="region-header">
+        <h3>South</h3>
+        <p>Mostly responsible early, then a hard Houston fade of Florida in the regional final.</p>
+      </div>
+      <div class="bracket-scroll"><div class="bracket" id="bracket-south"></div></div>
+    </div>
+
+    <!-- West -->
+    <div class="region">
+      <div class="region-header">
+        <h3>West</h3>
+        <p>The Gonzaga leverage lane. Niche sources pulled back the High Point upset but the path stays intact.</p>
+      </div>
+      <div class="bracket-scroll"><div class="bracket" id="bracket-west"></div></div>
+    </div>
+
+    <!-- Midwest -->
+    <div class="region">
+      <div class="region-header">
+        <h3>Midwest</h3>
+        <p>The chaos region: Saint Louis, Akron, Miami (Ohio), Santa Clara &mdash; and Virginia slipping through it all.</p>
+      </div>
+      <div class="bracket-scroll"><div class="bracket" id="bracket-midwest"></div></div>
+    </div>
+
+    <!-- Final Four -->
+    <div class="region final-four-section">
+      <div class="region-header">
+        <h3>Final Four &amp; Championship</h3>
+        <p>East and Midwest winners meet in one semifinal; South and West in the other.</p>
+      </div>
+      <div class="bracket-scroll"><div class="bracket" id="bracket-ff"></div></div>
+      <div class="champ-banner">Champion: Gonzaga</div>
+    </div>
+
+    <div class="divider">&#9670;</div>
+
+    <!-- Niche Signals -->
+    <div class="section-header"><h2>Niche Signals</h2></div>
+    <div class="signals">
+      <div class="signal-col">
+        <h3>Potentially Bracket-Changing</h3>
+        <ul>
+          <li><strong>Flip made:</strong> Wisconsin over High Point. High Point's offense is real, but its defense looks too weak. <a href="https://s3.amazonaws.com/sidearm.sites/bigsouth.sidearmsports.com/documents/2026/3/1/2025_26_Men_s_Basketball_Report_March_1.pdf">Big South report</a>, <a href="https://hoopshd.com/2026/03/02/conference-tourney-previews-part-1-of-3-2/">Hoops HD</a></li>
+          <li><strong>Live watch:</strong> Gonzaga's title pick carries real Braden Huff uncertainty. <a href="https://www.spokesman.com/stories/2026/feb/21/gonzaga-narrowly-lands-on-no-3-seed-line-during-nc/">Spokesman Feb. 21</a>, <a href="https://www.spokesman.com/stories/2026/feb/07/gonzaga-waiting-to-make-a-final-decision-on-injure/">Spokesman Feb. 7</a></li>
+          <li><strong>Arizona warning:</strong> Most dangerous 1-seed to overfade after winning Big 12 regular season and tournament. <a href="https://www.axios.com/local/phoenix/2026/03/16/arizona-wildcats-no-1-seed-west-region-march-madness">Axios</a>, <a href="https://apnews.com/article/6bcf0716a22296d27aa9c253cb07fd21">AP</a></li>
+        </ul>
+      </div>
+      <div class="signal-col">
+        <h3>Signals That Strengthened Picks</h3>
+        <ul>
+          <li><strong>Miami (Ohio)</strong> is not a normal 11-play-in team. 31-0 regular season, No. 64 NET. <a href="https://getsomemaction.com/news/2026/3/7/mens-basketball-no-19-redhawks-close-out-perfect-regular-season-with-overtime-rivalry-win.aspx">MAC note</a></li>
+          <li><strong>Virginia out of the Midwest</strong> still makes sense. Michigan's region is softer due to L.J. Cason ACL loss. <a href="https://mgoblue.com/documents/download/2026/2/9/20260209-bkm-notes-northwestern.pdf">Michigan notes</a></li>
+          <li><strong>Utah State, Santa Clara, Saint Louis</strong> all confirmed by niche predictive sources. <a href="https://barttorvik.com/personal_tranketology.php">Bart Torvik</a>, <a href="https://wccsports.com/news/2026/2/14/mens-basketball-santa-claras-push-for-long-awaited-ncaa-tournament-return.aspx">WCC</a>, <a href="https://atlantic10.com/news/2026/3/7/mens-basketball-saint-louis-vcu-share-regular-season-title-billikens-top-seed-for-atlantic-10-championship.aspx">A-10</a></li>
+        </ul>
+      </div>
+      <div class="signal-col">
+        <h3>What Got Ignored</h3>
+        <ul>
+          <li>Reddit betting threads</li>
+          <li>AI-generated matchup pages without sourcing</li>
+          <li>Generic sportsbook content farms</li>
+        </ul>
+        <p>Useful only as noise checks. Did not drive any pick changes.</p>
+      </div>
+    </div>
+
+    <!-- Quick Fill -->
+    <details class="quick-fill">
+      <summary>Quick Fill (plain text for automation)</summary>
+      <pre>First Four | Midwest | UMBC vs Howard -&gt; Howard
+First Four | West | Texas vs NC State -&gt; Texas
+First Four | South | Prairie View A&amp;M vs Lehigh -&gt; Prairie View A&amp;M
+First Four | Midwest | Miami (Ohio) vs SMU -&gt; Miami (Ohio)
+Round of 64 | East | Duke vs Siena -&gt; Duke
+Round of 64 | East | Ohio St. vs TCU -&gt; Ohio St.
+Round of 64 | East | St. John&#x27;s vs Northern Iowa -&gt; St. John&#x27;s
+Round of 64 | East | Kansas vs Cal Baptist -&gt; Kansas
+Round of 64 | East | Louisville vs South Florida -&gt; Louisville
+Round of 64 | East | Michigan St. vs North Dakota St. -&gt; Michigan St.
+Round of 64 | East | UCLA vs UCF -&gt; UCLA
+Round of 64 | East | UConn vs Furman -&gt; UConn
+Round of 64 | South | Florida vs Prairie View A&amp;M -&gt; Florida
+Round of 64 | South | Clemson vs Iowa -&gt; Iowa
+Round of 64 | South | Vanderbilt vs McNeese -&gt; Vanderbilt
+Round of 64 | South | Nebraska vs Troy -&gt; Nebraska
+Round of 64 | South | North Carolina vs VCU -&gt; VCU
+Round of 64 | South | Illinois vs Penn -&gt; Illinois
+Round of 64 | South | Saint Mary&#x27;s vs Texas A&amp;M -&gt; Saint Mary&#x27;s
+Round of 64 | South | Houston vs Idaho -&gt; Houston
+Round of 64 | West | Arizona vs Long Island -&gt; Arizona
+Round of 64 | West | Villanova vs Utah St. -&gt; Utah St.
+Round of 64 | West | Wisconsin vs High Point -&gt; Wisconsin
+Round of 64 | West | Arkansas vs Hawaii -&gt; Arkansas
+Round of 64 | West | BYU vs Texas -&gt; BYU
+Round of 64 | West | Gonzaga vs Kennesaw St. -&gt; Gonzaga
+Round of 64 | West | Miami (FL) vs Missouri -&gt; Miami (FL)
+Round of 64 | West | Purdue vs Queens (N.C.) -&gt; Purdue
+Round of 64 | Midwest | Michigan vs Howard -&gt; Michigan
+Round of 64 | Midwest | Georgia vs Saint Louis -&gt; Saint Louis
+Round of 64 | Midwest | Texas Tech vs Akron -&gt; Akron
+Round of 64 | Midwest | Alabama vs Hofstra -&gt; Alabama
+Round of 64 | Midwest | Tennessee vs Miami (Ohio) -&gt; Miami (Ohio)
+Round of 64 | Midwest | Virginia vs Wright St. -&gt; Virginia
+Round of 64 | Midwest | Kentucky vs Santa Clara -&gt; Santa Clara
+Round of 64 | Midwest | Iowa St. vs Tennessee St. -&gt; Iowa St.
+Round of 32 | East | Duke vs Ohio St. -&gt; Duke
+Round of 32 | East | St. John&#x27;s vs Kansas -&gt; St. John&#x27;s
+Round of 32 | East | Louisville vs Michigan St. -&gt; Louisville
+Round of 32 | East | UCLA vs UConn -&gt; UConn
+Round of 32 | South | Florida vs Iowa -&gt; Florida
+Round of 32 | South | Vanderbilt vs Nebraska -&gt; Nebraska
+Round of 32 | South | VCU vs Illinois -&gt; Illinois
+Round of 32 | South | Saint Mary&#x27;s vs Houston -&gt; Houston
+Round of 32 | West | Arizona vs Utah St. -&gt; Arizona
+Round of 32 | West | Wisconsin vs Arkansas -&gt; Arkansas
+Round of 32 | West | BYU vs Gonzaga -&gt; Gonzaga
+Round of 32 | West | Miami (FL) vs Purdue -&gt; Purdue
+Round of 32 | Midwest | Michigan vs Saint Louis -&gt; Michigan
+Round of 32 | Midwest | Akron vs Alabama -&gt; Alabama
+Round of 32 | Midwest | Miami (Ohio) vs Virginia -&gt; Virginia
+Round of 32 | Midwest | Santa Clara vs Iowa St. -&gt; Iowa St.
+Sweet 16 | East | Duke vs St. John&#x27;s -&gt; Duke
+Sweet 16 | East | Louisville vs UConn -&gt; UConn
+Sweet 16 | South | Florida vs Nebraska -&gt; Florida
+Sweet 16 | South | Illinois vs Houston -&gt; Houston
+Sweet 16 | West | Arizona vs Arkansas -&gt; Arizona
+Sweet 16 | West | Gonzaga vs Purdue -&gt; Gonzaga
+Sweet 16 | Midwest | Michigan vs Alabama -&gt; Alabama
+Sweet 16 | Midwest | Virginia vs Iowa St. -&gt; Virginia
+Elite 8 | East | Duke vs UConn -&gt; Duke
+Elite 8 | South | Florida vs Houston -&gt; Houston
+Elite 8 | West | Arizona vs Gonzaga -&gt; Gonzaga
+Elite 8 | Midwest | Alabama vs Virginia -&gt; Virginia
+Final Four | Final Four | Duke vs Virginia -&gt; Duke
+Final Four | Final Four | Houston vs Gonzaga -&gt; Gonzaga
+National Championship | National Championship | Duke vs Gonzaga -&gt; Gonzaga</pre>
+    </details>
+
+    <!-- Sources -->
+    <section class="sources-section">
+      <h2>Sources</h2>
+      <ul>
+        <li><a href="https://www.ncaa.com/march-madness-live/bracket">Official NCAA live bracket</a></li>
+        <li><a href="https://www.ncaa.com/news/basketball-men/mml-official-bracket/2026-03-18/2026-ncaa-tournament-printable-bracket-schedule-march-madness">NCAA printable bracket</a></li>
+        <li><a href="https://data.ncaa.com/prod/mml/2026/mobile/bracket_iq/ncaa_team_stats.json">NCAA team-stats feed</a></li>
+        <li><a href="https://mmldata.ncaa.com/mml/2026/data/prod/bracket_iq/ma_stats.json">NCAA bracket IQ glossary</a></li>
+        <li><a href="https://www.ncaa.com/news/basketball-men/article/2026-03-01/what-make-questions-only-march-can-answer-mens-college-basketball">NCAA March questions</a></li>
+        <li><a href="https://apnews.com/article/03063af18be479d3b59726303e372180">AP: odds and value plays</a></li>
+        <li><a href="https://mgoblue.com/documents/download/2026/2/9/20260209-bkm-notes-northwestern.pdf">Michigan: L.J. Cason ACL context</a></li>
+      </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      Built by Cody &middot; March 18, 2026 &middot; Data from NCAA, AP, Bart Torvik, TeamRankings
+    </footer>
+  </div>
+
+  <!-- ── Bracket Data ── -->
+  <script id="bracket-picks" type="application/json">[
+  {
+    "round": "First Four",
+    "region": "Midwest",
+    "matchup": "UMBC vs Howard",
+    "team1": "UMBC",
+    "team2": "Howard",
+    "pick": "Howard",
+    "seed1": 16,
+    "seed2": 16,
+    "confidence": "high",
+    "reason": "This one is already locked in as an official NCAA result on March 18, 2026, so the bracket pick is simply the current winner."
+  },
+  {
+    "round": "First Four",
+    "region": "West",
+    "matchup": "Texas vs NC State",
+    "team1": "Texas",
+    "team2": "NC State",
+    "pick": "Texas",
+    "seed1": 11,
+    "seed2": 11,
+    "confidence": "high",
+    "reason": "This one is already locked in as an official NCAA result on March 18, 2026, so the bracket pick is simply the current winner."
+  },
+  {
+    "round": "First Four",
+    "region": "South",
+    "matchup": "Prairie View A&M vs Lehigh",
+    "team1": "Prairie View A&M",
+    "team2": "Lehigh",
+    "pick": "Prairie View A&M",
+    "seed1": 16,
+    "seed2": 16,
+    "confidence": "high",
+    "reason": "This one is already locked in as an official NCAA result on March 18, 2026, so the bracket pick is simply the current winner."
+  },
+  {
+    "round": "First Four",
+    "region": "Midwest",
+    "matchup": "Miami (Ohio) vs SMU",
+    "team1": "Miami (Ohio)",
+    "team2": "SMU",
+    "pick": "Miami (Ohio)",
+    "seed1": 11,
+    "seed2": 11,
+    "confidence": "medium",
+    "reason": "Fact: NCAA's live bracket still showed this game in progress on March 18, 2026. Inference: I'm taking Miami (Ohio) because its NCAA team-stats profile is far better than a normal 11-line play-in team: No. 64 NET, 9-1 in its last 10, 39% from three and a 0.970 away win percentage."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "Duke vs Siena",
+    "team1": "Duke",
+    "team2": "Siena",
+    "pick": "Duke",
+    "seed1": 1,
+    "seed2": 16,
+    "confidence": "high",
+    "reason": "Duke still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "Ohio St. vs TCU",
+    "team1": "Ohio St.",
+    "team2": "TCU",
+    "pick": "Ohio St.",
+    "seed1": 8,
+    "seed2": 9,
+    "confidence": "low",
+    "reason": "Ohio St. still owns the better underlying profile here, especially in NET rank and offensive glass. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "St. John's vs Northern Iowa",
+    "team1": "St. John's",
+    "team2": "Northern Iowa",
+    "pick": "St. John's",
+    "seed1": 5,
+    "seed2": 12,
+    "confidence": "medium",
+    "reason": "St. John's still owns the better underlying profile here, especially in NET rank and offensive glass. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "Kansas vs Cal Baptist",
+    "team1": "Kansas",
+    "team2": "Cal Baptist",
+    "pick": "Kansas",
+    "seed1": 4,
+    "seed2": 13,
+    "confidence": "medium",
+    "reason": "Kansas still owns the better underlying profile here, especially in NET rank and foul discipline. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "Louisville vs South Florida",
+    "team1": "Louisville",
+    "team2": "South Florida",
+    "pick": "Louisville",
+    "seed1": 6,
+    "seed2": 11,
+    "confidence": "low",
+    "reason": "Louisville still owns the better underlying profile here, especially in NET rank and offensive glass. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "Michigan St. vs North Dakota St.",
+    "team1": "Michigan St.",
+    "team2": "North Dakota St.",
+    "pick": "Michigan St.",
+    "seed1": 3,
+    "seed2": 14,
+    "confidence": "medium",
+    "reason": "Michigan St. still owns the better underlying profile here, especially in NET rank and foul discipline. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "UCLA vs UCF",
+    "team1": "UCLA",
+    "team2": "UCF",
+    "pick": "UCLA",
+    "seed1": 7,
+    "seed2": 10,
+    "confidence": "medium",
+    "reason": "UCLA still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "East",
+    "matchup": "UConn vs Furman",
+    "team1": "UConn",
+    "team2": "Furman",
+    "pick": "UConn",
+    "seed1": 2,
+    "seed2": 15,
+    "confidence": "high",
+    "reason": "UConn still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Florida vs Prairie View A&M",
+    "team1": "Florida",
+    "team2": "Prairie View A&M",
+    "pick": "Florida",
+    "seed1": 1,
+    "seed2": 16,
+    "confidence": "high",
+    "reason": "Florida still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Clemson vs Iowa",
+    "team1": "Clemson",
+    "team2": "Iowa",
+    "pick": "Iowa",
+    "seed1": 8,
+    "seed2": 9,
+    "confidence": "low",
+    "reason": "This graded as a real upset and not a gimmick one: Iowa has the better edge in NET rank and net efficiency, plus strong enough upset-viability (44.8) and chaos-edge (47.1) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Vanderbilt vs McNeese",
+    "team1": "Vanderbilt",
+    "team2": "McNeese",
+    "pick": "Vanderbilt",
+    "seed1": 5,
+    "seed2": 12,
+    "confidence": "medium",
+    "reason": "Vanderbilt is one of the strongest 5-seeds by profile, with a No. 13 NET and elite scoring efficiency. McNeese is live enough to scare me, but not enough to force the upset when I already have better chaos spots elsewhere."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Nebraska vs Troy",
+    "team1": "Nebraska",
+    "team2": "Troy",
+    "pick": "Nebraska",
+    "seed1": 4,
+    "seed2": 13,
+    "confidence": "high",
+    "reason": "Nebraska still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "North Carolina vs VCU",
+    "team1": "North Carolina",
+    "team2": "VCU",
+    "pick": "VCU",
+    "seed1": 6,
+    "seed2": 11,
+    "confidence": "low",
+    "reason": "This graded as a real upset and not a gimmick one: VCU has the better edge in NET rank and foul discipline, plus strong enough upset-viability (46.8) and chaos-edge (54.1) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Illinois vs Penn",
+    "team1": "Illinois",
+    "team2": "Penn",
+    "pick": "Illinois",
+    "seed1": 3,
+    "seed2": 14,
+    "confidence": "high",
+    "reason": "Illinois still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Saint Mary's vs Texas A&M",
+    "team1": "Saint Mary's",
+    "team2": "Texas A&M",
+    "pick": "Saint Mary's",
+    "seed1": 7,
+    "seed2": 10,
+    "confidence": "medium",
+    "reason": "Saint Mary's still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "South",
+    "matchup": "Houston vs Idaho",
+    "team1": "Houston",
+    "team2": "Idaho",
+    "pick": "Houston",
+    "seed1": 2,
+    "seed2": 15,
+    "confidence": "high",
+    "reason": "Houston still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Arizona vs Long Island",
+    "team1": "Arizona",
+    "team2": "Long Island",
+    "pick": "Arizona",
+    "seed1": 1,
+    "seed2": 16,
+    "confidence": "high",
+    "reason": "Arizona still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Villanova vs Utah St.",
+    "team1": "Villanova",
+    "team2": "Utah St.",
+    "pick": "Utah St.",
+    "seed1": 8,
+    "seed2": 9,
+    "confidence": "medium",
+    "reason": "This graded as a real upset and not a gimmick one: Utah St. has the better edge in NET rank and net efficiency, plus strong enough upset-viability (55.3) and chaos-edge (54.7) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Wisconsin vs High Point",
+    "team1": "Wisconsin",
+    "team2": "High Point",
+    "pick": "Wisconsin",
+    "seed1": 5,
+    "seed2": 12,
+    "confidence": "medium",
+    "reason": "After the niche-source pass, this is the one game I flipped. High Point's offense is real, but the defense looks too weak to force the upset when Wisconsin still grades as the more reliable full-game team."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Arkansas vs Hawaii",
+    "team1": "Arkansas",
+    "team2": "Hawaii",
+    "pick": "Arkansas",
+    "seed1": 4,
+    "seed2": 13,
+    "confidence": "medium",
+    "reason": "Arkansas still owns the better underlying profile here, especially in NET rank and ball security. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "BYU vs Texas",
+    "team1": "BYU",
+    "team2": "Texas",
+    "pick": "BYU",
+    "seed1": 6,
+    "seed2": 11,
+    "confidence": "low",
+    "reason": "BYU still owns the better underlying profile here, especially in NET rank and foul discipline. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Gonzaga vs Kennesaw St.",
+    "team1": "Gonzaga",
+    "team2": "Kennesaw St.",
+    "pick": "Gonzaga",
+    "seed1": 3,
+    "seed2": 14,
+    "confidence": "high",
+    "reason": "Gonzaga still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Miami (FL) vs Missouri",
+    "team1": "Miami (FL)",
+    "team2": "Missouri",
+    "pick": "Miami (FL)",
+    "seed1": 7,
+    "seed2": 10,
+    "confidence": "medium",
+    "reason": "Miami (FL) still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "West",
+    "matchup": "Purdue vs Queens (N.C.)",
+    "team1": "Purdue",
+    "team2": "Queens (N.C.)",
+    "pick": "Purdue",
+    "seed1": 2,
+    "seed2": 15,
+    "confidence": "high",
+    "reason": "Purdue still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Michigan vs Howard",
+    "team1": "Michigan",
+    "team2": "Howard",
+    "pick": "Michigan",
+    "seed1": 1,
+    "seed2": 16,
+    "confidence": "high",
+    "reason": "Michigan still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Georgia vs Saint Louis",
+    "team1": "Georgia",
+    "team2": "Saint Louis",
+    "pick": "Saint Louis",
+    "seed1": 8,
+    "seed2": 9,
+    "confidence": "medium",
+    "reason": "This graded as a real upset and not a gimmick one: Saint Louis has the better edge in net efficiency and offensive glass, plus strong enough upset-viability (55.1) and chaos-edge (52.8) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Texas Tech vs Akron",
+    "team1": "Texas Tech",
+    "team2": "Akron",
+    "pick": "Akron",
+    "seed1": 5,
+    "seed2": 12,
+    "confidence": "low",
+    "reason": "This graded as a real upset and not a gimmick one: Akron has the better edge in NET rank and net efficiency, plus strong enough upset-viability (55.4) and chaos-edge (58.8) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Alabama vs Hofstra",
+    "team1": "Alabama",
+    "team2": "Hofstra",
+    "pick": "Alabama",
+    "seed1": 4,
+    "seed2": 13,
+    "confidence": "medium",
+    "reason": "Alabama still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Tennessee vs Miami (Ohio)",
+    "team1": "Tennessee",
+    "team2": "Miami (Ohio)",
+    "pick": "Miami (Ohio)",
+    "seed1": 6,
+    "seed2": 11,
+    "confidence": "low",
+    "reason": "This graded as a real upset and not a gimmick one: Miami (Ohio) has the better edge in NET rank and offensive glass, plus strong enough upset-viability (41.4) and chaos-edge (48.9) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Virginia vs Wright St.",
+    "team1": "Virginia",
+    "team2": "Wright St.",
+    "pick": "Virginia",
+    "seed1": 3,
+    "seed2": 14,
+    "confidence": "high",
+    "reason": "Virginia still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Kentucky vs Santa Clara",
+    "team1": "Kentucky",
+    "team2": "Santa Clara",
+    "pick": "Santa Clara",
+    "seed1": 7,
+    "seed2": 10,
+    "confidence": "low",
+    "reason": "This graded as a real upset and not a gimmick one: Santa Clara has the better edge in NET rank and net efficiency, plus strong enough upset-viability (53.3) and chaos-edge (55.9) scores to justify fading the seed line."
+  },
+  {
+    "round": "Round of 64",
+    "region": "Midwest",
+    "matchup": "Iowa St. vs Tennessee St.",
+    "team1": "Iowa St.",
+    "team2": "Tennessee St.",
+    "pick": "Iowa St.",
+    "seed1": 2,
+    "seed2": 15,
+    "confidence": "high",
+    "reason": "Iowa St. still owns the better underlying profile here, especially in NET rank and net efficiency. I'm not forcing chaos when the favorite also has the cleaner True Win Score."
+  },
+  {
+    "round": "Round of 32",
+    "region": "East",
+    "matchup": "Duke vs Ohio St.",
+    "team1": "Duke",
+    "team2": "Ohio St.",
+    "pick": "Duke",
+    "seed1": 1,
+    "seed2": 8,
+    "confidence": "high",
+    "reason": "Duke advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "East",
+    "matchup": "St. John's vs Kansas",
+    "team1": "St. John's",
+    "team2": "Kansas",
+    "pick": "St. John's",
+    "seed1": 5,
+    "seed2": 4,
+    "confidence": "medium",
+    "reason": "St. John's is underseeded relative to its No. 16 NET and 9-1 close, and Kansas looks more like a fragile 4 than a real title team. This is a public-brand fade with actual metric support."
+  },
+  {
+    "round": "Round of 32",
+    "region": "East",
+    "matchup": "Louisville vs Michigan St.",
+    "team1": "Louisville",
+    "team2": "Michigan St.",
+    "pick": "Louisville",
+    "seed1": 6,
+    "seed2": 3,
+    "confidence": "low",
+    "reason": "Louisville's No. 17 NET is stronger than its 6-seed, and its offensive efficiency/FT combo is the kind that survives second-round shot variance. Michigan St. is solid, but the Cardinals are the sharper price."
+  },
+  {
+    "round": "Round of 32",
+    "region": "East",
+    "matchup": "UCLA vs UConn",
+    "team1": "UCLA",
+    "team2": "UConn",
+    "pick": "UConn",
+    "seed1": 7,
+    "seed2": 2,
+    "confidence": "medium",
+    "reason": "UConn advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "South",
+    "matchup": "Florida vs Iowa",
+    "team1": "Florida",
+    "team2": "Iowa",
+    "pick": "Florida",
+    "seed1": 1,
+    "seed2": 9,
+    "confidence": "medium",
+    "reason": "Florida advances because the matchup still tilts its way in NET rank and offensive glass, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "South",
+    "matchup": "Vanderbilt vs Nebraska",
+    "team1": "Vanderbilt",
+    "team2": "Nebraska",
+    "pick": "Nebraska",
+    "seed1": 5,
+    "seed2": 4,
+    "confidence": "low",
+    "reason": "Nebraska has the better two-way profile and a much stronger NET line than most 4-seeds. Once I stop the Cinderella, I want the more stable favorite carrying forward."
+  },
+  {
+    "round": "Round of 32",
+    "region": "South",
+    "matchup": "VCU vs Illinois",
+    "team1": "VCU",
+    "team2": "Illinois",
+    "pick": "Illinois",
+    "seed1": 11,
+    "seed2": 3,
+    "confidence": "medium",
+    "reason": "Illinois advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "South",
+    "matchup": "Saint Mary's vs Houston",
+    "team1": "Saint Mary's",
+    "team2": "Houston",
+    "pick": "Houston",
+    "seed1": 7,
+    "seed2": 2,
+    "confidence": "low",
+    "reason": "Houston advances because the matchup still tilts its way in NET rank and ball security, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "West",
+    "matchup": "Arizona vs Utah St.",
+    "team1": "Arizona",
+    "team2": "Utah St.",
+    "pick": "Arizona",
+    "seed1": 1,
+    "seed2": 9,
+    "confidence": "medium",
+    "reason": "Arizona advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "West",
+    "matchup": "Wisconsin vs Arkansas",
+    "team1": "Wisconsin",
+    "team2": "Arkansas",
+    "pick": "Arkansas",
+    "seed1": 5,
+    "seed2": 4,
+    "confidence": "low",
+    "reason": "Arkansas advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "West",
+    "matchup": "BYU vs Gonzaga",
+    "team1": "BYU",
+    "team2": "Gonzaga",
+    "pick": "Gonzaga",
+    "seed1": 6,
+    "seed2": 3,
+    "confidence": "medium",
+    "reason": "Gonzaga advances because the matchup still tilts its way in net efficiency and NET rank, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "West",
+    "matchup": "Miami (FL) vs Purdue",
+    "team1": "Miami (FL)",
+    "team2": "Purdue",
+    "pick": "Purdue",
+    "seed1": 7,
+    "seed2": 2,
+    "confidence": "medium",
+    "reason": "Purdue advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "Midwest",
+    "matchup": "Michigan vs Saint Louis",
+    "team1": "Michigan",
+    "team2": "Saint Louis",
+    "pick": "Michigan",
+    "seed1": 1,
+    "seed2": 9,
+    "confidence": "low",
+    "reason": "Saint Louis is a very real 9-seed threat, but Michigan still carries the stronger top-end profile here. I want the Billikens as bracket chaos, not as my pick to string together four wins."
+  },
+  {
+    "round": "Round of 32",
+    "region": "Midwest",
+    "matchup": "Akron vs Alabama",
+    "team1": "Akron",
+    "team2": "Alabama",
+    "pick": "Alabama",
+    "seed1": 12,
+    "seed2": 4,
+    "confidence": "low",
+    "reason": "Alabama advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "Midwest",
+    "matchup": "Miami (Ohio) vs Virginia",
+    "team1": "Miami (Ohio)",
+    "team2": "Virginia",
+    "pick": "Virginia",
+    "seed1": 11,
+    "seed2": 3,
+    "confidence": "low",
+    "reason": "Virginia advances because the matchup still tilts its way in NET rank and offensive glass, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Round of 32",
+    "region": "Midwest",
+    "matchup": "Santa Clara vs Iowa St.",
+    "team1": "Santa Clara",
+    "team2": "Iowa St.",
+    "pick": "Iowa St.",
+    "seed1": 10,
+    "seed2": 2,
+    "confidence": "medium",
+    "reason": "Iowa St. advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "East",
+    "matchup": "Duke vs St. John's",
+    "team1": "Duke",
+    "team2": "St. John's",
+    "pick": "Duke",
+    "seed1": 1,
+    "seed2": 5,
+    "confidence": "medium",
+    "reason": "Duke advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "East",
+    "matchup": "Louisville vs UConn",
+    "team1": "Louisville",
+    "team2": "UConn",
+    "pick": "UConn",
+    "seed1": 6,
+    "seed2": 2,
+    "confidence": "low",
+    "reason": "UConn advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "South",
+    "matchup": "Florida vs Nebraska",
+    "team1": "Florida",
+    "team2": "Nebraska",
+    "pick": "Florida",
+    "seed1": 1,
+    "seed2": 4,
+    "confidence": "low",
+    "reason": "Florida advances because the matchup still tilts its way in NET rank and offensive glass, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "South",
+    "matchup": "Illinois vs Houston",
+    "team1": "Illinois",
+    "team2": "Houston",
+    "pick": "Houston",
+    "seed1": 3,
+    "seed2": 2,
+    "confidence": "low",
+    "reason": "Houston advances because the matchup still tilts its way in foul discipline and NET rank, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "West",
+    "matchup": "Arizona vs Arkansas",
+    "team1": "Arizona",
+    "team2": "Arkansas",
+    "pick": "Arizona",
+    "seed1": 1,
+    "seed2": 4,
+    "confidence": "medium",
+    "reason": "Arizona advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "West",
+    "matchup": "Gonzaga vs Purdue",
+    "team1": "Gonzaga",
+    "team2": "Purdue",
+    "pick": "Gonzaga",
+    "seed1": 3,
+    "seed2": 2,
+    "confidence": "medium",
+    "reason": "Gonzaga advances because the matchup still tilts its way in net efficiency and foul discipline, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "Midwest",
+    "matchup": "Michigan vs Alabama",
+    "team1": "Michigan",
+    "team2": "Alabama",
+    "pick": "Alabama",
+    "seed1": 1,
+    "seed2": 4,
+    "confidence": "low",
+    "reason": "Alabama advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Sweet 16",
+    "region": "Midwest",
+    "matchup": "Virginia vs Iowa St.",
+    "team1": "Virginia",
+    "team2": "Iowa St.",
+    "pick": "Virginia",
+    "seed1": 3,
+    "seed2": 2,
+    "confidence": "low",
+    "reason": "Virginia advances because the matchup still tilts its way in NET rank and net efficiency, and its title-equity score stays above the alternative."
+  },
+  {
+    "round": "Elite 8",
+    "region": "East",
+    "matchup": "Duke vs UConn",
+    "team1": "Duke",
+    "team2": "UConn",
+    "pick": "Duke",
+    "seed1": 1,
+    "seed2": 2,
+    "confidence": "medium",
+    "reason": "Duke is the cleaner Final Four ticket because it still owns the better blend of efficiency, form and late-game survivability."
+  },
+  {
+    "round": "Elite 8",
+    "region": "South",
+    "matchup": "Florida vs Houston",
+    "team1": "Florida",
+    "team2": "Houston",
+    "pick": "Houston",
+    "seed1": 1,
+    "seed2": 2,
+    "confidence": "low",
+    "reason": "Florida's offensive rebounding is terrifying, but Houston owns the cleaner championship template: No. 5 NET, 8.51 turnovers per game, 77% at the line and top-tier defense. This is my biggest 1-seed fade that still feels responsible."
+  },
+  {
+    "round": "Elite 8",
+    "region": "West",
+    "matchup": "Arizona vs Gonzaga",
+    "team1": "Arizona",
+    "team2": "Gonzaga",
+    "pick": "Gonzaga",
+    "seed1": 1,
+    "seed2": 3,
+    "confidence": "low",
+    "reason": "This is the bracket's core leverage play. Gonzaga has the best efficiency margin in the field, a 0.910 away win percentage and fewer self-inflicted empty trips than Arizona; the seed line is hiding that it still looks like a No. 1-level team."
+  },
+  {
+    "round": "Elite 8",
+    "region": "Midwest",
+    "matchup": "Alabama vs Virginia",
+    "team1": "Alabama",
+    "team2": "Virginia",
+    "pick": "Virginia",
+    "seed1": 4,
+    "seed2": 3,
+    "confidence": "low",
+    "reason": "Virginia is my Midwest escape hatch because the region's chalk has real flaws and AP handicapper Bruce Marshall flagged the Cavaliers as a team that could slip through the 3-line. I'm betting on balance over Alabama's volatility."
+  },
+  {
+    "round": "Final Four",
+    "region": "Final Four",
+    "matchup": "Duke vs Virginia",
+    "team1": "Duke",
+    "team2": "Virginia",
+    "pick": "Duke",
+    "seed1": 1,
+    "seed2": 3,
+    "confidence": "medium",
+    "reason": "This is where I stop getting cute. Duke still owns the strongest all-around title profile in the field: No. 1 NET, 10-0 in its last 10 and elite away form."
+  },
+  {
+    "round": "Final Four",
+    "region": "Final Four",
+    "matchup": "Houston vs Gonzaga",
+    "team1": "Houston",
+    "team2": "Gonzaga",
+    "pick": "Gonzaga",
+    "seed1": 2,
+    "seed2": 3,
+    "confidence": "low",
+    "reason": "Houston is safer; Gonzaga is sharper. The Bulldogs' field-best efficiency margin and just 9.74 turnovers per game make them the best \"crazy enough to win the pool\" team left standing."
+  },
+  {
+    "round": "National Championship",
+    "region": "National Championship",
+    "matchup": "Duke vs Gonzaga",
+    "team1": "Duke",
+    "team2": "Gonzaga",
+    "pick": "Gonzaga",
+    "seed1": 1,
+    "seed2": 3,
+    "confidence": "low",
+    "reason": "Duke is the best team by seed logic; Gonzaga is the best championship leverage bet by profile. I'll take the No. 7 NET, field-best efficiency margin and veteran March infrastructure over the most popular 1-seed."
+  }
+]</script>
+
+  <!-- ── JavaScript ── -->
+  <script>
+    const picks = JSON.parse(document.getElementById('bracket-picks').textContent);
+    const regions = ['East', 'South', 'West', 'Midwest'];
+    const roundOrder = ['Round of 64', 'Round of 32', 'Sweet 16', 'Elite 8'];
+    const roundLabels = { 'Round of 64': 'Round of 64', 'Round of 32': 'Round of 32', 'Sweet 16': 'Sweet 16', 'Elite 8': 'Elite 8', 'Final Four': 'Semifinal', 'National Championship': 'Championship' };
+
+    function getGames(region, round) {
+      return picks.filter(g => g.region === region && g.round === round);
+    }
+
+    function isUpsetGame(game) {
+      const pickSeed = game.pick === game.team1 ? game.seed1 : game.seed2;
+      const otherSeed = game.pick === game.team1 ? game.seed2 : game.seed1;
+      return pickSeed > otherSeed && (pickSeed - otherSeed) >= 2;
+    }
+
+    function createMatchupEl(game) {
+      const upset = isUpsetGame(game);
+      const div = document.createElement('div');
+      div.className = 'matchup' + (upset ? ' upset' : '');
+
+      const t1Winner = game.pick === game.team1;
+      const t2Winner = game.pick === game.team2;
+
+      div.innerHTML =
+        '<div class="team' + (t1Winner ? ' winner' : '') + '">' +
+          '<span class="seed">' + game.seed1 + '</span>' +
+          '<span class="name">' + game.team1 + '</span>' +
+          (t1Winner ? '<span class="conf-dot ' + game.confidence + '"></span>' : '') +
+        '</div>' +
+        '<div class="team' + (t2Winner ? ' winner' : '') + '">' +
+          '<span class="seed">' + game.seed2 + '</span>' +
+          '<span class="name">' + game.team2 + '</span>' +
+          (t2Winner ? '<span class="conf-dot ' + game.confidence + '"></span>' : '') +
+        '</div>' +
+        '<div class="detail">' +
+          '<div class="conf-tag ' + game.confidence + '">' + game.confidence + ' confidence</div>' +
+          '<p>' + game.reason + '</p>' +
+        '</div>';
+
+      return div;
+    }
+
+    function buildRegionBracket(region, containerId) {
+      const container = document.getElementById(containerId);
+      roundOrder.forEach(function(round) {
+        const col = document.createElement('div');
+        col.className = 'bracket-round';
+
+        const label = document.createElement('span');
+        label.className = 'round-label';
+        label.textContent = roundLabels[round] || round;
+        col.appendChild(label);
+
+        getGames(region, round).forEach(function(game) {
+          col.appendChild(createMatchupEl(game));
+        });
+        container.appendChild(col);
+      });
+    }
+
+    function buildFirstFour() {
+      const container = document.getElementById('ff-games');
+      picks.filter(function(g) { return g.round === 'First Four'; }).forEach(function(game) {
+        container.appendChild(createMatchupEl(game));
+      });
+    }
+
+    function buildFinalFour() {
+      const container = document.getElementById('bracket-ff');
+
+      var semiCol = document.createElement('div');
+      semiCol.className = 'bracket-round';
+      var semiLabel = document.createElement('span');
+      semiLabel.className = 'round-label';
+      semiLabel.textContent = 'Semifinal';
+      semiCol.appendChild(semiLabel);
+      picks.filter(function(g) { return g.round === 'Final Four'; }).forEach(function(game) {
+        semiCol.appendChild(createMatchupEl(game));
+      });
+      container.appendChild(semiCol);
+
+      var champCol = document.createElement('div');
+      champCol.className = 'bracket-round';
+      var champLabel = document.createElement('span');
+      champLabel.className = 'round-label';
+      champLabel.textContent = 'Championship';
+      champCol.appendChild(champLabel);
+      picks.filter(function(g) { return g.round === 'National Championship'; }).forEach(function(game) {
+        champCol.appendChild(createMatchupEl(game));
+      });
+      container.appendChild(champCol);
+    }
+
+    /* ── SVG Connectors ── */
+    function drawConnectors(bracketEl) {
+      var existing = bracketEl.querySelector('svg.connectors');
+      if (existing) existing.remove();
+
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.classList.add('connectors');
+      bracketEl.appendChild(svg);
+
+      var w = bracketEl.scrollWidth;
+      var h = bracketEl.scrollHeight;
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+      svg.setAttribute('width', w);
+      svg.setAttribute('height', h);
+
+      var rounds = bracketEl.querySelectorAll('.bracket-round');
+      var br = bracketEl.getBoundingClientRect();
+
+      for (var i = 0; i < rounds.length - 1; i++) {
+        var srcMatchups = Array.from(rounds[i].querySelectorAll('.matchup'));
+        var tgtMatchups = Array.from(rounds[i + 1].querySelectorAll('.matchup'));
+
+        for (var j = 0; j < tgtMatchups.length; j++) {
+          var s1 = srcMatchups[j * 2];
+          var s2 = srcMatchups[j * 2 + 1];
+          var tgt = tgtMatchups[j];
+          if (!s1 || !s2 || !tgt) continue;
+
+          var s1r = s1.getBoundingClientRect();
+          var s2r = s2.getBoundingClientRect();
+          var tr = tgt.getBoundingClientRect();
+
+          var x1 = s1r.right - br.left;
+          var y1 = (s1r.top + s1r.bottom) / 2 - br.top;
+          var x2 = s2r.right - br.left;
+          var y2 = (s2r.top + s2r.bottom) / 2 - br.top;
+          var x3 = tr.left - br.left;
+          var y3 = (tr.top + tr.bottom) / 2 - br.top;
+          var mx = (Math.max(x1, x2) + x3) / 2;
+
+          var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d',
+            'M' + x1 + ',' + y1 + ' H' + mx +
+            ' V' + y3 + ' H' + x3 +
+            ' M' + x2 + ',' + y2 + ' H' + mx +
+            ' V' + y3
+          );
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', '#c8c0b4');
+          path.setAttribute('stroke-width', '1.2');
+          svg.appendChild(path);
+        }
+      }
+    }
+
+    /* ── Click handler: one detail at a time ── */
+    document.addEventListener('click', function(e) {
+      var matchup = e.target.closest('.matchup');
+      if (!matchup) {
+        document.querySelectorAll('.matchup.expanded').forEach(function(m) {
+          m.classList.remove('expanded');
+        });
+        return;
+      }
+      var wasExpanded = matchup.classList.contains('expanded');
+      document.querySelectorAll('.matchup.expanded').forEach(function(m) {
+        m.classList.remove('expanded');
+      });
+      if (!wasExpanded) matchup.classList.add('expanded');
+    });
+
+    /* ── Init ── */
+    buildFirstFour();
+    regions.forEach(function(r) {
+      buildRegionBracket(r, 'bracket-' + r.toLowerCase());
+    });
+    buildFinalFour();
+
+    /* Draw connectors after fonts load + layout settles */
+    var drawAll = function() {
+      document.querySelectorAll('.bracket').forEach(drawConnectors);
+    };
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function() {
+        requestAnimationFrame(drawAll);
+      });
+    } else {
+      window.addEventListener('load', function() {
+        requestAnimationFrame(drawAll);
+      });
+    }
+
+    /* Redraw on resize */
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(drawAll, 200);
+    });
+  </script>
+</body>
+</html>
