@@ -18,6 +18,12 @@
       --accent: #991b1b;
       --navy: #1e3a5f;
       --winner-bg: rgba(153,27,27,0.045);
+      --correct: #166534;
+      --correct-bg: rgba(22,101,52,0.14);
+      --correct-border: rgba(22,101,52,0.45);
+      --incorrect: #b91c1c;
+      --incorrect-bg: rgba(185,28,28,0.14);
+      --incorrect-border: rgba(185,28,28,0.45);
     }
 
     /* ── Reset ── */
@@ -202,6 +208,21 @@
       background: var(--accent);
       border-radius: 1px;
     }
+    .result-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      display: inline-block;
+    }
+    .result-swatch.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+    }
+    .result-swatch.incorrect {
+      background: var(--incorrect-bg);
+      border-color: var(--incorrect-border);
+    }
     .click-hint { font-style: italic; opacity: 0.7; }
 
     /* ── First Four Strip ── */
@@ -292,6 +313,14 @@
       z-index: 3;
     }
     .matchup.upset { border-left: 3px solid var(--accent); }
+    .matchup.result-correct {
+      border-color: var(--correct-border);
+      box-shadow: inset 0 0 0 1px rgba(22,101,52,0.08);
+    }
+    .matchup.result-incorrect {
+      border-color: var(--incorrect-border);
+      box-shadow: inset 0 0 0 1px rgba(185,28,28,0.08);
+    }
     .team {
       display: flex;
       align-items: center;
@@ -304,6 +333,18 @@
     .team.winner {
       font-weight: 700;
       background: var(--winner-bg);
+    }
+    .team.pick-correct {
+      background: var(--correct-bg);
+      color: var(--correct);
+    }
+    .team.pick-incorrect {
+      background: var(--incorrect-bg);
+      color: var(--incorrect);
+    }
+    .team.pick-correct .seed,
+    .team.pick-incorrect .seed {
+      color: inherit;
     }
     .seed {
       font-size: 10px;
@@ -352,15 +393,46 @@
       display: inline-block;
       font-size: 10px;
       font-weight: 600;
+      line-height: 1;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       padding: 2px 6px;
       border-radius: 3px;
-      margin-bottom: 6px;
     }
     .conf-tag.high { background: #dcfce7; color: #166534; }
     .conf-tag.medium { background: #fef3c7; color: #92400e; }
     .conf-tag.low { background: #fee2e2; color: #991b1b; }
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .result-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .result-tag.correct {
+      background: #dcfce7;
+      color: var(--correct);
+    }
+    .result-tag.incorrect {
+      background: #fee2e2;
+      color: var(--incorrect);
+    }
+    .result-note {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--ink);
+      font-weight: 600;
+    }
 
     /* ── SVG Connectors ── */
     svg.connectors {
@@ -563,6 +635,8 @@
         <span class="legend-item"><span class="conf-dot medium"></span> Med</span>
         <span class="legend-item"><span class="conf-dot low"></span> Low</span>
         <span class="legend-item"><span class="upset-swatch"></span> Upset</span>
+        <span class="legend-item"><span class="result-swatch correct"></span> Correct</span>
+        <span class="legend-item"><span class="result-swatch incorrect"></span> Wrong</span>
         <span class="legend-item click-hint">Click any game for reasoning</span>
       </div>
     </div>
@@ -739,7 +813,7 @@ National Championship | National Championship | Duke vs Gonzaga -&gt; Gonzaga</p
 
     <!-- Footer -->
     <footer class="footer">
-      Built by Cody &middot; March 18, 2026 &middot; Data from NCAA, AP, Bart Torvik, TeamRankings
+      Built by Cody &middot; March 18, 2026 &middot; Updated March 23, 2026 with results through Round of 32 &middot; Data from NCAA, AP, Bart Torvik, TeamRankings
     </footer>
   </div>
 
@@ -1557,9 +1631,42 @@ National Championship | National Championship | Duke vs Gonzaga -&gt; Gonzaga</p
     const regions = ['East', 'South', 'West', 'Midwest'];
     const roundOrder = ['Round of 64', 'Round of 32', 'Sweet 16', 'Elite 8'];
     const roundLabels = { 'Round of 64': 'Round of 64', 'Round of 32': 'Round of 32', 'Sweet 16': 'Sweet 16', 'Elite 8': 'Elite 8', 'Final Four': 'Semifinal', 'National Championship': 'Championship' };
+    const completedWinners = {
+      'First Four|Midwest': ['Howard', 'Miami (Ohio)'],
+      'First Four|South': ['Prairie View A&M'],
+      'First Four|West': ['Texas'],
+      'Round of 64|East': ['Duke', 'TCU', "St. John's", 'Kansas', 'Louisville', 'Michigan St.', 'UCLA', 'UConn'],
+      'Round of 64|South': ['Florida', 'Iowa', 'Vanderbilt', 'Nebraska', 'VCU', 'Illinois', 'Texas A&M', 'Houston'],
+      'Round of 64|West': ['Arizona', 'Utah St.', 'High Point', 'Arkansas', 'Texas', 'Gonzaga', 'Miami (FL)', 'Purdue'],
+      'Round of 64|Midwest': ['Michigan', 'Saint Louis', 'Texas Tech', 'Alabama', 'Tennessee', 'Virginia', 'Kentucky', 'Iowa St.'],
+      'Round of 32|East': ['Duke', "St. John's", 'Michigan St.', 'UConn'],
+      'Round of 32|South': ['Iowa', 'Nebraska', 'Illinois', 'Houston'],
+      'Round of 32|West': ['Arizona', 'Arkansas', 'Texas', 'Purdue'],
+      'Round of 32|Midwest': ['Michigan', 'Alabama', 'Tennessee', 'Iowa St.']
+    };
+    const gameCountsByGroup = new Map();
+
+    picks.forEach(function(game) {
+      const groupKey = game.round + '|' + game.region;
+      const slotIndex = gameCountsByGroup.get(groupKey) || 0;
+      game.groupKey = groupKey;
+      game.slotIndex = slotIndex;
+      gameCountsByGroup.set(groupKey, slotIndex + 1);
+    });
 
     function getGames(region, round) {
       return picks.filter(g => g.region === region && g.round === round);
+    }
+
+    function getActualWinner(game) {
+      const winners = completedWinners[game.groupKey];
+      return winners ? winners[game.slotIndex] || null : null;
+    }
+
+    function getPickStatus(game) {
+      const actualWinner = getActualWinner(game);
+      if (!actualWinner) return 'pending';
+      return actualWinner === game.pick ? 'correct' : 'incorrect';
     }
 
     function isUpsetGame(game) {
@@ -1570,26 +1677,40 @@ National Championship | National Championship | Duke vs Gonzaga -&gt; Gonzaga</p
 
     function createMatchupEl(game) {
       const upset = isUpsetGame(game);
+      const status = getPickStatus(game);
+      const actualWinner = getActualWinner(game);
       const div = document.createElement('div');
-      div.className = 'matchup' + (upset ? ' upset' : '');
+      div.className = 'matchup' + (upset ? ' upset' : '') + (status !== 'pending' ? ' result-' + status : '');
 
       const t1Winner = game.pick === game.team1;
       const t2Winner = game.pick === game.team2;
+      const t1Classes = 'team' + (t1Winner ? ' winner' : '') + (t1Winner && status !== 'pending' ? ' pick-' + status : '');
+      const t2Classes = 'team' + (t2Winner ? ' winner' : '') + (t2Winner && status !== 'pending' ? ' pick-' + status : '');
+      const resultTag = status === 'pending'
+        ? ''
+        : '<div class="result-tag ' + status + '">' + (status === 'correct' ? 'Correct' : 'Wrong') + '</div>';
+      const resultNote = actualWinner
+        ? '<p class="result-note">Actual winner: ' + actualWinner + '</p>'
+        : '';
 
       div.innerHTML =
-        '<div class="team' + (t1Winner ? ' winner' : '') + '">' +
+        '<div class="' + t1Classes + '">' +
           '<span class="seed">' + game.seed1 + '</span>' +
           '<span class="name">' + game.team1 + '</span>' +
           (t1Winner ? '<span class="conf-dot ' + game.confidence + '"></span>' : '') +
         '</div>' +
-        '<div class="team' + (t2Winner ? ' winner' : '') + '">' +
+        '<div class="' + t2Classes + '">' +
           '<span class="seed">' + game.seed2 + '</span>' +
           '<span class="name">' + game.team2 + '</span>' +
           (t2Winner ? '<span class="conf-dot ' + game.confidence + '"></span>' : '') +
         '</div>' +
         '<div class="detail">' +
-          '<div class="conf-tag ' + game.confidence + '">' + game.confidence + ' confidence</div>' +
+          '<div class="detail-meta">' +
+            '<div class="conf-tag ' + game.confidence + '">' + game.confidence + ' confidence</div>' +
+            resultTag +
+          '</div>' +
           '<p>' + game.reason + '</p>' +
+          resultNote +
         '</div>';
 
       return div;
