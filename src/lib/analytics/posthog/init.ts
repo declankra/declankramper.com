@@ -1,4 +1,9 @@
 import posthog from "posthog-js"
+import { isChunkLoadError } from "@/lib/chunk-load"
+
+type PostHogClientWithLoadedFlag = typeof posthog & {
+  __loaded?: boolean
+}
 
 const nonEmpty = (value: string | undefined) => {
   const trimmed = value?.trim()
@@ -7,7 +12,7 @@ const nonEmpty = (value: string | undefined) => {
 
 // Only initialize PostHog in production.
 // Guard against double init when multiple entrypoints import this module.
-if (process.env.NODE_ENV === "production" && !(posthog as any).__loaded) {
+if (process.env.NODE_ENV === "production" && !(posthog as PostHogClientWithLoadedFlag).__loaded) {
   const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
   if (!posthogKey) {
     console.warn("PostHog key missing: set NEXT_PUBLIC_POSTHOG_KEY")
@@ -18,6 +23,16 @@ if (process.env.NODE_ENV === "production" && !(posthog as any).__loaded) {
         nonEmpty(process.env.NEXT_PUBLIC_POSTHOG_UI_HOST) ?? "https://us.posthog.com",
       defaults: "2025-11-30",
       capture_exceptions: true,
+      before_send: (event) => {
+        if (
+          event?.event === "$exception" &&
+          isChunkLoadError(event.properties?.$exception_message)
+        ) {
+          return null
+        }
+
+        return event
+      },
     })
   }
 }
