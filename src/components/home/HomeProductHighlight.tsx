@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useMotionValue, useSpring } from 'framer-motio
 import { toast } from 'sonner'
 
 export default function HomeProductHighlight() {
+  const ontologyXtractHomeVideoSrc = '/finished/ontology-xtract/ontology-xtract-sanitized-demo.web-hq.mp4'
   const [hoveredItem, setHoveredItem] = useState<'consulting' | 'surgent' | null>(null)
   const [isHoverDevice, setIsHoverDevice] = useState(false)
   const hoveredItemRef = useRef<'consulting' | 'surgent' | null>(null)
@@ -231,6 +232,7 @@ export default function HomeProductHighlight() {
             >
               <div className="pt-2">
                 <p className="text-[13px] md:text-sm font-medium text-[#0A0A0B]">
+                  Lessons Productized &middot;{' '}
                   <a
                     href="https://surgent.run"
                     target="_blank"
@@ -238,8 +240,7 @@ export default function HomeProductHighlight() {
                     className="underline decoration-transparent underline-offset-2 transition-colors hover:decoration-current"
                   >
                     Surgent
-                  </a>{' '}
-                  &middot; iOS Running App
+                  </a>
                 </p>
                 <p className="text-xs md:text-[13px] text-[#888] leading-snug mt-1">
                   Turning health data into daily confidence. An iOS app for understanding your body's running performance through objective progress over time — gradually, then suddenly all at once.
@@ -266,7 +267,7 @@ export default function HomeProductHighlight() {
                     playsInline
                     className="aspect-video w-full object-contain bg-black"
                   >
-                    <source src="/finished/ontology-xtract/ontology-xtract-preview.web-hq.mp4" type="video/mp4" />
+                    <source src={ontologyXtractHomeVideoSrc} type="video/mp4" />
                   </video>
                 </motion.div>
               )}
@@ -335,7 +336,7 @@ export default function HomeProductHighlight() {
                   playsInline
                   className="w-full h-full object-contain rounded-[16px] bg-black"
                 >
-                  <source src="/finished/ontology-xtract/ontology-xtract-preview.web-hq.mp4" type="video/mp4" />
+                  <source src={ontologyXtractHomeVideoSrc} type="video/mp4" />
                 </video>
               </motion.div>
 
@@ -358,7 +359,7 @@ export default function HomeProductHighlight() {
                       playsInline
                       className="w-full h-full object-contain rounded-2xl"
                     >
-                      <source src="/finished/ontology-xtract/ontology-xtract-preview.web-hq.mp4" type="video/mp4" />
+                      <source src={ontologyXtractHomeVideoSrc} type="video/mp4" />
                     </video>
                   </motion.div>
                 ) : (
