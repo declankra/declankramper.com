@@ -13,7 +13,7 @@ That's the first question I asked myself after waking up groggy, having just bee
 
 It’s been 2 months of heads down dedicated to building a platform product for a real business. This comes after ~2 months of passive work here and there to build a foundational prototype before aligning on the partnership + opportunity. These lessons are from the past two months, which is effectively the journey of trying to take it from prototype with potential to production-ready with measured business impact.
 
-so, why’s it taking so long? (since there's been no measurable business impact, yet)
+so, why’s it taking so long? (since there’s been no measurable business impact, yet — the 85% time savings on the submittal slice was real, but one validated workflow isn’t the same as a product someone reaches for every day)
 
 imo it comes down to three things on why it’s taking so long:
 1. Lack of verifiable digital data
