@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 export default function HomeProductHighlight() {
   const ontologyXtractHomeVideoSrc = '/finished/ontology-xtract/ontology-xtract-sanitized-demo.web-hq.mp4'
+  const ontologyXtractVideoAspectClass = 'aspect-[320/191]'
   const [hoveredItem, setHoveredItem] = useState<'consulting' | 'surgent' | null>(null)
   const [isHoverDevice, setIsHoverDevice] = useState(false)
   const hoveredItemRef = useRef<'consulting' | 'surgent' | null>(null)
@@ -258,14 +259,14 @@ export default function HomeProductHighlight() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.98 }}
                   transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                  className="relative w-full overflow-hidden rounded-[16px] border border-[#e5e5e5] bg-black"
+                  className={`relative w-full overflow-hidden rounded-[16px] border border-[#e5e5e5] ${ontologyXtractVideoAspectClass}`}
                 >
                   <video
                     autoPlay
                     loop
                     muted
                     playsInline
-                    className="aspect-video w-full object-contain bg-black"
+                    className="h-full w-full object-cover"
                   >
                     <source src={ontologyXtractHomeVideoSrc} type="video/mp4" />
                   </video>
@@ -312,9 +313,9 @@ export default function HomeProductHighlight() {
           </div>
         </div>
 
-        <div className="relative hidden md:flex items-center justify-center min-h-[340px] lg:min-h-[420px]">
+        <div className="relative hidden md:flex items-start justify-center">
           <motion.div
-            className="absolute inset-0 rounded-2xl flex flex-col items-center justify-center overflow-hidden"
+            className={`relative w-full overflow-hidden rounded-2xl ${ontologyXtractVideoAspectClass}`}
             animate={{
               opacity: hoveredItem === 'consulting' ? 1 : 0,
               scale: hoveredItem === 'consulting' ? 1 : 0.97
@@ -322,7 +323,7 @@ export default function HomeProductHighlight() {
             initial={false}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative w-full flex-1 rounded-[16px] overflow-hidden border border-[#e5e5e5] bg-black">
+            <div className="relative h-full w-full rounded-[16px] overflow-hidden border border-[#e5e5e5]">
               <motion.div
                 className="absolute inset-0 rounded-[16px] overflow-hidden"
                 initial={{ opacity: 0, scale: 0.92 }}
@@ -334,7 +335,7 @@ export default function HomeProductHighlight() {
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-contain rounded-[16px] bg-black"
+                  className="h-full w-full rounded-[16px] object-cover"
                 >
                   <source src={ontologyXtractHomeVideoSrc} type="video/mp4" />
                 </video>
