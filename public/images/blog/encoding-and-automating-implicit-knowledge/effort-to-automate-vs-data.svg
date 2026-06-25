@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 645 460" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <!-- right zone wash: "worth automating" -->
+  <rect x="274" y="70" width="331" height="325" fill="#eef4ef"/>
+
+  <!-- floor reference (right portion only) -->
+  <line x1="360" y1="336.5" x2="605" y2="336.5" stroke="#b3b3b3" stroke-width="1" stroke-dasharray="1 4"/>
+
+  <!-- threshold: probably worth automating -->
+  <line x1="95" y1="258.5" x2="605" y2="258.5" stroke="#555" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+  <!-- frontier (also left edge of the worth-automating zone) -->
+  <line x1="274" y1="70" x2="274" y2="395" stroke="#c9c9c9" stroke-width="1"/>
+  <path d="M274,390 L270,399 L278,399 z" fill="#888"/>
+
+  <!-- axes -->
+  <line x1="95" y1="395" x2="617" y2="395" stroke="#999" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="95" y1="395" x2="95" y2="56" stroke="#999" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- the curve: effort to automate vs usable data -->
+  <polyline fill="none" stroke="#1a1a1a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"
+    points="95,70 115.4,104.8 135.8,135.1 156.2,161.4 176.6,184.3 197,204.2 217.4,221.4 237.8,236.5 258.2,249.5 274,258.5 278.6,260.9 299,270.8 319.4,279.4 339.8,286.8 360.2,293.3 380.6,299 401,303.9 421.4,308.1 441.8,311.8 462.2,315.1 482.6,317.8 503,320.3 523.4,322.4 543.8,324.2 564.2,325.8 584.6,327.2 605,328.5"/>
+
+  <!-- crossing point -->
+  <circle cx="274" cy="258.5" r="4" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.6"/>
+
+  <!-- title -->
+  <text x="95" y="36" font-size="15" font-weight="600" fill="#222">More usable data, less effort to automate</text>
+
+  <!-- threshold label -->
+  <text x="599" y="250" font-size="12.5" font-style="italic" fill="#555" text-anchor="end">probably worth automating</text>
+
+  <!-- left zone label -->
+  <text x="150" y="312" font-size="12.5" font-style="italic" fill="#8a8a8a">not worth it (yet)</text>
+
+  <!-- floor annotation -->
+  <text x="600" y="353" font-size="11" fill="#777" text-anchor="end">effort never reaches zero &#8212;</text>
+  <text x="600" y="367" font-size="11" fill="#777" text-anchor="end">human judgment always remains</text>
+
+  <!-- y-axis title -->
+  <text transform="rotate(-90 28 232)" x="28" y="232" font-size="12.5" fill="#555" text-anchor="middle">human effort to automate</text>
+  <text x="86" y="74" font-size="10.5" fill="#bbb" text-anchor="end">high</text>
+  <text x="86" y="393" font-size="10.5" fill="#bbb" text-anchor="end">low</text>
+
+  <!-- x-axis title -->
+  <text x="350" y="437" font-size="12.5" fill="#555" text-anchor="middle">quality / availability of usable data</text>
+  <text x="100" y="412" font-size="10.5" fill="#bbb">low</text>
+  <text x="605" y="412" font-size="10.5" fill="#bbb" text-anchor="end">high</text>
+  <text x="274" y="412" font-size="11" font-style="italic" fill="#777" text-anchor="middle">frontier</text>
+</svg>
