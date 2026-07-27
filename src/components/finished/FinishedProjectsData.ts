@@ -64,6 +64,22 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
 
 export const finishedProjects: FinishedProject[] = [
     {
+        id: 'japan-voice',
+        title: 'Japan Voice',
+        subtitle: 'A way to communicate face to face without the language barrier using gpt-realtime-2',
+        month: 4,
+        year: 2026,
+        link: 'https://github.com/declankra/japan-voice-app',
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/japan-voice/japan-voice-demo.mp4',
+                alt: 'Japan Voice Demo',
+                autoplay: true
+            }
+        ]
+    },
+    {
         id: 'Surgent',
         title: 'Surgent',
         subtitle: 'Turning health data into daily confidence. An iOS app for understanding your body\'s running performance through objective progress over time — gradually, then suddenly all at once.',
