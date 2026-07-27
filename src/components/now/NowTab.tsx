@@ -39,26 +39,48 @@ export default function NowTab() {
 
   useEffect(() => {
     const video = videoRef.current
-    if (!mediaActive || !video) return
+    if (!video || !tabReady) return
 
-    // iOS Safari can ignore the declarative autoplay request when a video is
-    // mounted after client-side tab state resolves. Set the muted properties
-    // before explicitly starting playback so the first frame never waits for
-    // a user gesture.
+    if (!mediaActive) {
+      video.pause()
+      return
+    }
+
+    // Keep the properties in sync for iOS Safari, then retry when the media
+    // becomes playable, visible, or returns from the back-forward cache.
     video.defaultMuted = true
     video.muted = true
 
     const startPlayback = () => {
+      if (!video.paused) return
       void video.play().catch(() => {
-        // Browsers may reject play() while the document is backgrounded. The
-        // autoplay attribute and canplay listener will retry when it is ready.
+        // A later media, visibility, or pageshow event will retry.
       })
     }
 
+    const startWhenVisible = () => {
+      if (document.visibilityState === 'visible') startPlayback()
+    }
+
     startPlayback()
+    video.addEventListener('loadedmetadata', startPlayback)
     video.addEventListener('canplay', startPlayback)
-    return () => video.removeEventListener('canplay', startPlayback)
-  }, [mediaActive])
+    document.addEventListener('visibilitychange', startWhenVisible)
+    window.addEventListener('pageshow', startPlayback)
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) startPlayback()
+    })
+    observer.observe(video)
+
+    return () => {
+      video.removeEventListener('loadedmetadata', startPlayback)
+      video.removeEventListener('canplay', startPlayback)
+      document.removeEventListener('visibilitychange', startWhenVisible)
+      window.removeEventListener('pageshow', startPlayback)
+      observer.disconnect()
+    }
+  }, [mediaActive, tabReady])
 
   return (
     <div className="relative flex h-full flex-col justify-center">
@@ -134,18 +156,16 @@ export default function NowTab() {
         </div>
 
         <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[clamp(12px,1.4vw,18px)]">
-          {mediaActive ? (
-            <video
-              ref={videoRef}
-              className="block h-full w-full object-contain"
-              src="/finished/now-product-montage-expanded.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-            />
-          ) : null}
+          <video
+            ref={videoRef}
+            className="block h-full w-full object-contain"
+            src="/finished/now-product-montage-expanded.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
         </div>
       </div>
 
