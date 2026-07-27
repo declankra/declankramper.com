@@ -66,7 +66,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'japan-voice',
         title: 'Japan Voice',
-        subtitle: 'A way to communicate face to face without the language barrier',
+        subtitle: 'A way to communicate face to face without the language barrier using gpt-realtime-2',
         month: 4,
         year: 2026,
         link: 'https://github.com/declankra/japan-voice-app',
