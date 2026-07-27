@@ -2,7 +2,7 @@
 
 export default function RandomIcon() {
   return (
-    <div className="random-icon-container inline-block mr-2">
+    <div className="random-icon-container inline-block">
       <svg
         width="16"
         height="16"

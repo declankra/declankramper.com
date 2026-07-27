@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: '/builds', destination: '/#builds', permanent: false },
+      { source: '/writes', destination: '/#writes', permanent: false },
+      { source: '/everything-i-built', destination: '/#builds', permanent: false },
+    ];
+  },
   async rewrites() {
     return [
       {

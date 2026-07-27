@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import { OpenPanelProvider } from "@/lib/analytics/openpanel/OpenPanelProvider";
 import { Toaster } from "sonner";
 import { PostHogProvider } from "@/lib/analytics/posthog/PostHogProvider";
@@ -69,9 +67,7 @@ export default function RootLayout({
         </a>
         <PostHogProvider>
           <OpenPanelProvider />
-          <Header />  
           <main id="main-content">{children}</main>
-          <Footer />
           <Toaster />
         </PostHogProvider>
       </body>

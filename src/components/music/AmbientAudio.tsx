@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Volume2, VolumeX } from 'lucide-react'
+import { Pause, Play, Volume2, VolumeX } from 'lucide-react'
 
 const AUDIO_PATH = '/audio/little-voices.mp3'
 const FADE_DURATION = 2000 // 2 seconds
@@ -25,15 +25,9 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
   const isStartingRef = useRef(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isInitialized, setIsInitialized] = useState(false)
+  // Mute is session-only on purpose: sound always starts ON — persisting the
+  // preference meant one mute made every future visit start muted.
   const [isMuted, setIsMuted] = useState(false)
-
-  // Check localStorage for user preference
-  useEffect(() => {
-    const savedPreference = localStorage.getItem('ambient-audio-muted')
-    if (savedPreference !== null) {
-      setIsMuted(savedPreference === 'true')
-    }
-  }, [])
 
   // Initialize audio element
   useEffect(() => {
@@ -100,7 +94,6 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
     const newMuted = !isMuted
     setIsMuted(newMuted)
     audioRef.current.muted = newMuted
-    localStorage.setItem('ambient-audio-muted', String(newMuted))
   }, [isMuted])
 
   useEffect(() => {
@@ -132,23 +125,39 @@ const AmbientAudio = forwardRef<AmbientAudioControls, AmbientAudioProps>(functio
   // Only show toggle after audio has started
   if (!isInitialized) return null
 
+  const controlButton =
+    'p-2 rounded-full bg-white border border-[#E5E5E5] text-[#888] hover:text-[#0A0A0B] hover:border-[#CCC] transition-[color,border-color,box-shadow] shadow-sm'
+
   return (
     <AnimatePresence>
-      <motion.button
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.8 }}
         transition={{ delay: 0.5, duration: 0.3 }}
-        onClick={toggleMute}
-        className="fixed top-6 right-6 z-50 p-2 rounded-full bg-white border border-[#E5E5E5] text-[#888] hover:text-[#0A0A0B] hover:border-[#CCC] transition-[color,border-color,box-shadow] shadow-sm"
-        aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
+        className="fixed top-6 right-6 z-50 flex items-center gap-2"
       >
-        {isMuted ? (
-          <VolumeX size={18} />
-        ) : (
-          <Volume2 size={18} />
-        )}
-      </motion.button>
+        <button
+          type="button"
+          onClick={togglePlayback}
+          className={controlButton}
+          aria-label={isPlaying ? 'Pause audio' : 'Play audio'}
+        >
+          {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+        </button>
+        <button
+          type="button"
+          onClick={toggleMute}
+          className={controlButton}
+          aria-label={isMuted ? 'Unmute audio' : 'Mute audio'}
+        >
+          {isMuted ? (
+            <VolumeX size={18} />
+          ) : (
+            <Volume2 size={18} />
+          )}
+        </button>
+      </motion.div>
     </AnimatePresence>
   )
 })

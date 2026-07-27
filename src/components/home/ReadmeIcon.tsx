@@ -2,7 +2,7 @@
 
 export default function ReadmeIcon() {
   return (
-    <div className="readme-icon-container inline-block mr-2">
+    <div className="readme-icon-container inline-block">
       <svg
         width="16"
         height="16"
@@ -11,61 +11,73 @@ export default function ReadmeIcon() {
         xmlns="http://www.w3.org/2000/svg"
         className="readme-icon"
       >
-        {/* Document body */}
-        <path
-          className="doc-body"
-          d="M3 2C3 1.44772 3.44772 1 4 1H10L13 4V14C13 14.5523 12.5523 15 12 15H4C3.44772 15 3 14.5523 3 14V2Z"
+        {/* Terminal window */}
+        <rect
+          className="term-window"
+          x="1.5"
+          y="2.5"
+          width="13"
+          height="11"
+          rx="1.5"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="1.4"
           fill="none"
         />
 
-        {/* Corner fold */}
+        {/* Prompt chevron */}
         <path
-          className="doc-fold"
-          d="M10 1V4H13"
+          className="term-prompt"
+          d="M4.5 6.5L7 8.5L4.5 10.5"
           stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           fill="none"
         />
 
-        {/* Text lines */}
-        <line className="doc-line line-1" x1="5" y1="7" x2="11" y2="7" stroke="currentColor" strokeWidth="1" />
-        <line className="doc-line line-2" x1="5" y1="9.5" x2="11" y2="9.5" stroke="currentColor" strokeWidth="1" />
-        <line className="doc-line line-3" x1="5" y1="12" x2="9" y2="12" stroke="currentColor" strokeWidth="1" />
+        {/* Cursor */}
+        <line
+          className="term-cursor"
+          x1="9"
+          y1="10.5"
+          x2="11.5"
+          y2="10.5"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
       </svg>
 
       <style jsx global>{`
-        .readme-link:hover .doc-body,
-        .readme-link:active .doc-body {
-          animation: doc-wiggle 0.5s ease-in-out;
+        .readme-link:hover .readme-icon,
+        .readme-link:active .readme-icon {
+          animation: term-pop 0.4s ease-in-out;
           transform-origin: center;
         }
 
-        .readme-link:hover .doc-line,
-        .readme-link:active .doc-line {
-          animation: line-reveal 0.6s ease-out forwards;
+        .readme-link:hover .term-prompt,
+        .readme-link:active .term-prompt {
+          animation: term-nudge 0.4s ease-out;
         }
 
-        .readme-link:hover .line-2,
-        .readme-link:active .line-2 {
-          animation-delay: 0.1s;
+        .readme-link:hover .term-cursor,
+        .readme-link:active .term-cursor {
+          animation: term-blink 0.9s steps(1) infinite;
         }
 
-        .readme-link:hover .line-3,
-        .readme-link:active .line-3 {
-          animation-delay: 0.2s;
+        @keyframes term-pop {
+          0%, 100% { transform: scale(1); }
+          40% { transform: scale(1.08); }
         }
 
-        @keyframes doc-wiggle {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(-3deg); }
-          75% { transform: rotate(3deg); }
+        @keyframes term-nudge {
+          0% { transform: translateX(-1.5px); opacity: 0.5; }
+          100% { transform: translateX(0); opacity: 1; }
         }
 
-        @keyframes line-reveal {
-          0% { stroke-dasharray: 0 10; stroke-dashoffset: 0; }
-          100% { stroke-dasharray: 10 0; stroke-dashoffset: 0; }
+        @keyframes term-blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
         }
       `}</style>
     </div>

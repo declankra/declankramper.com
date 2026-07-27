@@ -63,6 +63,13 @@
     @apply border-[hsl(var(--border))];
   }
 
+  /* Tailwind v4 preflight follows the native OS button cursor (default);
+     this site opts back into the web convention: clickable = pointer. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+
   .skip-link {
     position: absolute;
     left: 1rem;

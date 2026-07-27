@@ -2,7 +2,7 @@
 
 export default function ContactIcon() {
   return (
-    <div className="contact-icon-container inline-block mr-2">
+    <div className="contact-icon-container inline-block">
       <svg
         width="16"
         height="16"

@@ -2,7 +2,7 @@
 
 export default function GameIcon() {
   return (
-    <div className="game-icon-container inline-block mr-2">
+    <div className="game-icon-container inline-block">
       <svg
         width="16"
         height="16"

@@ -48,11 +48,18 @@ function toBlogPostSummary(slug: string, data: Record<string, unknown>): BlogPos
   };
 }
 
+function isDraft(data: Record<string, unknown>): boolean {
+  return data.draft === true;
+}
+
 const getPostSummaryBySlugCached = cache(async (slug: string): Promise<BlogPostSummary | null> => {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data } = matter(fileContents);
+    if (isDraft(data as Record<string, unknown>)) {
+      return null;
+    }
     return toBlogPostSummary(slug, data as Record<string, unknown>);
   } catch (error) {
     console.error(`Error loading post metadata ${slug}:`, error);
@@ -126,6 +133,9 @@ const getPostBySlugCached = cache(async (slug: string): Promise<BlogPost | null>
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     const { data, content } = matter(fileContents);
+    if (isDraft(data as Record<string, unknown>)) {
+      return null;
+    }
     const processedContent = await markdownToHtml(content);
     const summary = toBlogPostSummary(slug, data as Record<string, unknown>);
 

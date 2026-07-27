@@ -20,10 +20,10 @@ npm start
 
 ## Architecture
 
-This is a Next.js 14+ portfolio website with the following structure:
+This is a Next.js 16 portfolio website with the following structure:
 
 ### Core Technologies
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 16 with App Router
 - **Styling**: Tailwind CSS with shadcn/ui components
 - **Forms**: React Hook Form with Zod validation
 - **Analytics**: OpenPanel
@@ -35,7 +35,7 @@ This is a Next.js 14+ portfolio website with the following structure:
 ### Directory Structure
 - `src/app/` - Next.js App Router pages and API routes
   - `api/contact/` - Contact form API endpoint using Resend
-  - Individual project pages (builds, runs, writes, etc.)
+  - `(portfolio-shell)/` - persistent-shell route group: `/` (hash-tab home: now/builds/writes) and `/writes/[slug]` (articles render in-shell); legacy `/builds`, `/writes`, `/everything-i-built` redirect to hash URLs (next.config.js)
 - `src/components/` - React components organized by feature
   - `ui/` - shadcn/ui components
   - `home/`, `blog/`, `finished/`, etc. - Feature-specific components

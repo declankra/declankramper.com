@@ -9,6 +9,20 @@ import { FinishedProject, CurrentlyBuildingProject, Testimonial } from '@/types/
 
 export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
     {
+        id: 'construction-quote-mapping',
+        title: 'Quote Mapping',
+        subtitle: 'Vendor quote PDFs in, bid comparison + POs out. Built with and for real estimators.',
+        metrics: ['in production trial', 'a $200k/yr problem at enterprise scale'],
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/ontology-xtract/ontology-xtract-sanitized-demo.web-hq.mp4',
+                alt: 'AI document extraction demo',
+                autoplay: true
+            }
+        ]
+    },
+    {
         id: 'ontology-xtract',
         title: 'Ontology-Xtract',
         subtitle: 'An AI agent that interviews you about your business, extracts your domain knowledge, and identifies the highest-ROI opportunities for AI.',
@@ -52,7 +66,8 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'Surgent',
         title: 'Surgent',
-        subtitle: 'Objective-only performance analytics for runners to see progress over time (170+ waitlist signups). Just went live.',
+        subtitle: 'Turning health data into daily confidence. An iOS app for understanding your body\'s running performance through objective progress over time — gradually, then suddenly all at once.',
+        metrics: ['4,374+ users', '$3.1k run-rate 11 days after launch', '38% D1 retention'],
         month: 11,
         year: 2025,
         link: 'https://www.surgent.run',
@@ -375,6 +390,7 @@ export const finishedProjects: FinishedProject[] = [
         id: 'race-time-calculator',
         title: 'Race Time Calculator',
         subtitle: 'The only IOS app that can predict your race time based on your apple health running data',
+        metrics: ['2,790+ users', '48k+ predictions'],
         month: 3,
         year: 2024,
         link: 'https://apps.apple.com/us/app/race-time-calculator/id6478423515?ppid=1dcc2c47-705e-4e5f-a97e-711ecd9089db',
@@ -554,7 +570,7 @@ export const testimonials: Testimonial[] = [
     },
     {
         id: 'tyler-feedback-1',
-        title: 'Director of Product Management, Client',
+        title: 'Head of Product, Client',
         text: 'Given he is a self-starter, we often just counted on him figuring things out (which he did).',
         month: 11,
         year: 2023

@@ -8,10 +8,15 @@ export default function ReadingProgress() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    // Articles render inside the shell's scroll container (#shell-content);
+    // fall back to window scrolling when rendered outside the shell.
+    const container = document.getElementById("shell-content");
+
     const calculateProgress = () => {
-      const scrollable =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = Math.max(window.scrollY, 0);
+      const scrollable = container
+        ? container.scrollHeight - container.clientHeight
+        : document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = Math.max(container ? container.scrollTop : window.scrollY, 0);
       const next = scrollable > 0 ? (scrolled / scrollable) * 100 : 0;
 
       setProgress(next);
@@ -27,14 +32,15 @@ export default function ReadingProgress() {
 
     requestTick();
 
-    window.addEventListener("scroll", requestTick, { passive: true });
+    const scrollTarget: HTMLElement | Window = container ?? window;
+    scrollTarget.addEventListener("scroll", requestTick, { passive: true });
     window.addEventListener("resize", requestTick);
 
     return () => {
       if (frame.current !== null) {
         cancelAnimationFrame(frame.current);
       }
-      window.removeEventListener("scroll", requestTick);
+      scrollTarget.removeEventListener("scroll", requestTick);
       window.removeEventListener("resize", requestTick);
     };
   }, []);

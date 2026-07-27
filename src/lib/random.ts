@@ -26,10 +26,9 @@ const blogSlugs = [
 ]
 
 const projectPages = [
-  '/builds',
+  '/#builds',
+  '/#writes',
   '/runs',
-  '/writes',
-  '/everything-i-built',
 ]
 
 export function getRandomDestination(): string {

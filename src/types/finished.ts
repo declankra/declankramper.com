@@ -15,6 +15,7 @@ export interface FinishedProject {
     link?: string;
     learnMoreUrl?: string;
     visuals?: FinishedProjectVisual[]; // 0-3 items
+    metrics?: string[]; // short metric strings, rendered as one tabular-nums line
 }
 
 export interface CurrentlyBuildingProject {
@@ -23,6 +24,7 @@ export interface CurrentlyBuildingProject {
     subtitle: string;
     link?: string;
     visuals?: FinishedProjectVisual[];
+    metrics?: string[]; // short metric strings, rendered as one tabular-nums line
 }
 
 export interface Testimonial {

@@ -66,6 +66,18 @@ const clamp = (value: number, min: number, max: number) => Math.min(max, Math.ma
 const lerp = (from: number, to: number, alpha: number) => from + (to - from) * alpha
 const toUnit = (db: number) => clamp((db + 100) / 100, 0, 1)
 
+// The shell-level audio element outlives this component (it unmounts with the
+// now tab / home page), and an HTMLMediaElement can only ever be captured by
+// one MediaElementSourceNode — so the audio graph is built once per element
+// and cached for reuse across remounts instead of being torn down.
+interface SparkAudioGraph {
+  audioContext: AudioContext
+  spectrumAnalyser: AnalyserNode
+  timeAnalyser: AnalyserNode
+}
+
+const audioGraphCache = new WeakMap<HTMLAudioElement, SparkAudioGraph>()
+
 export default function SparkBackground({
   audio,
   isActive = false
@@ -115,65 +127,63 @@ export default function SparkBackground({
   }, [isActive])
 
   useEffect(() => {
-    if (!audio || audioContextRef.current) return
+    if (!audio) return
     if (typeof window === 'undefined') return
 
-    const audioContext = new AudioContext()
-    const source = audioContext.createMediaElementSource(audio)
+    let graph = audioGraphCache.get(audio)
 
-    // Output path (leave audio untouched).
-    const output = audioContext.createGain()
-    output.gain.value = 1
-    source.connect(output)
-    output.connect(audioContext.destination)
+    if (!graph) {
+      const audioContext = new AudioContext()
+      const source = audioContext.createMediaElementSource(audio)
 
-    // Silent analysis path so analysis runs without doubling audio.
-    const silent = audioContext.createGain()
-    silent.gain.value = 0
-    silent.connect(audioContext.destination)
+      // Output path (leave audio untouched).
+      const output = audioContext.createGain()
+      output.gain.value = 1
+      source.connect(output)
+      output.connect(audioContext.destination)
 
-    // Frequency-domain analyser for spectral flux.
-    const spectrumAnalyser = audioContext.createAnalyser()
-    spectrumAnalyser.fftSize = 2048
-    spectrumAnalyser.smoothingTimeConstant = 0.15
-    source.connect(spectrumAnalyser)
-    spectrumAnalyser.connect(silent)
+      // Silent analysis path so analysis runs without doubling audio.
+      const silent = audioContext.createGain()
+      silent.gain.value = 0
+      silent.connect(audioContext.destination)
 
-    // Time-domain analyser for low-band energy envelope.
-    const highpass = audioContext.createBiquadFilter()
-    highpass.type = 'highpass'
-    highpass.frequency.value = ENERGY_HIGHPASS_HZ
+      // Frequency-domain analyser for spectral flux.
+      const spectrumAnalyser = audioContext.createAnalyser()
+      spectrumAnalyser.fftSize = 2048
+      spectrumAnalyser.smoothingTimeConstant = 0.15
+      source.connect(spectrumAnalyser)
+      spectrumAnalyser.connect(silent)
 
-    const lowpass = audioContext.createBiquadFilter()
-    lowpass.type = 'lowpass'
-    lowpass.frequency.value = ENERGY_LOWPASS_HZ
+      // Time-domain analyser for low-band energy envelope.
+      const highpass = audioContext.createBiquadFilter()
+      highpass.type = 'highpass'
+      highpass.frequency.value = ENERGY_HIGHPASS_HZ
 
-    const timeAnalyser = audioContext.createAnalyser()
-    timeAnalyser.fftSize = 1024
-    timeAnalyser.smoothingTimeConstant = 0
+      const lowpass = audioContext.createBiquadFilter()
+      lowpass.type = 'lowpass'
+      lowpass.frequency.value = ENERGY_LOWPASS_HZ
 
-    source.connect(highpass)
-    highpass.connect(lowpass)
-    lowpass.connect(timeAnalyser)
-    timeAnalyser.connect(silent)
+      const timeAnalyser = audioContext.createAnalyser()
+      timeAnalyser.fftSize = 1024
+      timeAnalyser.smoothingTimeConstant = 0
 
-    audioContextRef.current = audioContext
-    spectrumAnalyserRef.current = spectrumAnalyser
-    timeAnalyserRef.current = timeAnalyser
-    frequencyDataRef.current = new Float32Array(spectrumAnalyser.frequencyBinCount)
-    timeDataRef.current = new Float32Array(timeAnalyser.fftSize)
+      source.connect(highpass)
+      highpass.connect(lowpass)
+      lowpass.connect(timeAnalyser)
+      timeAnalyser.connect(silent)
+
+      graph = { audioContext, spectrumAnalyser, timeAnalyser }
+      audioGraphCache.set(audio, graph)
+    }
+
+    audioContextRef.current = graph.audioContext
+    spectrumAnalyserRef.current = graph.spectrumAnalyser
+    timeAnalyserRef.current = graph.timeAnalyser
+    frequencyDataRef.current = new Float32Array(graph.spectrumAnalyser.frequencyBinCount)
+    timeDataRef.current = new Float32Array(graph.timeAnalyser.fftSize)
 
     return () => {
-      spectrumAnalyser.disconnect()
-      timeAnalyser.disconnect()
-      highpass.disconnect()
-      lowpass.disconnect()
-      silent.disconnect()
-      output.disconnect()
-      source.disconnect()
-      if (audioContext.state !== 'closed') {
-        audioContext.close().catch(() => undefined)
-      }
+      // Leave the cached graph connected — only drop this instance's handles.
       audioContextRef.current = null
       spectrumAnalyserRef.current = null
       timeAnalyserRef.current = null

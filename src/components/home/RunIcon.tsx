@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function RunIcon() {
   return (
-    <div className="run-icon-container inline-block mr-2">
+    <div className="run-icon-container inline-block">
       <svg
         width="16"
         height="16"

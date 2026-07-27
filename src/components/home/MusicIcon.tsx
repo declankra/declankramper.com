@@ -2,7 +2,7 @@
 
 export default function MusicIcon() {
   return (
-    <div className="music-icon-container inline-block mr-2">
+    <div className="music-icon-container inline-block">
       <svg
         width="16"
         height="16"
