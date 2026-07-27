@@ -44,6 +44,7 @@ export default function HomeTabs({ now, builds, writes }: HomeTabsProps) {
           <motion.div
             key={id}
             hidden={!active}
+            className={id === 'now' ? 'h-full' : undefined}
             initial={false}
             animate={
               active

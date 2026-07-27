@@ -10,6 +10,7 @@ import ShellRail from '@/components/shell/ShellRail'
 import FooterIconRow from '@/components/shell/FooterIconRow'
 import { GameProvider } from '@/components/game/GameContext'
 import { useHashTab, type TabId } from '@/components/shell/useHashTab'
+import { cn } from '@/lib/utils'
 
 interface ShellTabContextValue {
   /** null on in-shell pages that aren't a tab (e.g. /resume) — no underline */
@@ -42,6 +43,7 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
   // inside the shell; nav stays put and visible). Other in-shell pages
   // (e.g. /resume) belong to no tab.
   const activeTab: TabId | null = isHome ? hashTab : isArticle ? 'writes' : null
+  const isNow = activeTab === 'now'
 
   // Reading mode: on an article the shell quiets down immediately — tabs
   // collapse and the name becomes the back affordance, so the only action
@@ -71,14 +73,22 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
         value={{ activeTab, tabReady: isHome && hashTabReady, selectTab, articleFocus }}
       >
         <GameProvider>
-          <FooterIconRow showSignOff={activeTab === 'now'}>
-            <div className="flex h-svh flex-col bg-white md:flex-row">
+          <FooterIconRow showSignOff={isNow}>
+            <div
+              className={cn(
+                'flex flex-col bg-white md:flex-row',
+                isNow ? 'h-svh overflow-hidden' : 'min-h-svh'
+              )}
+            >
               <aside className="relative z-10 shrink-0 px-5 pt-6 md:w-[200px] md:pb-14 md:pl-[clamp(20px,3.5vw,44px)] md:pr-0 md:pt-[30px]">
                 <ShellRail />
               </aside>
               <div
                 id="shell-content"
-                className="flex-1 overflow-y-auto px-5 pb-24 pt-4 md:pl-[clamp(24px,3vw,40px)] md:pr-[clamp(20px,5vw,64px)] md:pt-[30px]"
+                className={cn(
+                  'min-h-0 flex-1 px-5 pb-24 pt-4 md:pl-[clamp(24px,3vw,40px)] md:pr-[clamp(20px,5vw,64px)] md:pt-[30px]',
+                  isNow && 'overflow-hidden'
+                )}
               >
                 {children}
               </div>

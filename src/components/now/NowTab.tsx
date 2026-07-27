@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 
 import SparkBackground from '@/components/home/SparkBackground'
@@ -20,6 +20,7 @@ export default function NowTab() {
   const { audioElement, audioReactive } = useShellFeatures()
   const [hero, setHero] = useState<HeroVariantId>(DEFAULT_HERO)
   const [treatment, setTreatment] = useState<TreatmentId>(DEFAULT_TREATMENT)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     // Saved picks only apply while exploring with ?panel — without it the
@@ -36,8 +37,31 @@ export default function NowTab() {
   const subFirstSentence = `${v.sub.split('. ')[0]}.`
   const mediaActive = tabReady && activeTab === 'now'
 
+  useEffect(() => {
+    const video = videoRef.current
+    if (!mediaActive || !video) return
+
+    // iOS Safari can ignore the declarative autoplay request when a video is
+    // mounted after client-side tab state resolves. Set the muted properties
+    // before explicitly starting playback so the first frame never waits for
+    // a user gesture.
+    video.defaultMuted = true
+    video.muted = true
+
+    const startPlayback = () => {
+      void video.play().catch(() => {
+        // Browsers may reject play() while the document is backgrounded. The
+        // autoplay attribute and canplay listener will retry when it is ready.
+      })
+    }
+
+    startPlayback()
+    video.addEventListener('canplay', startPlayback)
+    return () => video.removeEventListener('canplay', startPlayback)
+  }, [mediaActive])
+
   return (
-    <div className="relative flex min-h-[calc(100svh-180px)] flex-col justify-center md:min-h-[calc(100svh-140px)]">
+    <div className="relative flex h-full flex-col justify-center">
       {/* Spark background: now-tab only (decision 2026-07-21); fades with tab.
           z-0 (not negative): negative z-index paints behind the shell's white
           background, which made the music-reactive sparks invisible. Content
@@ -112,6 +136,7 @@ export default function NowTab() {
         <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[clamp(12px,1.4vw,18px)]">
           {mediaActive ? (
             <video
+              ref={videoRef}
               className="block h-full w-full object-contain"
               src="/finished/now-product-montage-expanded.mp4"
               autoPlay
