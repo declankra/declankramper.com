@@ -73,7 +73,7 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
         value={{ activeTab, tabReady: isHome && hashTabReady, selectTab, articleFocus }}
       >
         <GameProvider>
-          <FooterIconRow showSignOff={isNow}>
+          <FooterIconRow>
             <div
               className={cn(
                 'flex flex-col bg-white md:flex-row',

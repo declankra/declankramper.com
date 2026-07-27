@@ -20,15 +20,14 @@ const ReadmeDialog = dynamic(
   { ssr: false }
 )
 
-// Hosts the shell-level features (ambient audio, game, readme dialog) and the
-// bottom-right sign-off. The icon cluster itself lives in the rail
-// (RailMoreIcons) and reaches these features through ShellFeaturesContext.
+// Hosts the shell-level features (ambient audio, game, readme dialog). The
+// icon cluster itself lives in the rail (RailMoreIcons) and reaches these
+// features through ShellFeaturesContext.
 interface FooterIconRowProps {
   children: React.ReactNode
-  showSignOff: boolean
 }
 
-export default function FooterIconRow({ children, showSignOff }: FooterIconRowProps) {
+export default function FooterIconRow({ children }: FooterIconRowProps) {
   const router = useRouter()
   const { setGameState, gameState } = useGame()
   const [isReadmeOpen, setIsReadmeOpen] = useState(false)
@@ -75,12 +74,6 @@ export default function FooterIconRow({ children, showSignOff }: FooterIconRowPr
         onAudioStateChange={setAudioState}
       />
       <ReadmeDialog open={isReadmeOpen} onOpenChange={setIsReadmeOpen} origin={readmeOrigin} />
-
-      {showSignOff && (
-        <span className="fixed bottom-4 right-5 z-[4] text-[11px] text-[#c6c6cb] md:right-[clamp(20px,5vw,64px)]">
-          {new Date().getFullYear()}, hi internet - declan
-        </span>
-      )}
     </ShellFeaturesContext.Provider>
   )
 }
