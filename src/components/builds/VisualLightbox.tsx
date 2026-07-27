@@ -9,13 +9,19 @@ import type { FinishedProjectVisual } from '@/types/finished'
 interface VisualLightboxProps {
   visuals: FinishedProjectVisual[]
   title: string
+  preloadPreview?: boolean
 }
 
-export default function VisualLightbox({ visuals, title }: VisualLightboxProps) {
+export default function VisualLightbox({
+  visuals,
+  title,
+  preloadPreview = false,
+}: VisualLightboxProps) {
   const { activeTab, tabReady } = useShellTab()
   const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
   const [dragging, setDragging] = useState(false)
+  const previewVideoRef = useRef<HTMLVideoElement | null>(null)
   const stripRef = useRef<HTMLDivElement | null>(null)
   const slideRefs = useRef<Array<HTMLDivElement | null>>([])
   const indexRef = useRef(0)
@@ -26,7 +32,23 @@ export default function VisualLightbox({ visuals, title }: VisualLightboxProps) 
   const wheelLastStepRef = useRef(0)
 
   const count = visuals.length
+  const first = visuals[0]
   const mediaActive = tabReady && activeTab === 'builds'
+
+  useEffect(() => {
+    const video = previewVideoRef.current
+    if (!preloadPreview || !video) return
+
+    if (mediaActive) {
+      video.defaultMuted = true
+      video.muted = true
+      void video.play().catch(() => {
+        // Autoplay is an enhancement; the preloaded first frame remains visible.
+      })
+    } else {
+      video.pause()
+    }
+  }, [mediaActive, preloadPreview])
 
   const scrollToIndex = useCallback((i: number, behavior: ScrollBehavior = 'smooth') => {
     slideRefs.current[i]?.scrollIntoView({ behavior, inline: 'center', block: 'nearest' })
@@ -149,7 +171,6 @@ export default function VisualLightbox({ visuals, title }: VisualLightboxProps) 
   const frame =
     'relative aspect-[4/3] w-[96px] shrink-0 overflow-hidden rounded-[10px] border border-[#eee] bg-gradient-to-br from-[#f6f6f7] to-[#e9e9ec] md:w-[120px]'
 
-  const first = visuals[0]
   if (!first) {
     return (
       <div className={`${frame} flex items-center justify-center text-lg font-semibold text-[#c2c2c8]`}>
@@ -170,8 +191,17 @@ export default function VisualLightbox({ visuals, title }: VisualLightboxProps) 
           setOpen(true)
         }}
       >
-        {first.type === 'video' && mediaActive ? (
-          <video className="h-full w-full object-cover" src={first.src} autoPlay muted loop playsInline />
+        {first.type === 'video' && (mediaActive || preloadPreview) ? (
+          <video
+            ref={preloadPreview ? previewVideoRef : undefined}
+            className="h-full w-full object-cover"
+            src={first.src}
+            preload={preloadPreview ? 'auto' : 'metadata'}
+            autoPlay={mediaActive}
+            muted
+            loop
+            playsInline
+          />
         ) : first.type !== 'video' ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img className="h-full w-full object-cover" src={first.src} alt={first.alt ?? title} loading="lazy" />
