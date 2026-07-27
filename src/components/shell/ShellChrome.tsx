@@ -80,7 +80,7 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
                 isNow ? 'h-svh overflow-hidden' : 'min-h-svh'
               )}
             >
-              <aside className="relative z-10 shrink-0 px-5 pt-6 md:w-[200px] md:pb-14 md:pl-[clamp(20px,3.5vw,44px)] md:pr-0 md:pt-[30px]">
+              <aside className="relative z-20 shrink-0 px-5 pt-6 md:z-10 md:w-[200px] md:pb-14 md:pl-[clamp(20px,3.5vw,44px)] md:pr-0 md:pt-[30px]">
                 <ShellRail />
               </aside>
               <div
