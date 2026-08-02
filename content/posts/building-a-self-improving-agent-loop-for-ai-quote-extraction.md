@@ -155,7 +155,7 @@ I built a companion skill to download that walks you through setting up a simila
 
 Copy this into your AI coding agent (Claude Code, Codex, Cursor, etc.):
 
-> Download and run the autoresearch setup skill from https://github.com/declankra/ai-engineering. Start by reading the skill file, then guide me through setting it up for my project.
+> Download and run the autoresearch setup skill from https://github.com/declankra/ai-engineering-public. Start by reading skills/autoresearch/SKILL.md, then guide me through setting it up for my project.
 
 Caveat is that it's preliminary. I'll keep adding gotchas and experiment-shaped learnings from my own work, so it gets better over time across a wider range of problems. If you try it and have trouble, declankramper@gmail.com.
 
