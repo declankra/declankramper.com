@@ -59,11 +59,7 @@ export default function BuildsTab() {
   rows.forEach((row) => {
     items.push(
       <div key={row.key} className="flex items-start gap-4 border-b border-[#f3f3f4] py-4">
-        <VisualLightbox
-          visuals={row.visuals}
-          title={row.title}
-          preloadPreview={row.key === 'construction-quote-mapping'}
-        />
+        <VisualLightbox visuals={row.visuals} title={row.title} />
         <div className="min-w-0">
           <time className="text-[11px] tabular-nums text-[#999]">{row.year}</time>
           <h3 className="flex items-center gap-1.5 text-[14.5px] font-medium text-[#0A0A0B]">

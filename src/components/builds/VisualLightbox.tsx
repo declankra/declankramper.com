@@ -9,14 +9,9 @@ import type { FinishedProjectVisual } from '@/types/finished'
 interface VisualLightboxProps {
   visuals: FinishedProjectVisual[]
   title: string
-  preloadPreview?: boolean
 }
 
-export default function VisualLightbox({
-  visuals,
-  title,
-  preloadPreview = false,
-}: VisualLightboxProps) {
+export default function VisualLightbox({ visuals, title }: VisualLightboxProps) {
   const { activeTab, tabReady } = useShellTab()
   const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
@@ -37,7 +32,7 @@ export default function VisualLightbox({
 
   useEffect(() => {
     const video = previewVideoRef.current
-    if (!preloadPreview || !video) return
+    if (first?.type !== 'video' || !first.autoplay || !video) return
 
     if (mediaActive) {
       video.defaultMuted = true
@@ -48,7 +43,7 @@ export default function VisualLightbox({
     } else {
       video.pause()
     }
-  }, [mediaActive, preloadPreview])
+  }, [first, mediaActive])
 
   const scrollToIndex = useCallback((i: number, behavior: ScrollBehavior = 'smooth') => {
     slideRefs.current[i]?.scrollIntoView({ behavior, inline: 'center', block: 'nearest' })
@@ -191,24 +186,21 @@ export default function VisualLightbox({
           setOpen(true)
         }}
       >
-        {first.type === 'video' && (mediaActive || preloadPreview) ? (
+        {first.type === 'video' ? (
           <video
-            ref={preloadPreview ? previewVideoRef : undefined}
+            ref={first.autoplay ? previewVideoRef : undefined}
             className="h-full w-full object-cover"
             src={first.src}
-            preload={preloadPreview ? 'auto' : 'metadata'}
-            autoPlay={mediaActive}
+            poster={first.poster}
+            preload={first.autoplay ? 'metadata' : 'none'}
+            autoPlay={mediaActive && first.autoplay}
             muted
             loop
             playsInline
           />
-        ) : first.type !== 'video' ? (
+        ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img className="h-full w-full object-cover" src={first.src} alt={first.alt ?? title} loading="lazy" />
-        ) : (
-          <span className="flex h-full w-full items-center justify-center text-lg font-semibold text-[#c2c2c8]">
-            {title.charAt(0).toLowerCase()}
-          </span>
         )}
       </button>
 
@@ -256,6 +248,8 @@ export default function VisualLightbox({
                     <video
                       className="max-h-[80vh] max-w-full rounded-[14px]"
                       src={visual.src}
+                      poster={visual.poster}
+                      preload="metadata"
                       autoPlay
                       muted
                       loop

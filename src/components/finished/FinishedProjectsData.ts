@@ -17,6 +17,7 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
             {
                 type: 'video',
                 src: '/finished/ontology-xtract/ontology-xtract-sanitized-demo.web-hq.mp4',
+                poster: '/finished/ontology-xtract/ontology-xtract-sanitized-demo.web-hq.poster.webp',
                 alt: 'AI document extraction demo',
                 autoplay: true
             }
@@ -31,6 +32,7 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
             {
                 type: 'video',
                 src: '/finished/ontology-xtract/ontology-xtract-preview.web-hq.mp4',
+                poster: '/finished/ontology-xtract/ontology-xtract-preview.web-hq.poster.webp',
                 alt: 'Ontology-Xtract preview video',
                 autoplay: true
             }
@@ -148,6 +150,7 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/claude-story-creator.mp4',
+                poster: '/finished/claude-story-creator.poster.webp',
                 alt: 'Claude Story Creator'
             }
         ]
@@ -163,6 +166,7 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/interactive-letter-demo.mp4',
+                poster: '/finished/interactive-letter-demo.poster.webp',
                 alt: 'Interactive Letter Demo'
             }
         ]
@@ -193,6 +197,7 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/screencam-recorder-demo.mp4',
+                poster: '/finished/screencam-recorder-demo.poster.webp',
                 alt: 'PS Connect'
             }
         ]
@@ -228,11 +233,13 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/chitrack/ability_to_view_all_upcoming_arrivals.mp4',
+                poster: '/finished/chitrack/ability_to_view_all_upcoming_arrivals.poster.webp',
                 alt: 'Chitrack'
             },
             {
                 type: 'video',
                 src: '/finished/chitrack/improved_search_results_view.mp4',
+                poster: '/finished/chitrack/improved_search_results_view.poster.webp',
                 alt: 'Chitrack'
             }
         ]
@@ -252,7 +259,8 @@ export const finishedProjects: FinishedProject[] = [
             },
             {
                 type: 'video',
-                src: '/finished/website-blocker/website-blocker-demo.mov',
+                src: '/finished/website-blocker/website-blocker-demo.mp4',
+                poster: '/finished/website-blocker/website-blocker-demo.poster.webp',
                 alt: 'Website Blocker Demo'
             }
         ]
@@ -273,6 +281,7 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/sunlit-sips/sunlit-sips-chicago-demo.mp4',
+                poster: '/finished/sunlit-sips/sunlit-sips-chicago-demo.poster.webp',
                 alt: 'Sunlit Sips Chicago'
             }
         ]
@@ -312,6 +321,7 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/psPRD/psPRD-demo.mp4',
+                poster: '/finished/psPRD/psPRD-demo.poster.webp',
                 alt: 'PS PRD.ai'
             }
         ]
@@ -327,6 +337,7 @@ export const finishedProjects: FinishedProject[] = [
         {
             type: 'video',
             src: '/finished/ppt-2-prd.mp4',
+            poster: '/finished/ppt-2-prd.poster.webp',
             alt: 'Automated PRD Generator'
         }
         ]
@@ -533,6 +544,7 @@ export const finishedProjects: FinishedProject[] = [
             {
                 type: 'video',
                 src: '/finished/rc-tank.mp4',
+                poster: '/finished/rc-tank.poster.webp',
                 alt: 'RC Tank'
             }
         ]

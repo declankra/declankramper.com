@@ -1,6 +1,7 @@
 export interface FinishedProjectVisual {
     type: 'image' | 'video' | 'gif' | 'pdf';
     src: string;
+    poster?: string;
     alt?: string;
     pdfSrc?: string; // For images that should open PDFs in popup
     autoplay?: boolean; // For inline video previews that should autoplay and loop
