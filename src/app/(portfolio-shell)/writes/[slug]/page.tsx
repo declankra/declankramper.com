@@ -62,16 +62,12 @@ export default async function BlogPost({
 
   return (
     <ArticleTransition>
-      {/* The desktop shell reserves 200px for the rail, so centering only within
-          the remaining pane makes the reading measure look too far right.
-          Offset by roughly half the rail width (accounting for pane gutters)
-          once there is enough room to keep the article clear of the rail. */}
       <article
         id="writes-post-root"
-        className="mx-auto max-w-[620px] pb-16 lg:-translate-x-[90px]"
+        className="mx-auto max-w-[620px] pb-16"
       >
         <ReadingProgress />
-        <h1 className="mb-2 text-[clamp(22px,2.6vw,30px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A0A0B]">
+        <h1 id="writes-post-title" className="mb-2 scroll-mt-8 text-[clamp(22px,2.6vw,30px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A0A0B]">
           {post.title}
         </h1>
         <div className="mb-[26px] text-xs text-[#999]">
@@ -81,7 +77,7 @@ export default async function BlogPost({
         <div
           className="prose prose-neutral max-w-none
             prose-p:text-[15px] prose-p:leading-[1.75] prose-p:tracking-normal prose-p:text-[#333] prose-p:mb-4
-            prose-headings:font-semibold prose-headings:tracking-normal prose-headings:mt-8 prose-headings:mb-4
+            prose-headings:font-semibold prose-headings:tracking-normal prose-headings:mt-8 prose-headings:mb-4 prose-headings:scroll-mt-8
             prose-h2:text-xl prose-h3:text-base
             prose-pre:bg-secondary/50 prose-pre:border-0
             prose-code:text-sm prose-code:text-foreground prose-code:bg-secondary/50 prose-code:px-1 prose-code:rounded

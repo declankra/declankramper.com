@@ -38,11 +38,12 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
   const [hashTab, setHashTab, hashTabReady] = useHashTab()
 
   const isHome = pathname === '/'
+  const isWrites = pathname === '/writes'
   const isArticle = pathname.startsWith('/writes/')
   // On /writes/[slug] the "writes" tab reads as active (spec: article opens
   // inside the shell; nav stays put and visible). Other in-shell pages
   // (e.g. /resume) belong to no tab.
-  const activeTab: TabId | null = isHome ? hashTab : isArticle ? 'writes' : null
+  const activeTab: TabId | null = isHome ? hashTab : isArticle || isWrites ? 'writes' : null
   const isNow = activeTab === 'now'
 
   // Reading mode: on an article the shell quiets down immediately — tabs
@@ -53,7 +54,7 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
   const selectTab = useCallback(
     (tab: TabId) => {
       posthog?.capture('tab_switch', { tab })
-      if (isHome) {
+      if (isHome && tab !== 'writes') {
         setHashTab(tab)
       } else {
         // Exiting an article back to the home shell: flag it so the incoming
@@ -61,7 +62,7 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
         if (isArticle) {
           window.sessionStorage.setItem('dk-exit-article', '1')
         }
-        router.push(tab === 'now' ? '/' : `/#${tab}`, { scroll: false })
+        router.push(tab === 'writes' ? '/writes' : tab === 'now' ? '/' : `/#${tab}`)
       }
     },
     [isHome, isArticle, posthog, router, setHashTab]
@@ -80,7 +81,10 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
                 isNow ? 'h-svh overflow-hidden' : 'min-h-svh'
               )}
             >
-              <aside className="relative z-20 shrink-0 px-5 pt-6 md:z-10 md:w-[200px] md:pb-14 md:pl-[clamp(20px,3.5vw,44px)] md:pr-0 md:pt-[30px]">
+              <aside className={cn(
+                'relative z-20 shrink-0 px-5 pt-6 md:z-10 md:w-[200px] md:pb-14 md:pl-[clamp(20px,3.5vw,44px)] md:pr-0 md:pt-[30px]',
+                isArticle && 'md:sticky md:top-0 md:max-h-svh md:w-[240px] md:self-start md:overflow-y-auto lg:w-[280px]'
+              )}>
                 <ShellRail />
               </aside>
               <div

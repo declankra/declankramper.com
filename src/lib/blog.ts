@@ -15,6 +15,7 @@ type HastNode = {
   type?: string;
   tagName?: string;
   properties?: Record<string, unknown>;
+  value?: string;
   children?: HastNode[];
 };
 
@@ -160,11 +161,39 @@ async function markdownToHtml(markdown: string): Promise<string> {
     .use(remarkGfm) // Enable GitHub-flavored markdown (tables, strikethrough, etc.)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
+    .use(rehypeHeadingIds)
     .use(rehypeEnhanceMedia)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
 
   return result.toString();
+}
+
+// Generate stable anchors from the rendered headings, including inline markup.
+function rehypeHeadingIds() {
+  return (tree: HastNode) => {
+    const used = new Set<string>();
+    const walk = (node: HastNode, visit: (node: HastNode) => void) => {
+      visit(node);
+      node.children?.forEach((child) => walk(child, visit));
+    };
+    const text = (node: HastNode): string =>
+      node.value ?? node.children?.map(text).join('') ?? '';
+
+    walk(tree, (node) => {
+      if (typeof node.properties?.id === 'string') used.add(node.properties.id);
+    });
+    walk(tree, (node) => {
+      if (!/^h[1-3]$/.test(node.tagName ?? '') || node.properties?.id) return;
+      const base = text(node).trim().toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, '').replace(/\s+/g, '-') || 'section';
+      let id = base;
+      let suffix = 1;
+      while (used.has(id)) id = `${base}-${suffix++}`;
+      used.add(id);
+      (node.properties ??= {}).id = id;
+    });
+  };
 }
 
 // Lightweight rehype plugin to normalize media elements that appear in blog posts
