@@ -39,6 +39,7 @@ Articulation helps us discover our intent.
 
 I think about this quite a bit because I struggle with the ability to effectively speak my thoughts, which is part of articulating my intent. I think I do a better job at meaning what I say, than saying what I mean. In some cases this works out because people can "get what I mean" (they're good "understanders of intent"! - the second layer), but not all. And even still, I'd love to be able to express myself fully, as intended. As I'm sure others would, too.
 
+<br />
 
 [^1]: maybe the better word is "soulful", I'm not 100% sure, but when i say this, i think we all have an intuitive sense of what this means. so for now we can describe it as such and visualize the thing that makes our hairs rise and brain tingle.
 [^2]: even if technology can take us to the extreme perfect state where there is zero signal loss between our conscious intentions and reality, and those intentions can be perfectly understood and represented in reality, our intentions can still differ. access to the same capabilities doesn't mean we want the same things from them, for the same reasons.
