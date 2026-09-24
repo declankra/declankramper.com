@@ -27,7 +27,7 @@ const blogSlugs = [
 
 const projectPages = [
   '/#builds',
-  '/#writes',
+  '/writes',
   '/runs',
 ]
 

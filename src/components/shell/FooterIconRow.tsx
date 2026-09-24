@@ -9,6 +9,8 @@ import { showIosMusicToast } from '@/components/music/IosMusicToast'
 import { useGame } from '@/components/game/GameContext'
 import { getRandomDestination } from '@/lib/random'
 import { ShellFeaturesContext } from '@/components/shell/ShellFeaturesContext'
+import { useShellTab } from '@/components/shell/ShellChrome'
+import { tabFromHash } from '@/components/shell/useHashTab'
 
 const CursorTrail = dynamic(() => import('@/components/game/CursorTrail'), { ssr: false })
 const FusionFrenzyGameContent = dynamic(
@@ -29,6 +31,7 @@ interface FooterIconRowProps {
 
 export default function FooterIconRow({ children }: FooterIconRowProps) {
   const router = useRouter()
+  const { goToTab } = useShellTab()
   const { setGameState, gameState } = useGame()
   const [isReadmeOpen, setIsReadmeOpen] = useState(false)
   const [readmeOrigin, setReadmeOrigin] = useState({ x: 0, y: 0 })
@@ -50,8 +53,14 @@ export default function FooterIconRow({ children }: FooterIconRowProps) {
   }, [])
 
   const goRandom = useCallback(() => {
-    router.push(getRandomDestination())
-  }, [router])
+    const destination = getRandomDestination()
+    // Home tabs ("/#builds") go through the shell, not a raw router.push.
+    if (destination.startsWith('/#')) {
+      goToTab(tabFromHash(destination.slice(1)))
+    } else {
+      router.push(destination)
+    }
+  }, [goToTab, router])
 
   return (
     <ShellFeaturesContext.Provider

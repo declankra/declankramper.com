@@ -145,7 +145,7 @@ export default function NowTab() {
               <div className="mt-[26px] text-[12.5px] text-[#999]">
                 more of what i believe →{' '}
                 <Link
-                  href="/#writes"
+                  href="/writes"
                   className="text-[#666] underline underline-offset-[3px]"
                 >
                   the writes

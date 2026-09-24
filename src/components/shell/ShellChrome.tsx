@@ -9,7 +9,7 @@ import { usePostHog } from 'posthog-js/react'
 import ShellRail from '@/components/shell/ShellRail'
 import FooterIconRow from '@/components/shell/FooterIconRow'
 import { GameProvider } from '@/components/game/GameContext'
-import { useHashTab, type TabId } from '@/components/shell/useHashTab'
+import { pushHomeTab, useHashTab, type TabId } from '@/components/shell/useHashTab'
 import { cn } from '@/lib/utils'
 
 interface ShellTabContextValue {
@@ -18,6 +18,8 @@ interface ShellTabContextValue {
   /** True once the home tab has been synchronized with the current URL hash. */
   tabReady: boolean
   selectTab: (tab: TabId) => void
+  /** selectTab without the tab_switch analytics event (e.g. "random"). */
+  goToTab: (tab: TabId) => void
   /** Reading mode: on an article, scrolled past the title — the rail quiets
    * down (tabs collapse, name becomes a back affordance). */
   articleFocus: boolean
@@ -51,9 +53,8 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
   // from an article is back to the list.
   const articleFocus = isArticle
 
-  const selectTab = useCallback(
+  const goToTab = useCallback(
     (tab: TabId) => {
-      posthog?.capture('tab_switch', { tab })
       if (isHome && tab !== 'writes') {
         setHashTab(tab)
       } else {
@@ -62,16 +63,28 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
         if (isArticle) {
           window.sessionStorage.setItem('dk-exit-article', '1')
         }
-        router.push(tab === 'writes' ? '/writes' : tab === 'now' ? '/' : `/#${tab}`)
+        if (tab === 'writes') {
+          router.push('/writes')
+        } else {
+          pushHomeTab(router, tab)
+        }
       }
     },
-    [isHome, isArticle, posthog, router, setHashTab]
+    [isHome, isArticle, router, setHashTab]
+  )
+
+  const selectTab = useCallback(
+    (tab: TabId) => {
+      posthog?.capture('tab_switch', { tab })
+      goToTab(tab)
+    },
+    [goToTab, posthog]
   )
 
   return (
     <MotionConfig reducedMotion="user">
       <ShellTabContext.Provider
-        value={{ activeTab, tabReady: isHome && hashTabReady, selectTab, articleFocus }}
+        value={{ activeTab, tabReady: isHome && hashTabReady, selectTab, goToTab, articleFocus }}
       >
         <GameProvider>
           <FooterIconRow>
