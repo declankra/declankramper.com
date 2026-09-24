@@ -66,6 +66,22 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
 
 export const finishedProjects: FinishedProject[] = [
     {
+        id: 'your-own-font',
+        title: 'Your Own Font',
+        subtitle: 'I wanted to write a digital letter in my own handwriting, so I trained a tiny model that knows when my pen strokes are an \'r\'',
+        month: 9,
+        year: 2026,
+        link: 'https://your-own-font.vercel.app/',
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/your-own-font/your-own-font-demo.mp4',
+                poster: '/finished/your-own-font/your-own-font-demo.poster.webp',
+                alt: 'Writing words by hand as each letter fills in once the model recognizes it'
+            }
+        ]
+    },
+    {
         id: 'Surgent',
         title: 'Surgent',
         subtitle: 'Turning health data into daily confidence. An iOS app for understanding your body\'s running performance through objective progress over time — gradually, then suddenly all at once.',
