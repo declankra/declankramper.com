@@ -5,8 +5,7 @@ categories: ["Business", "AI"]
 preview: "when i build something custom, and when i tell a client to just use ChatGPT."
 ---
 
-noted date: sep 27, 2026 <br />
-*because things change and i'll learn more later. this is the consultant seat; what the labs absorb and what products survive them come next.*
+noted date: sep 27, 2026
 
 When does it make sense to build something custom vs just using the off-the-shelf tools from the AI labs?
 
