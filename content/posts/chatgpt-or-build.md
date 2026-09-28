@@ -1,5 +1,5 @@
 ---
-title: "ChatGPT or Build? What I Build for Clients and Why"
+title: "ChatGPT or Build"
 date: "2026-09-27"
 categories: ["Business", "AI"]
 preview: "when i build something custom, and when i tell a client to just use ChatGPT."
