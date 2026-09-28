@@ -64,7 +64,7 @@ export default async function BlogPost({
     <ArticleTransition>
       <article
         id="writes-post-root"
-        className="max-w-[620px] pb-16"
+        className="max-w-[620px] pb-16 lg:ml-[max(0px,calc(50vw-630px))]"
       >
         <ReadingProgress />
         <h1 id="writes-post-title" className="mb-2 scroll-mt-8 text-[clamp(22px,2.6vw,30px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A0A0B]">
