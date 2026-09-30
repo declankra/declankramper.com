@@ -18,7 +18,7 @@ Generally speaking, you'll want to build if these two things are both true:
 2. it directly helps deliver better work for your customers
 
 Avoid it, and kill it if you've already started, if:
-- you're spending more time on infra than on ontology
+- you're spending more time on infra than on ontology (learning about your business and customers)
 - the next model release will do the infra for you
 
 There's only a handful of world-class companies that can spend time building more of the infrastructure. The Ramps, Coinbases, Shopifys, and Stripes, to name a few. Everyone else should let the labs build it.
