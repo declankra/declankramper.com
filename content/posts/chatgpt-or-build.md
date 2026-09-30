@@ -7,7 +7,7 @@ preview: "when i build something custom, and when i tell a client to just use Ch
 
 When does it make sense to build something custom vs just using the off-the-shelf tools from the AI labs?
 
-Clients ask me this, and I ask it myself before I build anything. This post answers it from my seat: as an independent consultant, when do I build something for a business, and when do I tell them to just use ChatGPT? It's informed by work I've done helping SMBs to enterprises figure out what to build, and then building the things that have been used... and also not used (sad, but necessary).
+Clients ask me this, and I ask it myself before I build anything. This post answers it from my POV: as an independent consultant, when do I build something for a business, and when do I tell them to just use ChatGPT? It's informed by work I've done helping SMBs to enterprises figure out what to build, and then building the things that have been used... and also not used (sad, but necessary).
 
 By "build" I don't mean standing up an internal IT team. I mean someone who specializes in the problem building inside the systems the business already runs, and then keeping it maintained.
 
