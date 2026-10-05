@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 720 300" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Learnings harden into the path</title>
+  <desc id="d">A dot crosses a bumpy, foggy path slowly. At each big bump a piece comes out of it, drops into a tray, and hardens into a solid block. The blocks go back into the path and smooth it. The second run is faster with fewer bumps, and the third run crosses a smooth, solid path almost instantly.</desc>
+  <defs>
+    <filter id="fog" x="-40%" y="-80%" width="180%" height="260%"><feGaussianBlur stdDeviation="16"/></filter>
+    <path id="s1" d="M60 150 Q85 90 110 150 Q135 150 160 150 Q185 190 210 150 Q235 62 260 150 Q285 150 310 150 Q335 98 360 150 Q385 210 410 150 Q435 150 460 150 Q485 74 510 150 Q535 182 560 150 Q585 150 610 150 Q635 102 660 150"/>
+    <path id="s2" d="M60 150 Q85 150 110 150 Q135 150 160 150 Q185 150 210 150 Q235 122 260 150 Q285 150 310 150 Q335 150 360 150 Q385 170 410 150 Q435 150 460 150 Q485 126 510 150 Q535 150 560 150 Q585 150 610 150 Q635 150 660 150"/>
+    <path id="s3" d="M60 150 Q85 150 110 150 Q135 150 160 150 Q185 150 210 150 Q235 150 260 150 Q285 150 310 150 Q335 150 360 150 Q385 150 410 150 Q435 150 460 150 Q485 150 510 150 Q535 150 560 150 Q585 150 610 150 Q635 150 660 150"/>
+  </defs>
+  <style>
+    .soft{fill:#2a78d6;fill-opacity:.2;stroke:#2a78d6;stroke-width:1.5;stroke-dasharray:2.5 2}
+    .brick{fill:#2a78d6}
+    .token{fill:#18181b}
+    .label{font-size:15px;font-weight:600;fill:#0a0a0a}
+    .cap{font-size:11px;fill:#737373}
+  </style>
+
+  <rect width="720" height="300" fill="#ffffff"/>
+
+  <g opacity="0">
+    <animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;1;1;0" keyTimes="0;0.03;0.946667;1"/>
+
+    <!-- ambiguity: fog around the path, thinning as the path hardens -->
+    <g filter="url(#fog)" fill="#cfcfd4">
+      <animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="1;1;0.4;0.4;0;0" keyTimes="0;0.453333;0.506667;0.72;0.766667;1"/>
+      <ellipse cx="130" cy="150" rx="80" ry="50" opacity=".8"/>
+      <ellipse cx="250" cy="140" rx="90" ry="58" opacity=".7"/>
+      <ellipse cx="380" cy="156" rx="95" ry="55" opacity=".8"/>
+      <ellipse cx="510" cy="144" rx="90" ry="58" opacity=".7"/>
+      <ellipse cx="615" cy="152" rx="70" ry="45" opacity=".8"/>
+    </g>
+
+    <!-- the tray where pieces harden -->
+    <rect x="270" y="234" width="180" height="36" rx="8" fill="#fafafa" stroke="#e5e5e5" stroke-width="1.5">
+      <animate attributeName="stroke" dur="15s" repeatCount="indefinite" values="#e5e5e5;#e5e5e5;#2a78d6;#e5e5e5;#e5e5e5;#2a78d6;#e5e5e5;#e5e5e5" keyTimes="0;0.393333;0.413333;0.433333;0.673333;0.69;0.706667;1"/>
+    </rect>
+
+    <!-- start and end posts -->
+    <line x1="60" y1="138" x2="60" y2="162" stroke="#d4d4d4" stroke-width="2" stroke-linecap="round"/>
+    <line x1="660" y1="138" x2="660" y2="162" stroke="#d4d4d4" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- the path: bumpy, then smoother, then solid -->
+    <path fill="none" stroke="#b0b0b0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M60 150 Q85 90 110 150 Q135 150 160 150 Q185 190 210 150 Q235 62 260 150 Q285 150 310 150 Q335 98 360 150 Q385 210 410 150 Q435 150 460 150 Q485 74 510 150 Q535 182 560 150 Q585 150 610 150 Q635 102 660 150">
+      <animate attributeName="d" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="M60 150 Q85 90 110 150 Q135 150 160 150 Q185 190 210 150 Q235 62 260 150 Q285 150 310 150 Q335 98 360 150 Q385 210 410 150 Q435 150 460 150 Q485 74 510 150 Q535 182 560 150 Q585 150 610 150 Q635 102 660 150;M60 150 Q85 90 110 150 Q135 150 160 150 Q185 190 210 150 Q235 62 260 150 Q285 150 310 150 Q335 98 360 150 Q385 210 410 150 Q435 150 460 150 Q485 74 510 150 Q535 182 560 150 Q585 150 610 150 Q635 102 660 150;M60 150 Q85 150 110 150 Q135 150 160 150 Q185 150 210 150 Q235 122 260 150 Q285 150 310 150 Q335 150 360 150 Q385 170 410 150 Q435 150 460 150 Q485 126 510 150 Q535 150 560 150 Q585 150 610 150 Q635 150 660 150;M60 150 Q85 150 110 150 Q135 150 160 150 Q185 150 210 150 Q235 122 260 150 Q285 150 310 150 Q335 150 360 150 Q385 170 410 150 Q435 150 460 150 Q485 126 510 150 Q535 150 560 150 Q585 150 610 150 Q635 150 660 150;M60 150 Q85 150 110 150 Q135 150 160 150 Q185 150 210 150 Q235 150 260 150 Q285 150 310 150 Q335 150 360 150 Q385 150 410 150 Q435 150 460 150 Q485 150 510 150 Q535 150 560 150 Q585 150 610 150 Q635 150 660 150;M60 150 Q85 150 110 150 Q135 150 160 150 Q185 150 210 150 Q235 150 260 150 Q285 150 310 150 Q335 150 360 150 Q385 150 410 150 Q435 150 460 150 Q485 150 510 150 Q535 150 560 150 Q585 150 610 150 Q635 150 660 150" keyTimes="0;0.453333;0.506667;0.72;0.766667;1"/>
+      <animate attributeName="stroke" dur="15s" repeatCount="indefinite" values="#b0b0b0;#b0b0b0;#7d9cc4;#7d9cc4;#2a78d6;#2a78d6" keyTimes="0;0.453333;0.506667;0.72;0.766667;1"/>
+      <animate attributeName="stroke-width" dur="15s" repeatCount="indefinite" values="3;3;3.5;3.5;4.5;4.5" keyTimes="0;0.453333;0.506667;0.72;0.766667;1"/>
+    </path>
+
+    <!-- run 1: a piece comes out at each big bump and drops into the tray -->
+    <circle r="6" class="soft" cx="85" cy="109" opacity="0"><animate attributeName="cx" dur="15s" repeatCount="indefinite" values="85;85;300;300" keyTimes="0;0.08;0.14;1"/><animate attributeName="cy" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.2 0.6 0.4 1;0.5 0 0.7 1;0 0 1 1" values="109;109;95;252;252" keyTimes="0;0.08;0.096667;0.14;1"/><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.08;0.09;0.393333;0.433333;1"/></circle>
+    <circle r="6" class="soft" cx="235" cy="95" opacity="0"><animate attributeName="cx" dur="15s" repeatCount="indefinite" values="235;235;340;340" keyTimes="0;0.146667;0.206667;1"/><animate attributeName="cy" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.2 0.6 0.4 1;0.5 0 0.7 1;0 0 1 1" values="95;95;81;252;252" keyTimes="0;0.146667;0.163333;0.206667;1"/><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.146667;0.156667;0.393333;0.433333;1"/></circle>
+    <circle r="6" class="soft" cx="485" cy="101" opacity="0"><animate attributeName="cx" dur="15s" repeatCount="indefinite" values="485;485;380;380" keyTimes="0;0.266667;0.326667;1"/><animate attributeName="cy" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.2 0.6 0.4 1;0.5 0 0.7 1;0 0 1 1" values="101;101;87;252;252" keyTimes="0;0.266667;0.283333;0.326667;1"/><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.266667;0.276667;0.393333;0.433333;1"/></circle>
+    <circle r="6" class="soft" cx="635" cy="115" opacity="0"><animate attributeName="cx" dur="15s" repeatCount="indefinite" values="635;635;420;420" keyTimes="0;0.33;0.39;1"/><animate attributeName="cy" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.2 0.6 0.4 1;0.5 0 0.7 1;0 0 1 1" values="115;115;101;252;252" keyTimes="0;0.33;0.346667;0.39;1"/><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.33;0.34;0.393333;0.433333;1"/></circle>
+
+    <!-- run 1: the pieces harden into blocks, then go back into the bumps they came from -->
+    <g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.393333;0.433333;0.48;0.506667;1"/>
+      <rect class="brick" x="-6" y="-6" width="12" height="12" rx="2"><animateTransform attributeName="transform" type="translate" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="300 252;300 252;85 150;85 150" keyTimes="0;0.446667;0.493333;1"/></rect>
+      <rect class="brick" x="-6" y="-6" width="12" height="12" rx="2"><animateTransform attributeName="transform" type="translate" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="340 252;340 252;235 150;235 150" keyTimes="0;0.446667;0.493333;1"/></rect>
+      <rect class="brick" x="-6" y="-6" width="12" height="12" rx="2"><animateTransform attributeName="transform" type="translate" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="380 252;380 252;485 150;485 150" keyTimes="0;0.446667;0.493333;1"/></rect>
+      <rect class="brick" x="-6" y="-6" width="12" height="12" rx="2"><animateTransform attributeName="transform" type="translate" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="420 252;420 252;635 150;635 150" keyTimes="0;0.446667;0.493333;1"/></rect>
+      </g>
+
+    <!-- run 2: fewer, smaller bumps; two more pieces -->
+    <circle r="6" class="soft" cx="235" cy="125" opacity="0"><animate attributeName="cx" dur="15s" repeatCount="indefinite" values="235;235;340;340" keyTimes="0;0.566667;0.613333;1"/><animate attributeName="cy" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.2 0.6 0.4 1;0.5 0 0.7 1;0 0 1 1" values="125;125;111;252;252" keyTimes="0;0.566667;0.58;0.613333;1"/><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.566667;0.576667;0.673333;0.706667;1"/></circle>
+    <circle r="6" class="soft" cx="485" cy="127" opacity="0"><animate attributeName="cx" dur="15s" repeatCount="indefinite" values="485;485;380;380" keyTimes="0;0.625;0.671667;1"/><animate attributeName="cy" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.2 0.6 0.4 1;0.5 0 0.7 1;0 0 1 1" values="127;127;113;252;252" keyTimes="0;0.625;0.638333;0.671667;1"/><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.625;0.635;0.673333;0.706667;1"/></circle>
+    <g opacity="0"><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.673333;0.706667;0.74;0.766667;1"/>
+      <rect class="brick" x="-6" y="-6" width="12" height="12" rx="2"><animateTransform attributeName="transform" type="translate" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="340 252;340 252;235 150;235 150" keyTimes="0;0.713333;0.753333;1"/></rect>
+      <rect class="brick" x="-6" y="-6" width="12" height="12" rx="2"><animateTransform attributeName="transform" type="translate" dur="15s" repeatCount="indefinite" calcMode="spline" keySplines="0 0 1 1;0.4 0 0.2 1;0 0 1 1" values="380 252;380 252;485 150;485 150" keyTimes="0;0.713333;0.753333;1"/></rect>
+      </g>
+
+    <!-- the work crossing the path, once per run -->
+    <circle r="9" cy="-11" class="token" opacity="1"><animateMotion dur="15s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;0.044;0.053;0.29;0.305;0.46;0.47;0.72;0.73;0.95;0.96;1;1" keyTimes="0;0.04;0.066667;0.093333;0.133333;0.16;0.193333;0.206667;0.253333;0.28;0.32;0.34;0.36;1"><mpath href="#s1" xlink:href="#s1"/></animateMotion><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="1;1;0;0" keyTimes="0;0.36;0.38;1"/></circle>
+    <circle r="9" cy="-11" class="token" opacity="0"><animateMotion dur="15s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;0.283;0.295;0.705;0.72;1;1" keyTimes="0;0.52;0.56;0.573333;0.62;0.63;0.653333;1"><mpath href="#s2" xlink:href="#s2"/></animateMotion><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.5;0.513333;0.653333;0.673333;1"/></circle>
+    <circle r="9" cy="-11" class="token" opacity="0"><animateMotion dur="15s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.773333;0.826667;1"><mpath href="#s3" xlink:href="#s3"/></animateMotion><animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0;0.753333;0.766667;1"/></circle>
+
+    <!-- run label -->
+    <text x="24" y="34" class="label">Run 1<animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="1;1;0;0" keyTimes="0;0.493333;0.506667;1"/></text>
+    <text x="24" y="34" class="label" opacity="0">Run 2<animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0;0.493333;0.506667;0.746667;0.76;1"/></text>
+    <text x="24" y="34" class="label" opacity="0">Run 3<animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;1;1" keyTimes="0;0.746667;0.76;1"/></text>
+
+    <!-- time per run, drawn in real time -->
+    <text x="556" y="18" class="cap">time per run</text>
+    <text x="548" y="34" class="cap" text-anchor="end">1</text>
+    <text x="548" y="50" class="cap" text-anchor="end">2</text>
+    <text x="548" y="66" class="cap" text-anchor="end">3</text>
+    <rect x="556" y="26" height="9" rx="3" width="0" fill="#b0b0b0"><animate attributeName="width" dur="15s" repeatCount="indefinite" values="0;0;120;120" keyTimes="0;0.04;0.36;1"/></rect>
+    <rect x="556" y="42" height="9" rx="3" width="0" fill="#7d9cc4"><animate attributeName="width" dur="15s" repeatCount="indefinite" values="0;0;50;50" keyTimes="0;0.52;0.653333;1"/></rect>
+    <rect x="556" y="58" height="9" rx="3" width="0" fill="#2a78d6"><animate attributeName="width" dur="15s" repeatCount="indefinite" values="0;0;20;20" keyTimes="0;0.773333;0.826667;1"/></rect>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 336" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Reading an uploaded sheet, before and after</title>
+  <desc id="d">Time per sheet: the LLM call takes a median 3.2 seconds, Jev takes 0.37 seconds, 8.6 times faster. Cost per sheet relative to before: the LLM call is 100 percent, Jev is about 11 percent, about 90 percent cheaper. Measured on 34 workbooks, 3 runs each.</desc>
+  <style>
+    .ink{fill:#0a0a0a}
+    .muted{fill:#737373}
+    .name{font-size:14px;fill:#525252}
+    .name.hero{fill:#0a0a0a;font-weight:600}
+    .val{font-size:14px;fill:#0a0a0a;font-variant-numeric:tabular-nums}
+    .head{font-size:15px;font-weight:600;fill:#0a0a0a}
+    .before{fill:#85858d}
+    .after{fill:#2a78d6}
+    .base{stroke:#d4d4d4;stroke-width:1}
+  </style>
+
+  <rect width="620" height="336" fill="#ffffff"/>
+
+  <text x="16" y="32" class="ink" font-size="17" font-weight="600">Reading an uploaded sheet, before and after</text>
+  <text x="16" y="54" class="muted" font-size="14">LLM call vs. Jev, measured on the same 34 workbooks</text>
+
+  <!-- Panel 1: time -->
+  <text x="16" y="94" class="head">Time per sheet</text>
+  <text x="604" y="94" class="head" text-anchor="end">8.6× faster</text>
+  <line x1="72.5" y1="104" x2="72.5" y2="172" class="base"/>
+  <text x="62" y="126" class="name" text-anchor="end">LLM</text>
+  <path class="before" d="M72 108 H538 A4 4 0 0 1 542 112 V130 A4 4 0 0 1 538 134 H72 Z"/>
+  <text x="550" y="126" class="val">3.2 s</text>
+  <text x="62" y="160" class="name hero" text-anchor="end">Jev</text>
+  <path class="after" d="M72 142 H122.3 A4 4 0 0 1 126.3 146 V164 A4 4 0 0 1 122.3 168 H72 Z"/>
+  <text x="134.3" y="160" class="val">0.37 s</text>
+
+  <!-- Panel 2: cost -->
+  <text x="16" y="212" class="head">Cost per sheet, relative to before</text>
+  <text x="604" y="212" class="head" text-anchor="end">about 90% cheaper</text>
+  <line x1="72.5" y1="222" x2="72.5" y2="290" class="base"/>
+  <text x="62" y="244" class="name" text-anchor="end">LLM</text>
+  <path class="before" d="M72 226 H538 A4 4 0 0 1 542 230 V248 A4 4 0 0 1 538 252 H72 Z"/>
+  <text x="550" y="244" class="val">100%</text>
+  <text x="62" y="278" class="name hero" text-anchor="end">Jev</text>
+  <path class="after" d="M72 260 H118.3 A4 4 0 0 1 122.3 264 V282 A4 4 0 0 1 118.3 286 H72 Z"/>
+  <text x="130.3" y="278" class="val">≈11%</text>
+
+  <text x="16" y="322" class="muted" font-size="12">34 workbooks, 3 runs each. Time is the median model step only.</text>
+</svg>
