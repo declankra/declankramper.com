@@ -34,7 +34,7 @@ interface NameLink {
 
 const LINKS: NameLink[] = [
   { label: 'linkedin', href: candidateLinks.linkedin, icon: <Linkedin size={13} strokeWidth={1.8} /> },
-  { label: 'dkbuilds.co', href: candidateLinks.dkBuilds, icon: <Hammer size={13} strokeWidth={1.8} /> },
+  { label: 'kramperengineering.com', href: candidateLinks.kramperEngineering, icon: <Hammer size={13} strokeWidth={1.8} /> },
   {
     label: 'contact',
     href: 'mailto:declankramper@gmail.com', // interview decision: gmail, not the dkbuilds address

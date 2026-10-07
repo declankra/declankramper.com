@@ -10,7 +10,7 @@ export const candidateLinks = {
   builds: `${SITE_URL}/builds`,
   writes: `${SITE_URL}/writes`,
   linkedin: "https://www.linkedin.com/in/declan-kramper/",
-  dkBuilds: "https://www.dkbuilds.co",
+  kramperEngineering: "https://kramperengineering.com",
   strava: "https://www.strava.com/athletes/98367252",
   substack: "https://substack.com/@declankramper",
 } as const;
@@ -100,7 +100,7 @@ export const candidateLinksList = [
   { label: "Builds", url: candidateLinks.builds },
   { label: "Writes", url: candidateLinks.writes },
   { label: "LinkedIn", url: candidateLinks.linkedin },
-  { label: "dkBuilds", url: candidateLinks.dkBuilds },
+  { label: "Kramper Engineering", url: candidateLinks.kramperEngineering },
 ];
 
 export const personJsonLd = {
@@ -127,7 +127,7 @@ export const personJsonLd = {
       "Forward-deployed applied AI builder who likes being close to the problem and close to the code.",
     sameAs: [
       candidateLinks.linkedin,
-      candidateLinks.dkBuilds,
+      candidateLinks.kramperEngineering,
       candidateLinks.strava,
     ],
     worksFor: {
@@ -182,8 +182,8 @@ export const resumeJson = {
         url: SITE_URL,
       },
       {
-        network: "dkBuilds",
-        url: candidateLinks.dkBuilds,
+        network: "Kramper Engineering",
+        url: candidateLinks.kramperEngineering,
       },
     ],
   },
