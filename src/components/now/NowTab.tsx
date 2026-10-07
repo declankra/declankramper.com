@@ -16,12 +16,13 @@ import {
   type TreatmentId,
 } from '@/components/now/nowContent'
 
-const KRAMPER_ENGINEERING = 'Kramper Engineering'
+const FIRM_MENTION = '(Kramper Engineering)'
 
 // The hero copy stays a plain string (variants and the t3 first-sentence cut
-// split it); the firm's name becomes a link to its site where it renders.
-function withFirmLink(text: string) {
-  const [before, after] = text.split(KRAMPER_ENGINEERING)
+// split it); the firm's mention renders as its four-square mark, linked to
+// its site. Placeholder mark until the Kramper brand lands.
+function withFirmMark(text: string) {
+  const [before, after] = text.split(FIRM_MENTION)
   if (after === undefined) return text
   return (
     <>
@@ -30,9 +31,16 @@ function withFirmLink(text: string) {
         href={candidateLinks.kramperEngineering}
         target="_blank"
         rel="noreferrer"
-        className="no-underline hover:underline hover:underline-offset-[3px]"
+        aria-label="Kramper Engineering"
+        title="Kramper Engineering"
+        className="inline-block align-[-0.1em] text-[#999] transition-colors duration-150 hover:text-[#0A0A0B]"
       >
-        {KRAMPER_ENGINEERING}
+        <svg viewBox="0 0 60 60" className="h-[0.95em] w-[0.95em]" fill="currentColor" aria-hidden="true">
+          <rect x="0" y="0" width="26" height="26" rx="2" />
+          <rect x="0" y="34" width="26" height="26" rx="2" />
+          <rect x="34" y="34" width="26" height="26" rx="2" />
+          <rect x="34" y="0" width="26" height="26" rx="2" opacity="0.4" />
+        </svg>
       </a>
       {after}
     </>
@@ -130,7 +138,7 @@ export default function NowTab() {
 
           {treatment !== 't3' && (
             <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
-              {withFirmLink(v.sub)}
+              {withFirmMark(v.sub)}
             </p>
           )}
 
@@ -164,7 +172,7 @@ export default function NowTab() {
           {treatment === 't3' && (
             <>
               <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
-                {withFirmLink(subFirstSentence)}
+                {withFirmMark(subFirstSentence)}
               </p>
               <div className="mt-[26px] text-[12.5px] text-[#999]">
                 more of what i believe →{' '}
