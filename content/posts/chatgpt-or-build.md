@@ -3,6 +3,7 @@ title: "ChatGPT or Build"
 date: "2026-09-27"
 categories: ["Business", "AI"]
 preview: "when i build something custom, and when i tell a client to just use ChatGPT."
+draft: true
 ---
 
 When does it make sense to build something custom vs just using the off-the-shelf tools from the AI labs?
