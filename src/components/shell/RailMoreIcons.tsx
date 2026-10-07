@@ -12,6 +12,7 @@ import ReadmeIcon from '@/components/home/ReadmeIcon'
 import ResumeIcon from '@/components/home/ResumeIcon'
 import SoundcloudIcon from '@/components/home/SoundcloudIcon'
 import CoffeeIcon from '@/components/home/CoffeeIcon'
+import StoplightIcon from '@/components/home/StoplightIcon'
 import { useShellFeatures } from '@/components/shell/ShellFeaturesContext'
 import { cn } from '@/lib/utils'
 
@@ -165,6 +166,9 @@ export default function RailMoreIcons() {
               </MoreItem>
               <MoreItem index={7} title="coffee" triggerClass="coffee-link" href="/coffee">
                 <CoffeeIcon />
+              </MoreItem>
+              <MoreItem index={8} title="stoplights" triggerClass="stoplights-link" href="/stoplights">
+                <StoplightIcon />
               </MoreItem>
             </>
           )}
