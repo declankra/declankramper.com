@@ -7,6 +7,7 @@ import SparkBackground from '@/components/home/SparkBackground'
 import { useShellTab } from '@/components/shell/ShellChrome'
 import { useShellFeatures } from '@/components/shell/ShellFeaturesContext'
 import VariantPanel from '@/components/now/VariantPanel'
+import { candidateLinks } from '@/lib/candidate-profile'
 import {
   DEFAULT_HERO,
   DEFAULT_TREATMENT,
@@ -14,6 +15,29 @@ import {
   type HeroVariantId,
   type TreatmentId,
 } from '@/components/now/nowContent'
+
+const KRAMPER_ENGINEERING = 'Kramper Engineering'
+
+// The hero copy stays a plain string (variants and the t3 first-sentence cut
+// split it); the firm's name becomes a link to its site where it renders.
+function withFirmLink(text: string) {
+  const [before, after] = text.split(KRAMPER_ENGINEERING)
+  if (after === undefined) return text
+  return (
+    <>
+      {before}
+      <a
+        href={candidateLinks.kramperEngineering}
+        target="_blank"
+        rel="noreferrer"
+        className="no-underline hover:underline hover:underline-offset-[3px]"
+      >
+        {KRAMPER_ENGINEERING}
+      </a>
+      {after}
+    </>
+  )
+}
 
 export default function NowTab() {
   const { activeTab, tabReady } = useShellTab()
@@ -106,7 +130,7 @@ export default function NowTab() {
 
           {treatment !== 't3' && (
             <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
-              {v.sub}
+              {withFirmLink(v.sub)}
             </p>
           )}
 
@@ -140,7 +164,7 @@ export default function NowTab() {
           {treatment === 't3' && (
             <>
               <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
-                {subFirstSentence}
+                {withFirmLink(subFirstSentence)}
               </p>
               <div className="mt-[26px] text-[12.5px] text-[#999]">
                 more of what i believe →{' '}
