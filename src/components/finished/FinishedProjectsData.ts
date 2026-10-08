@@ -66,6 +66,23 @@ export const currentlyBuildingProjects: CurrentlyBuildingProject[] = [
 
 export const finishedProjects: FinishedProject[] = [
     {
+        id: 'chicago-coffee',
+        title: 'Chicago Coffee Shops',
+        subtitle: 'My Apple Notes ranking of Chicago coffee shops, made quicker to pick from before I leave for LA: a "fast" model (OpenAI\'s Decision API) lifts the shops that fit as you type, and a "slow" agent (Vercel\'s eve) picks one in my words when you hit enter.',
+        month: 10,
+        year: 2026,
+        link: '/coffee',
+        visuals: [
+            {
+                type: 'video',
+                src: '/finished/chicago-coffee/chicago-coffee-demo.mp4',
+                poster: '/finished/chicago-coffee/chicago-coffee-demo.poster.webp',
+                alt: 'Logos fall into a pile, typing lifts the matching shops into a row, and on enter an agent answers in Declan\'s words with two shop cards',
+                autoplay: true
+            }
+        ]
+    },
+    {
         id: 'your-own-font',
         title: 'Your Own Font',
         subtitle: 'I wanted to write a digital letter in my own handwriting, so I trained a tiny model that knows when my pen strokes are an \'r\'',
