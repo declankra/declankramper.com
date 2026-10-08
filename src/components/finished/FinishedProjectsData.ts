@@ -68,7 +68,7 @@ export const finishedProjects: FinishedProject[] = [
     {
         id: 'chicago-coffee',
         title: 'Chicago Coffee Shops',
-        subtitle: 'My Apple Notes ranking of Chicago coffee shops, made quicker to pick from before I leave for LA: a "fast" model (OpenAI\'s Decision API) lifts the shops that fit as you type, and a "slow" agent (Vercel\'s eve) picks one in my words when you hit enter.',
+        subtitle: 'A fun test of my generative design skills; uses a "fast" (OpenAI Decision API) and "slow" (Vercel Eve Agent) experience to help me decide which (of the past 50+ I\'ve been to) coffee shop to go to',
         month: 10,
         year: 2026,
         link: '/coffee',
