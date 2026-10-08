@@ -39,13 +39,22 @@ function MoreItem({
   children: React.ReactNode
 }) {
   const className = cn(ITEM_CLASS, triggerClass)
+  const external = !href?.startsWith('/')
+  // /coffee is another app behind a rewrite; <Link> can't soft-navigate there.
   const inner = href ? (
-    href.startsWith('/') ? (
+    !external && href !== '/coffee' ? (
       <Link href={href} title={title} aria-label={title} className={className}>
         {children}
       </Link>
     ) : (
-      <a href={href} target="_blank" rel="noreferrer" title={title} aria-label={title} className={className}>
+      <a
+        href={href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noreferrer' : undefined}
+        title={title}
+        aria-label={title}
+        className={className}
+      >
         {children}
       </a>
     )
