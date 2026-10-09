@@ -115,11 +115,13 @@ export default function NowTab() {
   }, [mediaActive, tabReady])
 
   return (
-    <div className="relative flex h-full flex-col justify-center">
+    <>
       {/* Spark background: now-tab only (decision 2026-07-21); fades with tab.
           z-0 (not negative): negative z-index paints behind the shell's white
           background, which made the music-reactive sparks invisible. Content
-          sits above it via relative z-10. */}
+          sits above it via relative z-10. A sibling of the content, not its
+          child: the tab-enter animation transforms the pane's children, and a
+          transformed ancestor would pin this fixed layer to it. */}
       <div
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500"
@@ -130,74 +132,76 @@ export default function NowTab() {
         ) : null}
       </div>
 
-      <div className="relative z-10 grid items-center gap-[clamp(24px,4vw,60px)] md:grid-cols-[1fr_0.92fr]">
-        <div>
-          <h1 className="max-w-[640px] text-balance text-[clamp(26px,3.4vw,42px)] font-medium leading-[1.16] tracking-[-0.028em] text-[#0A0A0B] [&_em]:italic">
-            {v.heading}
-          </h1>
+      <div className="relative flex h-full flex-col justify-center">
+        <div className="relative z-10 grid items-center gap-[clamp(24px,4vw,60px)] md:grid-cols-[1fr_0.92fr]">
+          <div>
+            <h1 className="max-w-[640px] text-balance text-[clamp(26px,3.4vw,42px)] font-medium leading-[1.16] tracking-[-0.028em] text-[#0A0A0B] [&_em]:italic">
+              {v.heading}
+            </h1>
 
-          {treatment !== 't3' && (
-            <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
-              {withFirmMark(v.sub)}
-            </p>
-          )}
-
-          {treatment === 't1' && (
-            <div className="mt-[30px] flex max-w-[540px] flex-col gap-[7px]">
-              <div className="mb-[3px] text-[10.5px] uppercase tracking-[0.14em] text-[#999]">
-                what i believe
-              </div>
-              <p className="text-[13.5px] leading-[1.5] text-[#666]">
-                <b className="font-semibold text-[#0A0A0B]">building the right things</b> — shortening
-                the loop from problem to shipped value.
-              </p>
-              <p className="text-[13.5px] leading-[1.5] text-[#666]">
-                <b className="font-semibold text-[#0A0A0B]">health and fitness, always</b> — the
-                foundation for an enjoyable great life.
-              </p>
-              <p className="text-[13.5px] leading-[1.5] text-[#999]">
-                because both will appreciate in a post-AI world. (the only thing left is your
-                uniqueness.)
-              </p>
-            </div>
-          )}
-
-          {treatment === 't2' && (
-            <p className="mt-4 max-w-[540px] text-[13.5px] italic leading-[1.6] text-[#999]">
-              two things i believe appreciate in a post-AI world: building the right things, and
-              health. the only thing left is your uniqueness.
-            </p>
-          )}
-
-          {treatment === 't3' && (
-            <>
+            {treatment !== 't3' && (
               <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
-                {withFirmMark(subFirstSentence)}
+                {withFirmMark(v.sub)}
               </p>
-              <div className="mt-[26px] text-[12.5px] text-[#999]">
-                more of what i believe →{' '}
-                <Link
-                  href="/writes"
-                  className="text-[#666] underline underline-offset-[3px]"
-                >
-                  the writes
-                </Link>
-              </div>
-            </>
-          )}
-        </div>
+            )}
 
-        <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[clamp(12px,1.4vw,18px)]">
-          <video
-            ref={videoRef}
-            className="block h-full w-full object-contain"
-            src="/finished/now-product-montage-expanded.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-          />
+            {treatment === 't1' && (
+              <div className="mt-[30px] flex max-w-[540px] flex-col gap-[7px]">
+                <div className="mb-[3px] text-[10.5px] uppercase tracking-[0.14em] text-[#999]">
+                  what i believe
+                </div>
+                <p className="text-[13.5px] leading-[1.5] text-[#666]">
+                  <b className="font-semibold text-[#0A0A0B]">building the right things</b> — shortening
+                  the loop from problem to shipped value.
+                </p>
+                <p className="text-[13.5px] leading-[1.5] text-[#666]">
+                  <b className="font-semibold text-[#0A0A0B]">health and fitness, always</b> — the
+                  foundation for an enjoyable great life.
+                </p>
+                <p className="text-[13.5px] leading-[1.5] text-[#999]">
+                  because both will appreciate in a post-AI world. (the only thing left is your
+                  uniqueness.)
+                </p>
+              </div>
+            )}
+
+            {treatment === 't2' && (
+              <p className="mt-4 max-w-[540px] text-[13.5px] italic leading-[1.6] text-[#999]">
+                two things i believe appreciate in a post-AI world: building the right things, and
+                health. the only thing left is your uniqueness.
+              </p>
+            )}
+
+            {treatment === 't3' && (
+              <>
+                <p className="mt-5 max-w-[540px] text-[clamp(14px,1.35vw,16px)] leading-[1.62] text-[#666]">
+                  {withFirmMark(subFirstSentence)}
+                </p>
+                <div className="mt-[26px] text-[12.5px] text-[#999]">
+                  more of what i believe →{' '}
+                  <Link
+                    href="/writes"
+                    className="text-[#666] underline underline-offset-[3px]"
+                  >
+                    the writes
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="relative aspect-[16/11] w-full overflow-hidden rounded-[clamp(12px,1.4vw,18px)]">
+            <video
+              ref={videoRef}
+              className="block h-full w-full object-contain"
+              src="/finished/now-product-montage-expanded.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+            />
+          </div>
         </div>
       </div>
 
@@ -213,6 +217,6 @@ export default function NowTab() {
           window.localStorage.setItem('dk-treatment', t)
         }}
       />
-    </div>
+    </>
   )
 }

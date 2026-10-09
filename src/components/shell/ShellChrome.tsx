@@ -3,13 +3,15 @@
 import { createContext, useCallback, useContext, type ReactNode } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { MotionConfig } from 'framer-motion'
+import { play } from 'cuelume'
 
 import { usePostHog } from 'posthog-js/react'
 
 import ShellRail from '@/components/shell/ShellRail'
 import FooterIconRow from '@/components/shell/FooterIconRow'
 import { GameProvider } from '@/components/game/GameContext'
-import { pushHomeTab, useHashTab, type TabId } from '@/components/shell/useHashTab'
+import { setTabEntry } from '@/components/shell/tabEntry'
+import { pushHomeTab, TAB_IDS, useHashTab, type TabId } from '@/components/shell/useHashTab'
 import { cn } from '@/lib/utils'
 
 interface ShellTabContextValue {
@@ -55,19 +57,15 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
 
   const goToTab = useCallback(
     (tab: TabId) => {
+      // Exiting an article back to the home shell: the incoming pane slides
+      // in from the left (reverse of the article's slide-in).
+      setTabEntry(isArticle ? 'return' : 'enter')
       if (isHome && tab !== 'writes') {
         setHashTab(tab)
+      } else if (tab === 'writes') {
+        router.push('/writes')
       } else {
-        // Exiting an article back to the home shell: flag it so the incoming
-        // pane slides in from the left (reverse of the article's slide-in).
-        if (isArticle) {
-          window.sessionStorage.setItem('dk-exit-article', '1')
-        }
-        if (tab === 'writes') {
-          router.push('/writes')
-        } else {
-          pushHomeTab(router, tab)
-        }
+        pushHomeTab(router, tab)
       }
     },
     [isHome, isArticle, router, setHashTab]
@@ -75,10 +73,16 @@ export default function ShellChrome({ children }: { children: ReactNode }) {
 
   const selectTab = useCallback(
     (tab: TabId) => {
+      // Re-clicking the open tab does nothing (no sound, no replayed entry).
+      if (tab === activeTab && !isArticle) return
+      // Tab-switch sound, on for everyone. The click itself is the user
+      // gesture browsers need before audio can play.
+      const from = activeTab ? TAB_IDS.indexOf(activeTab) : -1
+      play('select', { direction: TAB_IDS.indexOf(tab) < from ? 'back' : 'forward' })
       posthog?.capture('tab_switch', { tab })
       goToTab(tab)
     },
-    [goToTab, posthog]
+    [activeTab, isArticle, goToTab, posthog]
   )
 
   return (

@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
+import { setTabEntry } from '@/components/shell/tabEntry'
+
 export type TabId = 'now' | 'builds' | 'writes'
 
 export const TAB_IDS: TabId[] = ['now', 'builds', 'writes']
@@ -44,12 +46,17 @@ export function useHashTab(): [TabId, (tab: TabId) => void, boolean] {
       setTabState(tabFromHash(window.location.hash))
       setSyncedPathname(pathname)
     }
+    // Back/forward is a tab switch too: the pane it reveals fades up.
+    const syncFromHistory = () => {
+      setTabEntry('enter')
+      sync()
+    }
     sync()
-    window.addEventListener('hashchange', sync)
-    window.addEventListener('popstate', sync)
+    window.addEventListener('hashchange', syncFromHistory)
+    window.addEventListener('popstate', syncFromHistory)
     return () => {
-      window.removeEventListener('hashchange', sync)
-      window.removeEventListener('popstate', sync)
+      window.removeEventListener('hashchange', syncFromHistory)
+      window.removeEventListener('popstate', syncFromHistory)
     }
   }, [pathname])
 

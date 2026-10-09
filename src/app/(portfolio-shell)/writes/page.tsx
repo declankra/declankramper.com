@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import TabPane from '@/components/shell/TabPane'
 import WritesTab from '@/components/writes/WritesTab'
 import { getAllPosts } from '@/lib/blog'
 
@@ -9,5 +10,9 @@ export const metadata: Metadata = {
 }
 
 export default async function WritesPage() {
-  return <WritesTab posts={await getAllPosts()} />
+  return (
+    <TabPane>
+      <WritesTab posts={await getAllPosts()} />
+    </TabPane>
+  )
 }
