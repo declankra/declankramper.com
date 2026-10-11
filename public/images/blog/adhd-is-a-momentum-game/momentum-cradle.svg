@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Momentum in, momentum out</title>
+  <desc id="d">A Newton's cradle. The left ball swings in and stops; its momentum passes, shown in blue, through the still middle balls to the right ball, which swings out and back. It never stops.</desc>
+  <style>
+    .label{font-size:15px;font-weight:600;fill:#0a0a0a}
+    .cap{font-size:11px;fill:#737373}
+    .capb{font-size:11px;font-weight:600;fill:#2a78d6}
+  </style>
+  <rect width="720" height="280" fill="#ffffff"/>
+  <line x1="176" y1="62" x2="544" y2="62" stroke="#d4d4d4" stroke-width="4" stroke-linecap="round"/>
+  <line x1="176" y1="62" x2="176" y2="252" stroke="#d4d4d4" stroke-width="4" stroke-linecap="round"/>
+  <line x1="544" y1="62" x2="544" y2="252" stroke="#d4d4d4" stroke-width="4" stroke-linecap="round"/>
+  <rect x="144" y="252" width="432" height="10" rx="5" fill="#fafafa" stroke="#e5e5e5" stroke-width="1.5"/>
+  <g transform="translate(292 62)"><g>
+    <animateTransform attributeName="transform" type="rotate" dur="2.4s" repeatCount="indefinite" calcMode="spline" values="32;0;0;32" keyTimes="0;0.25;0.75;1" keySplines="0.12 0 0.39 0;0 0 1 1;0.61 1 0.88 1"/>
+    <line x1="0" y1="0" x2="0" y2="150" stroke="#b0b0b0" stroke-width="1.5"/>
+    <circle cx="0" cy="150" r="17" fill="#18181b"/>
+    <circle cx="0" cy="150" r="17" fill="#2a78d6" opacity="0.12"><animate attributeName="opacity" dur="2.4s" repeatCount="indefinite" values="0.12;1;0;0;1;0.12" keyTimes="0;0.25;0.262;0.738;0.75;1"/></circle>
+  </g></g>
+  <g transform="translate(326 62)"><g>
+    <line x1="0" y1="0" x2="0" y2="150" stroke="#b0b0b0" stroke-width="1.5"/>
+    <circle cx="0" cy="150" r="17" fill="#18181b"/>
+    <circle cx="0" cy="150" r="17" fill="#2a78d6" opacity="0"><animate attributeName="opacity" dur="2.4s" repeatCount="indefinite" values="0;0;0.85;0;0;0.85;0;0" keyTimes="0;0.25;0.254;0.28;0.758;0.762;0.788;1"/></circle>
+  </g></g>
+  <g transform="translate(360 62)"><g>
+    <line x1="0" y1="0" x2="0" y2="150" stroke="#b0b0b0" stroke-width="1.5"/>
+    <circle cx="0" cy="150" r="17" fill="#18181b"/>
+    <circle cx="0" cy="150" r="17" fill="#2a78d6" opacity="0"><animate attributeName="opacity" dur="2.4s" repeatCount="indefinite" values="0;0;0.85;0;0;0.85;0;0" keyTimes="0;0.254;0.258;0.284;0.754;0.758;0.784;1"/></circle>
+  </g></g>
+  <g transform="translate(394 62)"><g>
+    <line x1="0" y1="0" x2="0" y2="150" stroke="#b0b0b0" stroke-width="1.5"/>
+    <circle cx="0" cy="150" r="17" fill="#18181b"/>
+    <circle cx="0" cy="150" r="17" fill="#2a78d6" opacity="0"><animate attributeName="opacity" dur="2.4s" repeatCount="indefinite" values="0;0;0.85;0;0;0.85;0;0" keyTimes="0;0.258;0.262;0.288;0.75;0.754;0.78;1"/></circle>
+  </g></g>
+  <g transform="translate(428 62)"><g>
+    <animateTransform attributeName="transform" type="rotate" dur="2.4s" repeatCount="indefinite" calcMode="spline" values="0;0;-32;0;0" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0 1 1;0.61 1 0.88 1;0.12 0 0.39 0;0 0 1 1"/>
+    <line x1="0" y1="0" x2="0" y2="150" stroke="#b0b0b0" stroke-width="1.5"/>
+    <circle cx="0" cy="150" r="17" fill="#18181b"/>
+    <circle cx="0" cy="150" r="17" fill="#2a78d6" opacity="0"><animate attributeName="opacity" dur="2.4s" repeatCount="indefinite" values="0;0;1;0.12;1;0;0" keyTimes="0;0.25;0.262;0.5;0.738;0.75;1"/></circle>
+  </g></g>
+</svg>
