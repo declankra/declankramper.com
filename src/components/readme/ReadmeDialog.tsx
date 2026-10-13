@@ -138,7 +138,7 @@ export function ReadmeDialog({ open, onOpenChange, origin }: ReadmeDialogProps) 
                                                     className="mt-6 font-sans"
                                                 >
                                                     <a
-                                                        href="mailto:declan@dkbuilds.co?subject=Hello%20from%20the%20internet!"
+                                                        href="mailto:declankramper@gmail.com?subject=Hello%20from%20the%20internet!"
                                                         className="text-primary underline-offset-4 hover:underline text-sm inline-block"
                                                     >
                                                         would love to talk if you think the same :)
