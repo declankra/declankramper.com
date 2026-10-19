@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
   <title id="t">The system within the company's loop</title>
-  <desc id="d">Two nodes: (a) the world, reality, and (b) the company's vision of it. Feedback from the world flows to the company along the top arc. The company tries something to close the gap along the bottom arc, and the world responds. In the middle, tied into both arcs, is the system within: the employee's work. They set the vision with judgment, execute on it, and bring the world's response back.</desc>
+  <desc id="d">Two nodes: (a) the world, reality, and (b) the company's vision of it. Feedback from the world flows to the company along the top arc. The company tries something to close the gap along the bottom arc, and the world responds. In the middle, tied into both arcs, is the system within: the employee's work. They set the vision with judgement, execute on it, and bring the world's response back.</desc>
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M1 1 L9 5 L1 9" fill="none" stroke="#a3a3a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,7 +46,7 @@
   <rect class="soft" x="246" y="110" width="228" height="120" rx="12"/>
   <text class="capb" x="360" y="134" text-anchor="middle">THE SYSTEM WITHIN</text>
   <text class="label" x="360" y="158" text-anchor="middle">the employee's work</text>
-  <text class="cap" x="360" y="181" text-anchor="middle">sets the vision with judgment</text>
+  <text class="cap" x="360" y="181" text-anchor="middle">sets the vision with judgement</text>
   <text class="cap" x="360" y="197" text-anchor="middle">executes on it</text>
   <text class="cap" x="360" y="213" text-anchor="middle">brings the world's response back</text>
 </svg>

@@ -9,7 +9,7 @@ preview: "If the ideal end state of working with AI is an AI that can work in th
 - The level of general intelligence in a frontier model has passed the threshold of doing "today's work" 
 - Backend infrastructure to power that intelligence is ready too (agents can use their own computer to complete long-running tasks autonomously in the cloud) 
 - But people still struggle to use that intelligence in general business domains today because today's products, starting with their experiences/interfaces, have too much friction (setup, workflow/behavior change, and up-skilling)
-- A services-lead approach is being used to supplement the ideal product in the meantime
+- A services-led approach is being used to supplement the ideal product in the meantime
 
 ## The ideal end state product
 
@@ -57,7 +57,7 @@ I think you do so through the process of
 2. Encoding those learnings into an agent system that does the understood work
 3. Using a system with the three parts from before to answer anything that’s not (yet) understood
 
-Here’s a video to conceptually visual what that process and system at the end looks like:
+Here’s a video to conceptually visualize what that process and system at the end looks like:
 
 <video src="/images/blog/on-ai-adoption-being-a-product-problem-and-ui-being-a-transient-state/ai-adoption-transient-ui.mp4" controls autoplay loop muted playsinline></video>
 
@@ -83,7 +83,7 @@ Interestingly I think the only two things between this envisioned product replac
 1. Judgement - taste in discovery and knowing what questions to ask
 2. Relationship - the trust, accountability, and joy of a shared connection
 
-Technology is quickly advancing in the judgment capability required, but the relationship-building is less of a technological one. It then seems reasonable to assert then that relationships, and those human qualities to build that, will matter more.
+Technology is quickly advancing in the judgement capability required, but the relationship-building is less of a technological one. It then seems reasonable to assert then that relationships, and those human qualities to build that, will matter more.
 
 ## Why write this
 
