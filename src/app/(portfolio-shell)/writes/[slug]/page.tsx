@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import ArticleTransition from '@/components/writes/ArticleTransition';
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import PostNavigation from "@/components/blog/PostNavigation";
+import MarginNotes from "@/components/blog/MarginNotes";
 import { formatDateUTC } from '@/lib/date';
 
 // Generate all possible paths at build time
@@ -57,14 +58,17 @@ export default async function BlogPost({
     notFound();
   }
 
-  const words = post.content.replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+  // Margin-note copies of footnotes (each word in its own span) aren't read twice.
+  const words = post.content
+    .replace(/<span class="fn-(?:w|num-digit)[^"]*">[^<]*<\/span>/g, ' ')
+    .replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
   const readMinutes = Math.max(1, Math.round(words / 220));
 
   return (
     <ArticleTransition>
       <article
         id="writes-post-root"
-        className="max-w-[620px] pb-16 lg:ml-[max(0px,calc(50vw-630px))]"
+        className="relative max-w-[620px] pb-16 lg:ml-[max(0px,calc(50vw-630px))]"
       >
         <ReadingProgress />
         <h1 id="writes-post-title" className="mb-2 scroll-mt-8 text-[clamp(22px,2.6vw,30px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0A0A0B]">
@@ -103,6 +107,7 @@ export default async function BlogPost({
             [&_p+ol]:mt-2"
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
+        <MarginNotes />
         <PostNavigation previous={adjacentPosts.previous} next={adjacentPosts.next} />
       </article>
     </ArticleTransition>

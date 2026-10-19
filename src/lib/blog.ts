@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import type { BlogCategory, BlogPost, BlogPostSummary } from '@/types/blog';
 import { normalizeDateString } from '@/lib/date';
+import rehypeMarginNotes from '@/lib/margin-notes';
 
 type HastNode = {
   type?: string;
@@ -163,6 +164,7 @@ async function markdownToHtml(markdown: string): Promise<string> {
     .use(rehypeRaw)
     .use(rehypeHeadingIds)
     .use(rehypeEnhanceMedia)
+    .use(rehypeMarginNotes)
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
 
