@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 340" font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">The system within the company's loop</title>
+  <desc id="d">Two nodes: (a) the world, reality, and (b) the company's vision of it. Feedback from the world flows to the company along the top arc. The company tries something to close the gap along the bottom arc, and the world responds. In the middle, tied into both arcs, is the system within: the employee's work. They set the vision with judgment, execute on it, and bring the world's response back.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="#a3a3a3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <style>
+    .node{fill:#fafafa;stroke:#e5e5e5;stroke-width:1.5}
+    .arc{fill:none;stroke:#d4d4d4;stroke-width:2;stroke-linecap:round}
+    .soft{fill:#2a78d6;fill-opacity:.08;stroke:#2a78d6;stroke-width:1.5;stroke-dasharray:4 3}
+    .tie{stroke:#2a78d6;stroke-width:1.5;stroke-dasharray:2.5 2.5}
+    .joint{fill:#2a78d6}
+    .label{font-size:15px;font-weight:600;fill:#0a0a0a}
+    .cap{font-size:11px;fill:#737373}
+    .capb{font-size:11px;font-weight:600;fill:#2a78d6;letter-spacing:.3px}
+  </style>
+
+  <rect width="720" height="340" fill="#ffffff"/>
+
+  <!-- the loop (apex of each arc at x=360: y=75 top, y=265 bottom) -->
+  <path class="arc" d="M196 128 Q360 22 524 128" marker-end="url(#ah)"/>
+  <path class="arc" d="M524 212 Q360 318 196 212" marker-end="url(#ah)"/>
+  <text class="cap" x="360" y="61" text-anchor="middle">feedback: customers, market, problem</text>
+  <text class="cap" x="360" y="287" text-anchor="middle">tries something to close the gap</text>
+
+  <!-- (a) the world -->
+  <circle class="node" cx="128" cy="170" r="76"/>
+  <text class="cap" x="128" y="150" text-anchor="middle">(a)</text>
+  <text class="label" x="128" y="174" text-anchor="middle">The world</text>
+  <text class="cap" x="128" y="194" text-anchor="middle">reality</text>
+
+  <!-- (b) the company's vision -->
+  <circle class="node" cx="592" cy="170" r="76"/>
+  <text class="cap" x="592" y="142" text-anchor="middle">(b)</text>
+  <text class="label" x="592" y="166" text-anchor="middle">The company's</text>
+  <text class="label" x="592" y="185" text-anchor="middle">vision</text>
+  <text class="cap" x="592" y="204" text-anchor="middle">what it wants to see</text>
+
+  <!-- the system within: the employee's work, tied into both arcs -->
+  <line class="tie" x1="360" y1="75" x2="360" y2="110"/>
+  <line class="tie" x1="360" y1="230" x2="360" y2="265"/>
+  <circle class="joint" cx="360" cy="75" r="3"/>
+  <circle class="joint" cx="360" cy="265" r="3"/>
+  <rect class="soft" x="246" y="110" width="228" height="120" rx="12"/>
+  <text class="capb" x="360" y="134" text-anchor="middle">THE SYSTEM WITHIN</text>
+  <text class="label" x="360" y="158" text-anchor="middle">the employee's work</text>
+  <text class="cap" x="360" y="181" text-anchor="middle">sets the vision with judgment</text>
+  <text class="cap" x="360" y="197" text-anchor="middle">executes on it</text>
+  <text class="cap" x="360" y="213" text-anchor="middle">brings the world's response back</text>
+</svg>
