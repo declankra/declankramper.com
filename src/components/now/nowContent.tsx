@@ -27,7 +27,7 @@ export const HERO_VARIANTS: Record<HeroVariantId, HeroVariant> = {
     heading: (
       <>the products we use everyday are testaments of people who <em>cared.</em> now i&apos;m building mine</>
     ),
-    sub: "today that means applying AI inside real businesses (Kramper Engineering). AI is making it economically viable to do the thing you're uniquely curious about. so this is me doing mine.",
+    sub: "today that means applying AI inside real businesses (Kramper Engineering). AI is making it economically viable to do the thing you're uniquely curious about.",
   },
   D1: {
     label: 'D1 · hybrid',
