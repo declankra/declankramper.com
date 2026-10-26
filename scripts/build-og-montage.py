@@ -5,7 +5,7 @@ Every shot is cropped to fill the frame (no letterbox or pillarbox).
 Crop boxes are in source pixels; h is derived from w for the 1200:630 aspect.
 The Coffer (Summit Waterworks) shot is cut from the previous montage, builds-v4.mp4.
 
-Usage: python3 scripts/build-og-montage.py public/og/builds-v5.mp4
+Usage: python3 scripts/build-og-montage.py public/og/builds-v6.mp4
 """
 import subprocess, sys, os
 
@@ -20,10 +20,12 @@ def h_for(w, ow=W, oh=H):
     return round(w * oh / ow)
 
 # kind, src, start, frames, x, y, w   (still: start ignored)
+# 'fit' shots also take a crop height and are padded with white to 1200 wide
 SHOTS = [
     ('vid', f'{F}/led-race-display-2x.mp4', 0.2, 15, 0, 24, 1280),
     ('vid', f'{F}/chicago-coffee/chicago-coffee-demo.mp4', 1.0, 15, 0, 0, 1280),
     ('vid', M, 11.9, 18, 50, 8, 1200),
+    ('fit', M, 5.6, 21, 0, 40, 1280, 800),
     ('tri', [
         ('img', f'{F}/garpple/homeview1.webp', 0, 0, 60, 1242),
         ('vid', f'{F}/chitrack/improved_search_results_view.mp4', 3.0, 0, 120, 588),
@@ -42,8 +44,8 @@ SHOTS = [
     ('tri', [
         ('img', f'{F}/race-time-calculator/Results.png', 0, 0, 280, 1170),
         ('vid', f'{F}/chitrack/ability_to_view_all_upcoming_arrivals.mp4', 1.0, 0, 150, 588),
-        ('vid', M, 5.6, 420, 93, 440),
-    ], 24),
+        ('img', f'{F}/garpple/homeview.png', 0, 0, 200, 1242),
+    ], 18),
     ('img', f'{F}/meet-or-not/results.webp', 0, 12, 0, 0, 2392),
 ]
 
@@ -76,6 +78,13 @@ for n, shot in enumerate(SHOTS):
             f'{"".join(plabels)}hstack=inputs=3,'
             f'drawbox=x={PW - 2}:y=0:w=4:h={H}:color=0x111111:t=fill,'
             f'drawbox=x={2 * PW - 2}:y=0:w=4:h={H}:color=0x111111:t=fill[s{n}]')
+    elif shot[0] == 'fit':
+        _, src, start, frames, x, y, w, h = shot
+        idx = add_input('vid', src, start, frames)
+        chains.append(
+            f'[{idx}:v]fps={FPS},crop={w}:{h}:{x}:{y},scale=-2:{H}:flags=lanczos,'
+            f'pad={W}:{H}:-1:-1:white,setsar=1,format=yuv420p,'
+            f'trim=end_frame={frames},setpts=PTS-STARTPTS[s{n}]')
     else:
         kind, src, start, frames, x, y, w = shot
         idx = add_input(kind, src, start, frames)
