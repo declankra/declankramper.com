@@ -9,7 +9,7 @@ const siteUrl = 'https://www.declankramper.com'
 const previewTitle = 'Declan Kramper | Personal Portfolio'
 const previewDescription = 'A place on the internet for some of my thoughts and projects'
 const previewImage = `${siteUrl}/og/builds-v4.jpg`
-const previewVideo = `${siteUrl}/og/builds-v4.mp4`
+const previewVideo = `${siteUrl}/og/builds-v5.mp4`
 
 export const metadata: Metadata = {
   openGraph: {
