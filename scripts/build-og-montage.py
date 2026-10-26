@@ -22,11 +22,12 @@ def h_for(w, ow=W, oh=H):
 # kind, src, start, frames, x, y, w   (still: start ignored)
 SHOTS = [
     ('vid', f'{F}/led-race-display-2x.mp4', 0.2, 15, 0, 24, 1280),
-    ('vid', f'{F}/chicago-coffee/chicago-coffee-demo.mp4', 1.9, 15, 140, 435, 1000),
+    ('vid', f'{F}/chicago-coffee/chicago-coffee-demo.mp4', 1.0, 15, 0, 0, 1280),
+    ('vid', M, 11.9, 18, 50, 8, 1200),
     ('tri', [
         ('img', f'{F}/garpple/homeview1.webp', 0, 0, 60, 1242),
         ('vid', f'{F}/chitrack/improved_search_results_view.mp4', 3.0, 0, 120, 588),
-        ('vid', f'{F}/your-own-font/your-own-font-demo.mp4', 12.6, 40, 110, 640),
+        ('img', f'{F}/race-time-calculator/Feedback.png', 0, 0, 150, 1290),
     ], 18),
     ('vid', V4, 5.8, 15, 88, 0, 1020),
     ('vid', M, 9.6, 15, 40, 120, 1200),
@@ -36,18 +37,14 @@ SHOTS = [
     ('vid', f'{F}/rc-tank.mp4', 2.5, 15, 0, 48, 1280),
     ('vid', f'{F}/interactive-letter-demo.mp4', 17.4, 15, 330, 160, 620),
     ('img', f'{F}/strava-personality-test/personality_result.png', 0, 12, 0, 0, 1796),
-    ('vid', f'{F}/website-blocker/website-blocker-demo.mp4', 8.0, 12, 320, 40, 940),
     ('vid', f'{F}/ontology-xtract/ontology-xtract-sanitized-demo.web-hq.mp4', 12.0, 12, 0, 0, 1520),
-    ('vid', f'{F}/grade-final-boss/grade-final-boss.gif', 1.0, 12, 0, 40, 800),
     ('vid', f'{F}/screencam-recorder-demo.mp4', 4.0, 12, 172, 80, 976),
-    ('vid', f'{F}/remote-windshield-defroster.mp4', 2.0, 12, 320, 160, 1600),
     ('tri', [
         ('img', f'{F}/race-time-calculator/Results.png', 0, 0, 280, 1170),
         ('vid', f'{F}/chitrack/ability_to_view_all_upcoming_arrivals.mp4', 1.0, 0, 150, 588),
-        ('img', f'{F}/garpple/homeview2.webp', 0, 0, 60, 1242),
-    ], 15),
+        ('vid', M, 5.6, 420, 93, 440),
+    ], 24),
     ('img', f'{F}/meet-or-not/results.webp', 0, 12, 0, 0, 2392),
-    ('img', f'{F}/garpple/surgent-landing.webp', 0, 12, 289, 200, 2400),
 ]
 
 inputs, chains, labels = [], [], []
