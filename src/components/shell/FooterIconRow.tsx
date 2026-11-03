@@ -41,8 +41,9 @@ export default function FooterIconRow({ children }: FooterIconRowProps) {
 
   const toggleMusic = useCallback(() => {
     audioControlsRef.current?.togglePlayback()
-    showIosMusicToast()
-  }, [])
+    // "Now Playing" only when the music starts, not on pause.
+    if (!audioState.isPlaying) showIosMusicToast()
+  }, [audioState.isPlaying])
 
   const openGame = useCallback(() => setGameState('instructions'), [setGameState])
 
@@ -67,6 +68,7 @@ export default function FooterIconRow({ children }: FooterIconRowProps) {
       value={{
         audioElement,
         audioReactive: audioState.isPlaying && !audioState.isMuted,
+        musicPlaying: audioState.isPlaying,
         toggleMusic,
         openGame,
         openReadme,

@@ -6,6 +6,7 @@ import ArticleTransition from '@/components/writes/ArticleTransition';
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import PostNavigation from "@/components/blog/PostNavigation";
 import MarginNotes from "@/components/blog/MarginNotes";
+import PostMusicButton from "@/components/blog/PostMusicButton";
 import { formatDateUTC } from '@/lib/date';
 
 // Generate all possible paths at build time
@@ -108,6 +109,7 @@ export default async function BlogPost({
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
         <MarginNotes />
+        <PostMusicButton />
         <PostNavigation previous={adjacentPosts.previous} next={adjacentPosts.next} />
       </article>
     </ArticleTransition>

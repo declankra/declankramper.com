@@ -5,6 +5,7 @@ import { createContext, useContext } from 'react'
 export interface ShellFeaturesValue {
   audioElement: HTMLAudioElement | null
   audioReactive: boolean
+  musicPlaying: boolean
   /** feature actions owned by the shell (FooterIconRow hosts the machinery);
    * consumed by the rail's more-icons cluster */
   toggleMusic: () => void
@@ -16,6 +17,7 @@ export interface ShellFeaturesValue {
 export const ShellFeaturesContext = createContext<ShellFeaturesValue>({
   audioElement: null,
   audioReactive: false,
+  musicPlaying: false,
   toggleMusic: () => undefined,
   openGame: () => undefined,
   openReadme: () => undefined,
